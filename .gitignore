@@ -1,0 +1,6 @@
+# repertoires
+/vendor
+
+# fichiers
+composer.json
+composer.lock
