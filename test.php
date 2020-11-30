@@ -7,7 +7,7 @@ print("eloquent est installé ! \n");
 
 # permet de tester les requetes
 $db = new DB();
-$config = parse_ini_file(__DIR__.'/.../conf/db.conf.ini');
+$config = parse_ini_file(__DIR__.'/.../conf/conf.ini');
 if ($config) $db->addConnection($config);
 
 $db->setAsGlobal();
