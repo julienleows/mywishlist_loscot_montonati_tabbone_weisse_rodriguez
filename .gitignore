@@ -1,6 +1,9 @@
 # repertoires
-/vendor
+/vendor/
+
 
 # fichiers
-composer.json
+#composer.json
 composer.lock
+src/conf/conf.ini
+.idea
