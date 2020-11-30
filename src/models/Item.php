@@ -1,10 +1,8 @@
 <?php
 namespace mywishlist\model;
-use Illuminate\Database\Eloquent\Model;
 
-class item extends Model {
+class Item extends \Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
     protected $table = "item";
     protected $primaryKey = "id";
-
 }
