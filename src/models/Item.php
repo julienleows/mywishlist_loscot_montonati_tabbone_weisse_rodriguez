@@ -1,5 +1,5 @@
 <?php
-namespace mywishlist\model;
+namespace mywishlist\models;
 
 class Item extends \Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
