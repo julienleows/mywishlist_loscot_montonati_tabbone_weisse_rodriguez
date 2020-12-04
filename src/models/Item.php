@@ -5,4 +5,9 @@ class Item extends \Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
     protected $table = "item";
     protected $primaryKey = "id";
+
+    public function list() {
+        return $this->belongsTo('\mywishlist\models\List', 'liste_id');
+    }
+
 }

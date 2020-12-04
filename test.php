@@ -4,8 +4,7 @@
 require_once __DIR__ . "/vendor/autoload.php";
 use Illuminate\Database\Capsule\Manager as DB;
 use mywishlist\models\Item as Item;
-
-print("eloquent est installé ! \n");
+use mywishlist\models\Liste as Liste;
 
 # permet de tester les requetes
 $db = new DB();
@@ -15,9 +14,12 @@ if ($config) $db->addConnection($config);
 $db->setAsGlobal();
 $db->bootEloquent();
 
-$q1 = Item::all();
+/*$q1 = Item::all();
 print ("Liste des items : " . "\n");
 foreach ($q1 as $item){
     print($item->nom);
     print ("\n");
-}
+}*/
+
+$q2 = Item::where("id","=","1")->first();
+print($q2->nom);
