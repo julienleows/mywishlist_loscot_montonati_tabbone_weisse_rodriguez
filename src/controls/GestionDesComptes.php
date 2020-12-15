@@ -14,10 +14,11 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 class GestionDesComptes {
+
     private $app;
 
     /** constrcuteur du controleur gestion des comptes */
-    public function __contruct($app) {
+    public function __construct($app) {
         $this->app = $app;
     }
 

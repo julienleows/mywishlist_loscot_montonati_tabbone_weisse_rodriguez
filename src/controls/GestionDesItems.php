@@ -1,7 +1,7 @@
 <?php
 /**
- * Fichier: ....
- * description: ....
+ * fichier: GestionDesItems
+ * description: le controle gestion des items permet de gerer les items
  * @author: Julien WEISSE
  * @author: Lucas TABBONE
  * @author: Clement LOSCOT
@@ -15,17 +15,17 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class GestionDesItems {
 
-  private $c ;
+  private $app ;
 
   /**
-  * Constructeur vide de la classe GestionDesItems : pour l'instant
+  * constructeur vide de la classe GestionDesItems : pour l'instant
   **/
-  public function __construct(\Slim\Container $c) {
-      $this->c=$c;
+  public function __construct($app) {
+      $this->app = $app;
   }
 
   /**
-  *Fct 8 : Ajouter un item
+  * fct 8 : Ajouter un item
   **/
   function ajouterItem(Request $rq,Response $rs,array $args) : Response{
     $rs->getBody()->write('s\'ajouter un item') ;
@@ -33,7 +33,7 @@ class GestionDesItems {
   }
 
   /**
-  *Fct 9 : Modification d'un item
+  * fct 9 : Modification d'un item
   **/
   function modifierItem(Request $rq,Response $rs,array $args) : Response {
     $rs->getBody()->write('s\'modifier un item');
@@ -41,7 +41,7 @@ class GestionDesItems {
   }
 
   /**
-  *Fct 9 : Suppression d'un item
+  * fct 10 : Suppression d'un item
   **/
   function supprimerItem(Request $rq,Response $rs,array $args) : Response {
     $rs->getBody()->write('s\'supprimer un item');

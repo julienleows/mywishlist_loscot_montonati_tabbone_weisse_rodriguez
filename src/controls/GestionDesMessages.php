@@ -1,7 +1,7 @@
 <?php
 /**
- * Fichier: GestionDesMessages
- * description: Bonjour
+ * fichier: GestionDesMessages
+ * description: le controleur gestion des messages permet de gerer les messages
  * @author: Julien WEISSE
  * @author: Lucas TABBONE
  * @author: Clement LOSCOT
@@ -13,39 +13,30 @@ namespace mywishlist\controls;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-class GestionDesMessages{
+class GestionDesMessages {
 
-    private $c ;
+    private $app ;
 
     /**
-     * Constructeur vide de la classe GestionDesItems : pour l'instant
+     * constructeur vide de la classe GestionDesItems : pour l'instant
      **/
-    public function __construct(\Slim\Container $c) {
-        $this->c=$c;
+    public function __construct($app) {
+        $this->app = $app;
     }
 
-    /*
-     * fonction 4 : Ajouter un message avec sa réservation
-     * info : Affiche un message et d'une réservation
-     */
+    /* fct 4 : Ajouter un message avec sa réservation */
     function ajouterMessage(Request $rq, Response $rs, $args){
         $rs->getBody()->write("Ajoute un message avec la réservation");
         return $rs;
     }
 
-    /*
-     * fonction 4 : Ajouter un message avec sa réservation
-     * info : Affiche un message avec les informations d'une liste
-     */
+    /* fct 5 : Ajouter un message avec sa réservation */
     function ajouterMessageListe(Request $rq, Response $rs, $args){
         $rs->getBody()->write("Ajoute un message avec la liste");
         return $rs;
     }
 
-    /*
-     * fonction 4 : Ajouter un message avec sa réservation
-     * info : Affiche la réservation et messages d'une de ses listes après échéance
-     */
+    /* fct 16 : Ajouter un message avec sa réservation */
     function consulterReservationMessage(Request $rq, Response $rs, $args){
         $rs->getBody()->write("Consulte la réservation et messages d'une de ses listes après échéance");
         return $rs;

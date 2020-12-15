@@ -14,9 +14,23 @@ require_once __DIR__ . '/vendor/autoload.php';
 # imports
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use \mywishlist\controls\GestionDesListes;
+use \mywishlist\controls\GestionDesComptes;
+use \mywishlist\controls\GestionDesItems;
+use \mywishlist\controls\GestionDesMessages;
+
+# affichage des erreurs systeme de Slim
+$config = ['settings' => ['displayErrorDetails' => true,]];
+
+# connection base de donnees MySQL
+$db = new \Illuminate\Database\Capsule\Manager();
+$db->addConnection(parse_ini_file('src/conf/conf.ini'));
+$db->setAsGlobal();
+$db->bootEloquent();
 
 # creation instance App Slim
-$app = new Slim\App();
+$container = new \Slim\Container($config);
+$app = new \Slim\App($container);
 
 # ======= ROUTES =======
 # affichage de la liste des listes de souhaits
@@ -38,5 +52,5 @@ $app->get('/items/{id}[/]', function(Request $rq, Response $rs, array $args): Re
     return $rs;}
 );
 
-# declenchement le traitement de la requette HTTP courante par le framework Slim
+# declenchement du traitement de la requette HTTP courante par le framework Slim
 $app->run();

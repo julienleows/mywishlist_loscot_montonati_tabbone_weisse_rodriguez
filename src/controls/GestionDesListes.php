@@ -1,6 +1,6 @@
 <?php
 /**
- * Fichier: GestionDesListes
+ * fichier: GestionDesListes
  * description: le controleur gestion des listes permet de gerer les listes de souhaits
  * @author: Julien WEISSE
  * @author: Lucas TABBONE
@@ -14,10 +14,11 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 class GestionDesListes {
+
     private $app;
 
     /** constrcuteur du controleur gestion des listes */
-    public function __contruct($app) {
+    public function __construct($app) {
         $this->app = $app;
     }
 
