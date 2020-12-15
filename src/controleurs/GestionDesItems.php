@@ -18,7 +18,7 @@ class GestionDesItems {
   private $c ;
 
   /**
-  * Constructeur vide de la classe GestionDesItems : pour l'instant 
+  * Constructeur vide de la classe GestionDesItems : pour l'instant
   **/
   public function __construct(\Slim\Container $c) {
       $this->c=$c;
@@ -28,21 +28,24 @@ class GestionDesItems {
   *Fct 8 : Ajouter un item
   **/
   function ajouterItem(Request $rq,Response $rs,array $args) : Response{
-
+    $rs->getBody()->write('s\'ajouter un item') ;
+    return $rs;
   }
 
   /**
   *Fct 9 : Modification d'un item
   **/
   function modifierItem(Request $rq,Response $rs,array $args) : Response {
-
+    $rs->getBody()->write('s\'modifier un item');
+    return $rs;
   }
 
   /**
   *Fct 9 : Suppression d'un item
   **/
   function supprimerItem(Request $rq,Response $rs,array $args) : Response {
-
+    $rs->getBody()->write('s\'supprimer un item');
+    return $rs;
   }
 
 }
