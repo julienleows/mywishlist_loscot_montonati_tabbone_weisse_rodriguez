@@ -7,3 +7,8 @@ composer.json
 composer.lock
 src/conf/conf.ini
 .idea
+composer.phar
+info
+._DS_Store
+._index.php
+._test.php
