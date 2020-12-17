@@ -1,12 +1,9 @@
 <?php
 
-
 namespace mywishlist\view;
 
 use mywishlist\models\item as item;
 use mywishlist\models\liste as liste;
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
 
 class VueParticipant
 {
