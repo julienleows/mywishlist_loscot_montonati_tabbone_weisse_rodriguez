@@ -12,57 +12,58 @@ namespace mywishlist\controls;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use mywishlist\models\item as Item;
+use mywishlist\models\liste as Liste;
 
 class ParticipationListe {
 
-  private $app;
+    /** instance container */
+    private $container;
 
-  /**
-   * constructeur de la classe ParticipationListe
-   **/
-  public function __construct($app) {
-      $this->app = $app;
-  }
+    /** constructeur de la classe ParticipationListe **/
+    public function __construct(\Slim\Container $container) {
+        $this->container = $container;
+    }
 
-  /* fct 1 : Afficher une liste de souhaits */
-  function afficherListeSouhaits(Request $rq, Response $rs, $args){
-      $rs->getBody()->write("Affichage de la liste de souhaits");
-      return $rs;
-  }
+    /* fct 1 : Afficher une liste de souhaits */
+    public function afficherListeSouhaits(Request $rq, Response $rs, $args) {
+        $rs->getBody()->write("Affichage de la liste de souhaits");
+        return $rs;
+    }
 
-  /* fct 2 : Afficher un item d'une liste de souhaits */
-  function afficherItemListeSouhaits(Request $rq, Response $rs, $args){
-      $rs->getBody()->write("Affichage d'un item de la liste de souhaits");
-      return $rs;
-  }
+    /* fct 2 : Afficher un item d'une liste de souhaits */
+    public function afficherItemListeSouhaits(Request $rq, Response $rs, $args) {
+        $rs->getBody()->write("Affichage d'un item de la liste de souhaits");
+        return $rs;
+    }
 
-  /* fct 3 : Reserver un item */
-  function reserverItem(Request $rq, Response $rs, $args){
-      $rs->getBody()->write("Reserver un item");
-      return $rs;
-  }
+    /* fct 3 : Reserver un item */
+    public function reserverItem(Request $rq, Response $rs, $args) {
+        $rs->getBody()->write("Reserver un item");
+        return $rs;
+    }
 
-  /* fct 14 : partager une liste */
-  function partagerListe(Request $rq, Response $rs, $args){
-      $rs->getBody()->write("Partager la liste");
-      return $rs;
-  }
+    /* fct 14 : partager une liste */
+    public function partagerListe(Request $rq, Response $rs, $args) {
+        $rs->getBody()->write("Partager la liste");
+        return $rs;
+    }
 
-  /* fct 15 : Consulter les réservations d'une de ses listes avant échéance */
-  function consulterReservationListeAvantEcheance(Request $rq, Response $rs, $args){
-      $rs->getBody()->write("Consultation des reservations de la liste avant l'échéance");
-      return $rs;
-  }
+    /* fct 15 : Consulter les réservations d'une de ses listes avant échéance */
+    public function consulterReservationListeAvantEcheance(Request $rq, Response $rs, $args) {
+        $rs->getBody()->write("Consultation des reservations de la liste avant l'échéance");
+        return $rs;
+    }
 
-  /* fct 22 : Creer une cagnotte sur un item */
-  function creerCagnotteSurItem(Request $rq, Response $rs, $args){
-      $rs->getBody()->write("creation d'une cagnotte sur un item");
-      return $rs;
-  }
+    /* fct 22 : Creer une cagnotte sur un item */
+    public function creerCagnotteSurItem(Request $rq, Response $rs, $args) {
+        $rs->getBody()->write("creation d'une cagnotte sur un item");
+        return $rs;
+    }
 
-  /* fct 23 : Participer a une cagnotte */
-  function creerCagnotteSurItem(Request $rq, Response $rs, $args){
-      $rs->getBody()->write("participation a la cagnotte d'un item");
-      return $rs;
-  }
+    /* fct 23 : Participer a une cagnotte */
+    public function participerGagnotte(Request $rq, Response $rs, $args) {
+        $rs->getBody()->write("participation a la cagnotte d'un item");
+        return $rs;
+    }
 }

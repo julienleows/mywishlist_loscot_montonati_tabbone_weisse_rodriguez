@@ -12,40 +12,34 @@ namespace mywishlist\controls;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use mywishlist\models\item as Item;
+use mywishlist\models\liste as Liste;
 
 class GestionDesItems {
 
-  private $app ;
+    /** instance container */
+    private $container;
 
-  /**
-  * constructeur vide de la classe GestionDesItems : pour l'instant
-  **/
-  public function __construct($app) {
-      $this->app = $app;
-  }
+    /** constructeur vide de la classe GestionDesItems : pour l'instant **/
+    public function __construct(\Slim\Container $container) {
+        $this->container = $container;
+    }
 
-  /**
-  * fct 8 : Ajouter un item
-  **/
-  function ajouterItem(Request $rq,Response $rs,array $args) : Response{
-    $rs->getBody()->write('s\'ajouter un item') ;
-    return $rs;
-  }
+    /** fct 8 : Ajouter un item **/
+    public function ajouterItem(Request $rq, Response $rs, array $args): Response {
+        $rs->getBody()->write('s\'ajouter un item');
+        return $rs;
+    }
 
-  /**
-  * fct 9 : Modification d'un item
-  **/
-  function modifierItem(Request $rq,Response $rs,array $args) : Response {
-    $rs->getBody()->write('s\'modifier un item');
-    return $rs;
-  }
+    /** fct 9 : Modification d'un item **/
+    public function modifierItem(Request $rq, Response $rs, array $args): Response {
+        $rs->getBody()->write('s\'modifier un item');
+        return $rs;
+    }
 
-  /**
-  * fct 10 : Suppression d'un item
-  **/
-  function supprimerItem(Request $rq,Response $rs,array $args) : Response {
-    $rs->getBody()->write('s\'supprimer un item');
-    return $rs;
-  }
-
+    /** fct 10 : Suppression d'un item **/
+    public function supprimerItem(Request $rq, Response $rs, array $args): Response {
+        $rs->getBody()->write('s\'supprimer un item');
+        return $rs;
+    }
 }

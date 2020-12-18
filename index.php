@@ -34,22 +34,25 @@ $app = new \Slim\App($container);
 
 # ======= ROUTES =======
 # affichage de la liste des listes de souhaits
-$app->get('/souhaits[/]', function(Request $rq, Response $rs, array $args): Response {
-    $rs->getBody()->Write("<h1>affichage de la liste des listes de souhaits</h1>");
-    return $rs;}
+$app->get('/listes[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
+    $ctrl = new GestionDesListes($container);
+    return $ctrl->afficherListePublique($rq, $rs, $args);
+}
 );
 
 # affichage de la liste des items d'une liste de souhaits
-$app->get('/items[/]', function(Request $rq, Response $rs, array $args): Response {
+$app->get('/items[/]', function (Request $rq, Response $rs, array $args): Response {
     $rs->getBody()->Write("<h1>affichage de la liste des items d'une liste de souhaits</h1>");
-    return $rs;}
+    return $rs;
+}
 );
 
 # affichage d'un item désignée par son ID
-$app->get('/items/{id}[/]', function(Request $rq, Response $rs, array $args): Response {
+$app->get('/item/{id}[/]', function (Request $rq, Response $rs, array $args): Response {
     $id = $args['id'];
     $rs->getBody()->Write("<h1>affichage d'un item désignée par son ID : $id</h1>");
-    return $rs;}
+    return $rs;
+}
 );
 
 # declenchement du traitement de la requette HTTP courante par le framework Slim

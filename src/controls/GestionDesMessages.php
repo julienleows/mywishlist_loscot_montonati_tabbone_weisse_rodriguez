@@ -12,32 +12,33 @@ namespace mywishlist\controls;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use mywishlist\models\item as Item;
+use mywishlist\models\liste as Liste;
 
 class GestionDesMessages {
 
-    private $app ;
+    /** instance container */
+    private $container;
 
-    /**
-     * constructeur vide de la classe GestionDesItems : pour l'instant
-     **/
-    public function __construct($app) {
-        $this->app = $app;
+    /** constructeur vide de la classe GestionDesItems : pour l'instant **/
+    public function __construct(\Slim\Container $container) {
+        $this->container = $container;
     }
 
     /* fct 4 : Ajouter un message avec sa réservation */
-    function ajouterMessage(Request $rq, Response $rs, $args){
+    public function ajouterMessage(Request $rq, Response $rs, $args) {
         $rs->getBody()->write("Ajoute un message avec la réservation");
         return $rs;
     }
 
     /* fct 5 : Ajouter un message avec sa réservation */
-    function ajouterMessageListe(Request $rq, Response $rs, $args){
+    public function ajouterMessageListe(Request $rq, Response $rs, $args) {
         $rs->getBody()->write("Ajoute un message avec la liste");
         return $rs;
     }
 
     /* fct 16 : Ajouter un message avec sa réservation */
-    function consulterReservationMessage(Request $rq, Response $rs, $args){
+    public function consulterReservationMessage(Request $rq, Response $rs, $args) {
         $rs->getBody()->write("Consulte la réservation et messages d'une de ses listes après échéance");
         return $rs;
     }
