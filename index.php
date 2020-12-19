@@ -14,13 +14,15 @@ require_once __DIR__ . '/vendor/autoload.php';
 # imports
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \mywishlist\controls\GestionDesListes;
-use \mywishlist\controls\GestionDesComptes;
-use \mywishlist\controls\GestionDesItems;
-use \mywishlist\controls\GestionDesMessages;
+use \mywishlist\controls\ControleurDesListes as controleurListe;
+use \mywishlist\controls\ControleurDesComptes as controleurCompteur;
+use \mywishlist\controls\ControleurDesItems as controleurItem;
+use \mywishlist\controls\ControleurDesMessages as controleurMessage;
+use \mywishlist\controls\ControleurDesImages as controleurImage;
+use \mywishlist\controls\ControleurParticipationListe as controleurParticipation;
 
 # affichage des erreurs systeme de Slim
-$config = ['settings' => ['displayErrorDetails' => true,]];
+$config = ['settings' => ['displayErrorDetails' => true]];
 
 # connection base de donnees MySQL
 $db = new \Illuminate\Database\Capsule\Manager();
@@ -35,15 +37,15 @@ $app = new \Slim\App($container);
 # ======= ROUTES =======
 # affichage de la liste des listes de souhaits
 $app->get('/listes[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
-    $ctrl = new GestionDesListes($container);
+    $ctrl = new ControleurDesListes($container);
     return $ctrl->afficherListePublique($rq, $rs, $args);
 }
 );
 
 # affichage de la liste des items d'une liste de souhaits
-$app->get('/items[/]', function (Request $rq, Response $rs, array $args): Response {
-    $rs->getBody()->Write("<h1>affichage de la liste des items d'une liste de souhaits</h1>");
-    return $rs;
+$app->get('/items/{id}[/]', function (Request $rq, Response $rs, array $args): Response {
+    $c= new controleurParticipation($this);
+    return $c->afficherListeSouhaits($rq,$rs,$args);
 }
 );
 

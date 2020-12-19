@@ -10,6 +10,8 @@
 
 namespace mywishlist\controls;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use mywishlist\view\VueParticipationListe;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as Item;
@@ -25,16 +27,30 @@ class ControleurParticipationListe {
         $this->container = $container;
     }
 
-    /* fct 1 : Afficher une liste de souhaits */
+    /* fct 1 : Afficher les élements d'une liste de souhaits */
     public function afficherListeSouhaits(Request $rq, Response $rs, $args) {
-        $rs->getBody()->write("Affichage de la liste de souhaits");
-        return $rs;
+        try {
+            $item=Liste::query()->where('id','=',$args['id'])
+                    ->FirstOrFail();
+            $vue=new VueParticipationListe([$item]);
+            $rs->getBody()->write($vue->render(1));
+            return $rs;
+        } catch (ModelNotFoundException $m) {
+            $rs->getBody()->write("item {$item->nom} non trouvé !");
+        }
     }
 
     /* fct 2 : Afficher un item d'une liste de souhaits */
     public function afficherItemListeSouhaits(Request $rq, Response $rs, $args) {
-        $rs->getBody()->write("Affichage d'un item de la liste de souhaits");
-        return $rs;
+        try {
+            $item=Item::query()->where('id','=',$args['id'])
+                    ->FirstOrFail();
+            $vue=new VueParticipationListe([$item]);
+            $rs->getBody()->write($vue->render(2));
+            return $rs;
+        } catch (ModelNotFoundException $m) {
+            $rs->getBody()->write("item {$item->nom} non trouvé !");
+        }
     }
 
     /* fct 3 : Reserver un item */

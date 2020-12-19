@@ -19,7 +19,7 @@ class VueGestionListe {
     }
 
     /**
-     * Afficha de la liste des listes publiques
+     * Affichage de la liste des listes publiques
      * @param array $list
      */
     private function affichageListe(array $list) {

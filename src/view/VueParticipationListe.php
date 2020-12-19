@@ -24,7 +24,7 @@ class VueParticipationListe {
      * @param Liste $ls liste dont on souhaite afficher les items
      * @return string
      */
-    private function affichageElementsListe(array $items, Liste $ls): string {
+    private function affichageElementsListe(array $items): string {
         $html = "<div><ul>";
         foreach ($items as $it) {
             $html .= "<li>" . $it->nom . "</li>";
@@ -53,8 +53,32 @@ END;
      * Méthode pour choisir l'affichage désiré et retourner le resultat de cet affichage
      * @param $selecteur
      */
-    public function render($selecteur) {
-        // TODO render a finir
+    public function render($selecteur): string {
+        switch ($selecteur) {
+            case 1 :
+            { //on veut l'ensemble des élements d'une liste
+                $content = $this->affichageElementsListe($this->data[0]);
+                break;
+            }
+            case 2 :
+            { //on veut un item spécifique
+                $content = $this->affichageItem($this->data[0]);
+                break;
+            }
+        }
+        $html = <<<END
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exemple</title>
+  </head>
+  <body>
+		<h1>Wish List</h1>
+    $content
+  </body>
+</html>
+END;
+        return $html;
     }
 
 }
