@@ -1,6 +1,6 @@
 <?php
 /**
- * Fichier: ParticipationListe
+ * Fichier: ControleurParticipationListe
  * description: le controleur de gestion de la participation a une liste
  * @author: Julien WEISSE
  * @author: Lucas TABBONE
@@ -15,12 +15,12 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as Item;
 use mywishlist\models\liste as Liste;
 
-class ParticipationListe {
+class ControleurParticipationListe {
 
     /** instance container */
     private $container;
 
-    /** constructeur de la classe ParticipationListe **/
+    /** constructeur de la classe ControleurParticipationListe **/
     public function __construct(\Slim\Container $container) {
         $this->container = $container;
     }
