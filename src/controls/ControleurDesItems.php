@@ -1,6 +1,6 @@
 <?php
 /**
- * fichier: GestionDesItems
+ * fichier: ControleurDesItems
  * description: le controle gestion des items permet de gerer les items
  * @author: Julien WEISSE
  * @author: Lucas TABBONE
@@ -15,12 +15,12 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as Item;
 use mywishlist\models\liste as Liste;
 
-class GestionDesItems {
+class ControleurDesItems {
 
     /** instance container */
     private $container;
 
-    /** constructeur vide de la classe GestionDesItems : pour l'instant **/
+    /** constructeur vide de la classe ControleurDesItems : pour l'instant **/
     public function __construct(\Slim\Container $container) {
         $this->container = $container;
     }

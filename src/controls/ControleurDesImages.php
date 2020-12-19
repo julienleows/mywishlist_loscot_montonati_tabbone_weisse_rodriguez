@@ -1,6 +1,6 @@
 <?php
 /**
- * Fichier: GestionDesImages
+ * Fichier: ControleurDesImages
  * description: le controleur de gestion de toutes les images
  * @author: Julien WEISSE
  * @author: Lucas TABBONE
@@ -15,12 +15,12 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as Item;
 use mywishlist\models\liste as Liste;
 
-class GestionDesImages {
+class ControleurDesImages {
 
     /** instance container */
     private $container;
 
-    /** constructeur de la classe GestionDesImages **/
+    /** constructeur de la classe ControleurDesImages **/
     public function __construct(\Slim\Container $container) {
         $this->container = $container;
     }

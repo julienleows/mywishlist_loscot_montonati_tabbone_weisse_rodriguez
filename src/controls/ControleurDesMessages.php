@@ -1,6 +1,6 @@
 <?php
 /**
- * fichier: GestionDesMessages
+ * fichier: ControleurDesMessages
  * description: le controleur gestion des messages permet de gerer les messages
  * @author: Julien WEISSE
  * @author: Lucas TABBONE
@@ -15,12 +15,12 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as Item;
 use mywishlist\models\liste as Liste;
 
-class GestionDesMessages {
+class ControleurDesMessages {
 
     /** instance container */
     private $container;
 
-    /** constructeur vide de la classe GestionDesItems : pour l'instant **/
+    /** constructeur vide de la classe ControleurDesItems : pour l'instant **/
     public function __construct(\Slim\Container $container) {
         $this->container = $container;
     }

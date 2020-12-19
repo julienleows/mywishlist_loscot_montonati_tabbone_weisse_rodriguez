@@ -1,6 +1,6 @@
 <?php
 /**
- * fichier: GestionDesListes
+ * fichier: ControleurDesListes
  * description: le controleur gestion des listes permet de gerer les listes de souhaits
  * @author: Julien WEISSE
  * @author: Lucas TABBONE
@@ -17,7 +17,7 @@ use mywishlist\models\item as Item;
 use mywishlist\models\liste as Liste;
 use mywishlist\view\VueParticipant as VueParticipant;
 
-class GestionDesListes {
+class ControleurDesListes {
 
     /** instance container */
     private $container;

@@ -16,7 +16,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as Item;
 use mywishlist\models\liste as Liste;
 
-class GestionDesComptes {
+class ControleurDesComptes {
 
     /** instance container */
     private $container;
