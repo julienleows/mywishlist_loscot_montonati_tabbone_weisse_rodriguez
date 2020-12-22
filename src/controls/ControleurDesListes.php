@@ -11,12 +11,14 @@
 namespace mywishlist\controls;
 
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use mywishlist\view\VueGestionListe;
+use mywishlist\view\VueParticipationListe;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as Item;
 use mywishlist\models\liste as Liste;
-use mywishlist\view\VueParticipant as VueParticipant;
+use mywishlist\view\VueGestionListe as VueGestionLs;
 
 class ControleurDesListes {
 
@@ -30,8 +32,18 @@ class ControleurDesListes {
 
     /** fct 6 : créer une liste */
     public function creerListe(Request $rq, Response $rs, $args) {
-        $rs->getBody()->write('créer liste');
-        return $rs;
+        try {
+            $ls = new Liste();
+            $ls->titre = $args['titre'];
+            $ls->description = $args['description'];
+            $ls->expiration = $args['expiration'];
+            $ls->save();
+            $vue=new VueGestionLs([$ls]);
+            $rs->getBody()->write($vue->render(1));
+            return $rs;
+        } catch (ModelNotFoundException $m) {
+            $rs->getBody()->write("item {$ls->nom} non trouvé !");
+        }
     }
 
     /** fct 7 : modifier les informations générales d'une de ses listes */
@@ -52,7 +64,7 @@ class ControleurDesListes {
         $list = Liste::all(); // TODO doit recuperer les liste de souhait defini comme publique
 
         // instancier une vue (passage des modeles a la vue)
-        $vue = new VueGestionListe($list->toArray(), $this->container);
+        $vue = new VueGestionListe($list->toArray());
 
         // methode render (cf TD13) + cours 14 p5 -> code html
         $rs->getBody()->write($vue->render(1));

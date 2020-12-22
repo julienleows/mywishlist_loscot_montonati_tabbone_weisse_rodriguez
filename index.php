@@ -34,7 +34,7 @@ $app = new \Slim\App($container);
 # ======= ROUTES =======
 # fct 21 : afficher les listes de souhaits qui sont en publiques
 $app->get('/listes[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
-    $ctrl = new ControleurDesListes($container);
+    $ctrl = new controleurListe($container);
     return $ctrl->afficherListePublique($rq, $rs, $args);
 }
 );
