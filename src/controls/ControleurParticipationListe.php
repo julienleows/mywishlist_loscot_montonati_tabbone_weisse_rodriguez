@@ -55,7 +55,145 @@ class ControleurParticipationListe {
 
     /* fct 3 : Reserver un item */
     public function reserverItem(Request $rq, Response $rs, $args) {
-        $rs->getBody()->write("Reserver un item");
+        /*
+         * VERSION 1
+         */
+/*
+        $id = $args['id'];
+
+        try{
+            $args=Item::query()->where('id','=',$args['id'])
+                ->FirstOrFail();
+        } catch (Exception $exception){
+            $rs = getBody()->writ($exception);
+        }
+
+*/
+
+
+
+        /*
+         * VERSION 2
+         *//*
+
+        $id = $args['id'];
+        $liste_id = $args['liste_id'];
+        $nom = $args['nom'];
+        $descr = $args['descr'];
+        $img = $args['img'];
+        $url = $args['url'];
+        $tarif = $args['tarif'];
+
+        $rendu ='<!DOCTYPE html>
+                 <html lang="fr">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>ITEM</title>
+                        <style>
+                            h1{ text-align: center; } 
+                            table, th, td {
+                              border: 1px solid black;
+                              border-collapse: collapse;
+                            }
+                            table{
+                            margin: 0 auto;
+                            }
+                            td{
+                             text-align: center;
+                            }';
+
+        if($liste_id == '0'){
+            $rendu += 'form {
+                          margin: 0 auto;
+                          width: 400px;
+                          padding: 1em;
+                          border: 1px solid #CCC;
+                          border-radius: 1em;
+                        }
+            
+                        form div + div {
+                          margin-top: 1em;
+                        }
+            
+                        label {
+                          width: 90px;
+                          text-align: right;
+                        }
+            
+                        input, textarea {
+                          font: 1em sans-serif;
+                          width: 300px;
+                          box-sizing: border-box;
+                          border: 1px solid #999;
+                        }
+            
+                        input:focus, textarea:focus {
+                          border-color: #000;
+                        }
+            
+                        textarea {
+                          vertical-align: top;
+                          height: 5em;
+                        }
+            
+                        .button {
+                          padding-left: 90px; 
+                        }
+            
+                        button {
+                          margin-left: .5em;
+                        }';
+        }
+
+        $rendu += '</style>
+                   </head>
+                   <body>
+                    <h1>ITEM PAGE</h1>
+                    
+                    <br></br>
+                    <br></br>
+                    
+                    <div class="InformationItem">
+                        <table> 
+                            <tr> 
+                                <td>ID</td> 
+                                <td>LISTE_ID</td>
+                                <td>NOM</td> 
+                                <td>DESCRIPTION</td> 
+                                <td>IMG</td> 
+                                <td>URL</td> 
+                                <td>TARIF</td>
+                            </tr>
+                            <tr>
+                                <td>' . $id . '</td>
+                                <td>' . $liste_id . '</td>
+                                <td>' . $nom . '</td>
+                                <td>' . $descr . '</td>
+                                <td>'. $img . '</td>
+                                <td>' . $url . '</td>
+                                <td>'. $tarif . '</td>
+                            </tr>  
+                        </table>
+                    </div>';
+
+        if($liste_id == '0'){
+            $rendu += '<br></br>
+	
+		<div class="Formulaire">
+			<form action="<?php echo $_SERVER[' . "'PHP_SELF'".'];?>" method="post">
+				<label for="nameParticipantItem">Nom du participant :</label>
+				<input type="nameParticipantItem" id="name" name="user_name">
+				<input type="submit" id="envoyer" name="envoyer" value="Confirmer Participation">
+			</form>
+		</div>';
+        }
+
+        $rendu += '</body>
+                </html>';
+
+        $rs->getBody()->write( $rendu );
+*/
+        $rs->getBody()->write("fonction_3_A_COMPLETER");
         return $rs;
     }
 
