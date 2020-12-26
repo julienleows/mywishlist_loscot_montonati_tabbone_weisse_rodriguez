@@ -14,12 +14,12 @@ require_once __DIR__ . '/vendor/autoload.php';
 # imports
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \mywishlist\controls\ControleurDesListes as controleurListe;
-use \mywishlist\controls\ControleurDesComptes as controleurCompteur;
-use \mywishlist\controls\ControleurDesItems as controleurItem;
-use \mywishlist\controls\ControleurDesMessages as controleurMessage;
-use \mywishlist\controls\ControleurDesImages as controleurImage;
-use \mywishlist\controls\ControleurParticipationListe as controleurParticipation;
+use \mywishlist\controls\ControleurDesListes as ControleurDesListes;
+use \mywishlist\controls\ControleurDesComptes as ControleurDesCompteurs;
+use \mywishlist\controls\ControleurDesItems as ControleurDesItems;
+use \mywishlist\controls\ControleurDesMessages as ControleurDesMessages;
+use \mywishlist\controls\ControleurDesImages as ControleurDesImages;
+use \mywishlist\controls\ControleurParticipationListe as ControleurParticipationListe;
 
 # affichage des erreurs systeme de Slim
 $config = ['settings' => ['displayErrorDetails' => true,]];
@@ -37,14 +37,14 @@ $app = new \Slim\App($container);
 # ======= ROUTES =======
 # fct 21 : afficher les listes de souhaits qui sont en publiques
 $app->get('/listes[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
-    $ctrl = new controleurListe($container);
+    $ctrl = new ControleurDesListes($container);
     return $ctrl->afficherListePublique($rq, $rs, $args);
 }
 );
 
 # fct 14 : afficher une liste de souhait qui est en prive (par partage d'url)
 $app->get("/listes/{token}[/]", function (Request $rq, Response $rs, array $args) use ($container): Response {
-    $ctrl = new controleurParticipation($container);
+    $ctrl = new ControleurParticipationListe($container);
     // On affiche la liste de souhaits en fonction du token qui est donne
     return $ctrl->afficherListeSouhaits($rq, $rs, $args);
 }
@@ -52,7 +52,7 @@ $app->get("/listes/{token}[/]", function (Request $rq, Response $rs, array $args
 
 # fct 6 : afficher le formulaire de création d'une liste
 $app->get('/crealiste[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
-    $ctrl = new controleurListe($container);
+    $ctrl = new ControleurDesListes($container);
     return $ctrl->creerListe($rq, $rs, $args);
 }
 );

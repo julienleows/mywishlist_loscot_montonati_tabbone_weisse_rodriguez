@@ -9,7 +9,10 @@ src/conf/conf.ini
 .idea
 composer.phar
 info
+
+# fichiers mac
 ._DS_Store
 ._index.php
 ._test.php
 ._composer.json
+._README.md
