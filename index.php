@@ -20,9 +20,11 @@ use \mywishlist\controls\ControleurDesItems as ControleurDesItems;
 use \mywishlist\controls\ControleurDesMessages as ControleurDesMessages;
 use \mywishlist\controls\ControleurDesImages as ControleurDesImages;
 use \mywishlist\controls\ControleurParticipationListe as ControleurParticipationListe;
+use \mywishlist\models\Reservation as reservation;
 
 # affichage des erreurs systeme de Slim
-$config = ['settings' => ['displayErrorDetails' => true,]];
+    $config = ['settings' => ['displayErrorDetails' => true,
+        'dbconf' => '/conf/conf.ini']];
 
 # connection base de donnees MySQL
 $db = new \Illuminate\Database\Capsule\Manager();
@@ -54,6 +56,28 @@ $app->get("/listes/{token}[/]", function (Request $rq, Response $rs, array $args
 $app->get('/crealiste[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
     $ctrl = new ControleurDesListes($container);
     return $ctrl->creerListe($rq, $rs, $args);
+}
+);
+
+# fct 3 : Reserver un item
+$app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+    /*
+    $db::connection()->table("CREATE TABLE IF NOT EXISTS reservation (
+                                     nom varchar(200) NOT NULL,
+                                     id int(11),
+                                     message varchar(200),
+                                     PRIMARY KEY (nom,id),
+                                     FOREIGN KEY (id) REFERENCES item(id) );");
+    */
+    if (isset($_GET['nom'])) {
+        if (isset($_GET['message'])) {
+
+            $db::connection()->insert("INSERT INTO reservation VALUES('" . $_GET['nom'] . "','" . $args['id'] . "','" . $_GET['message'] . "')");
+
+        }
+    }
+    $ctrl = new ControleurParticipationListe($container);
+    return $ctrl->reserverItem($rq, $rs, $args);
 }
 );
 

@@ -17,6 +17,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as Item;
 use mywishlist\models\liste as Liste;
 use mywishlist\models\urlliste as UrlListe;
+use \mywishlist\models\Reservation as reservation;
 
 class ControleurParticipationListe {
 
@@ -71,43 +72,33 @@ class ControleurParticipationListe {
     }
 
     /* fct 3 : Reserver un item */
-    public function reserverItem(Request $rq, Response $rs, $args) {
+    public function reserverItem(Request $rq, Response $rs, $args)
+    {
         /*
          * VERSION 1
          */
-/*
-        $id = $args['id'];
-
-        try{
-            $args=Item::query()->where('id','=',$args['id'])
-                ->FirstOrFail();
-        } catch (Exception $exception){
-            $rs = getBody()->write($exception);
-        }
-
-*/
 
 
 
-        /*
-         * VERSION 2
-         *//*
 
-        $id = $args['id'];
-        $liste_id = $args['liste_id'];
-        $nom = $args['nom'];
-        $descr = $args['descr'];
-        $img = $args['img'];
-        $url = $args['url'];
-        $tarif = $args['tarif'];
 
-        $rendu ='<!DOCTYPE html>
+        try {
+            $args = Item::query()->where('id', '=', $args['id'])->FirstOrFail();
+            $reservation = Reservation::query()->where('id', '=', $args['id']);
+            $id = $args['id'];
+            $liste_id = $args['liste_id'];
+            $nom = $args['nom'];
+            $descr = $args['descr'];
+            $img = $args['img'];
+            $url = $args['url'];
+            $tarif = $args['tarif'];
+            $rendu = '<!DOCTYPE html>
                  <html lang="fr">
                     <head>
                         <meta charset="UTF-8">
                         <title>ITEM</title>
                         <style>
-                            h1{ text-align: center; }
+                            h1{ text-align: center; } 
                             table, th, td {
                               border: 1px solid black;
                               border-collapse: collapse;
@@ -119,66 +110,66 @@ class ControleurParticipationListe {
                              text-align: center;
                             }';
 
-        if($liste_id == '0'){
-            $rendu += 'form {
+            if (!$reservation->exists()) {
+                $rendu = $rendu . 'form {
                           margin: 0 auto;
                           width: 400px;
                           padding: 1em;
                           border: 1px solid #CCC;
                           border-radius: 1em;
                         }
-
+            
                         form div + div {
                           margin-top: 1em;
                         }
-
+            
                         label {
                           width: 90px;
                           text-align: right;
                         }
-
+            
                         input, textarea {
                           font: 1em sans-serif;
                           width: 300px;
                           box-sizing: border-box;
                           border: 1px solid #999;
                         }
-
+            
                         input:focus, textarea:focus {
                           border-color: #000;
                         }
-
+            
                         textarea {
                           vertical-align: top;
                           height: 5em;
                         }
-
+            
                         .button {
-                          padding-left: 90px;
+                          padding-left: 90px; 
                         }
-
+            
                         button {
                           margin-left: .5em;
                         }';
-        }
+            }
 
-        $rendu += '</style>
+            $rendu = $rendu . '</style>
                    </head>
                    <body>
                     <h1>ITEM PAGE</h1>
-
+                    
                     <br></br>
                     <br></br>
-
+                    
                     <div class="InformationItem">
-                        <table>
-                            <tr>
-                                <td>ID</td>
+                        <table> 
+                            <tr> 
+                                <td>ID</td> 
                                 <td>LISTE_ID</td>
-                                <td>NOM</td>
-                                <td>DESCRIPTION</td>
-                                <td>IMG</td>
-                                <td>URL</td>
+                                <td>NOM</td> 
+                                <td>DESCRIPTION</td> 
+                                <td>IMG</td> 
+                                <td>URL</td> 
                                 <td>TARIF</td>
                             </tr>
                             <tr>
@@ -186,32 +177,42 @@ class ControleurParticipationListe {
                                 <td>' . $liste_id . '</td>
                                 <td>' . $nom . '</td>
                                 <td>' . $descr . '</td>
-                                <td>'. $img . '</td>
+                                <td>' . $img . '</td>
                                 <td>' . $url . '</td>
-                                <td>'. $tarif . '</td>
-                            </tr>
+                                <td>' . $tarif . '</td>
+                            </tr>  
                         </table>
                     </div>';
 
-        if($liste_id == '0'){
-            $rendu += '<br></br>
 
-		<div class="Formulaire">
-			<form action="<?php echo $_SERVER[' . "'PHP_SELF'".'];?>" method="post">
-				<label for="nameParticipantItem">Nom du participant :</label>
-				<input type="nameParticipantItem" id="name" name="user_name">
-				<input type="submit" id="envoyer" name="envoyer" value="Confirmer Participation">
-			</form>
-		</div>';
+            if (!$reservation->exists()) {
+                $rendu = $rendu . '<br></br>
+	
+
+                      <form action="" method="get">
+                 <p>Votre nom : <input type="text" name="nom" /></p>
+                 <p>Votre message : <input type="text" name="message" /></p>
+                 <p><input type="submit" value="Compléter la réservation"></p>
+                </form>
+
+                        ';
+            }
+
+            if (isset($_GET['nom'])) {
+                if (isset($_GET['message'])) {
+                    $rendu = $rendu . '<br></br><p> La table fait partie de vos réservations </p>';
+                }
+            }
+
+            $rendu = $rendu . '</body>
+                </html>';
+            $rs->getBody()->Write($rendu);
+            return $rs;
+        } catch (Exception $exception) {
+            $rs->getBody()->Write($exception);
+            return $rs;
         }
 
-        $rendu += '</body>
-                </html>';
-
-        $rs->getBody()->write( $rendu );
-*/
-        $rs->getBody()->write("fonction_3_A_COMPLETER");
-        return $rs;
     }
 
     /* fct 14 : partager une liste */
