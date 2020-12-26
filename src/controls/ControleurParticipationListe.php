@@ -16,6 +16,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as Item;
 use mywishlist\models\liste as Liste;
+use mywishlist\models\urlliste as UrlListe;
 
 class ControleurParticipationListe {
 
@@ -29,15 +30,31 @@ class ControleurParticipationListe {
 
     /* fct 1 : Afficher les élements d'une liste de souhaits */
     public function afficherListeSouhaits(Request $rq, Response $rs, $args) {
+        (isset($args['id'])) ? $id = $args['id'] : $id = '';
+        (isset($args['token'])) ? $token = $args['token'] : $token = '';
         try {
-            $item=Liste::query()->where('id','=',$args['id'])
+            $item=Liste::query()->where('no','=',$id)
                     ->FirstOrFail();
             $vue=new VueParticipationListe([$item]);
             $rs->getBody()->write($vue->render(1));
-            return $rs;
-        } catch (ModelNotFoundException $m) {
-            $rs->getBody()->write("item {$item->nom} non trouvé !");
+        } catch (ModelNotFoundException $e){
+          // c'est tres moche, mais pour l'instant ça marche
+          // a modifier si possible
+          try {
+            $rest = substr($token, 0, 8);
+            if ($rest == "nosecure") {
+                $rs->getBody()->write("Erreur 403 forbidden");
+                return $rs;
+            } else
+            $item=Liste::query()->where('token','=',$token)
+                    ->FirstOrFail();
+            $vue=new VueParticipationListe([$item]);
+            $rs->getBody()->write($vue->render(1));
+          } catch (ModelNotFoundException $m) {
+              $rs->getBody()->write("item {$item->nom} non trouvé !");
+          }
         }
+        return $rs;
     }
 
     /* fct 2 : Afficher un item d'une liste de souhaits */
@@ -65,7 +82,7 @@ class ControleurParticipationListe {
             $args=Item::query()->where('id','=',$args['id'])
                 ->FirstOrFail();
         } catch (Exception $exception){
-            $rs = getBody()->writ($exception);
+            $rs = getBody()->write($exception);
         }
 
 */
@@ -90,7 +107,7 @@ class ControleurParticipationListe {
                         <meta charset="UTF-8">
                         <title>ITEM</title>
                         <style>
-                            h1{ text-align: center; } 
+                            h1{ text-align: center; }
                             table, th, td {
                               border: 1px solid black;
                               border-collapse: collapse;
@@ -110,36 +127,36 @@ class ControleurParticipationListe {
                           border: 1px solid #CCC;
                           border-radius: 1em;
                         }
-            
+
                         form div + div {
                           margin-top: 1em;
                         }
-            
+
                         label {
                           width: 90px;
                           text-align: right;
                         }
-            
+
                         input, textarea {
                           font: 1em sans-serif;
                           width: 300px;
                           box-sizing: border-box;
                           border: 1px solid #999;
                         }
-            
+
                         input:focus, textarea:focus {
                           border-color: #000;
                         }
-            
+
                         textarea {
                           vertical-align: top;
                           height: 5em;
                         }
-            
+
                         .button {
-                          padding-left: 90px; 
+                          padding-left: 90px;
                         }
-            
+
                         button {
                           margin-left: .5em;
                         }';
@@ -149,19 +166,19 @@ class ControleurParticipationListe {
                    </head>
                    <body>
                     <h1>ITEM PAGE</h1>
-                    
+
                     <br></br>
                     <br></br>
-                    
+
                     <div class="InformationItem">
-                        <table> 
-                            <tr> 
-                                <td>ID</td> 
+                        <table>
+                            <tr>
+                                <td>ID</td>
                                 <td>LISTE_ID</td>
-                                <td>NOM</td> 
-                                <td>DESCRIPTION</td> 
-                                <td>IMG</td> 
-                                <td>URL</td> 
+                                <td>NOM</td>
+                                <td>DESCRIPTION</td>
+                                <td>IMG</td>
+                                <td>URL</td>
                                 <td>TARIF</td>
                             </tr>
                             <tr>
@@ -172,13 +189,13 @@ class ControleurParticipationListe {
                                 <td>'. $img . '</td>
                                 <td>' . $url . '</td>
                                 <td>'. $tarif . '</td>
-                            </tr>  
+                            </tr>
                         </table>
                     </div>';
 
         if($liste_id == '0'){
             $rendu += '<br></br>
-	
+
 		<div class="Formulaire">
 			<form action="<?php echo $_SERVER[' . "'PHP_SELF'".'];?>" method="post">
 				<label for="nameParticipantItem">Nom du participant :</label>
@@ -199,8 +216,18 @@ class ControleurParticipationListe {
 
     /* fct 14 : partager une liste */
     public function partagerListe(Request $rq, Response $rs, $args) {
-        $rs->getBody()->write("Partager la liste");
-        return $rs;
+      $liste_id = $args['liste_id'];
+      try{
+          $ls=Liste::query()->where('no','=',$liste_id)
+              ->FirstOrFail();
+          $newtoken = hash('crc32', "secure" . $ls->no);
+          $ls->token = $newtoken; // on encrypte le token, et on le place dans la bdd
+          $ls->save();
+          $rs->getBody()->write("nouvelle url : " . "nomsiteweb/listepriv/" . $newtoken); // on affiche le lien
+      } catch (Exception $exception){
+          $rs = getBody()->write($exception);
+      }
+      return $rs;
     }
 
     /* fct 15 : Consulter les réservations d'une de ses listes avant échéance */

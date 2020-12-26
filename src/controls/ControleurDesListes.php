@@ -16,8 +16,8 @@ use mywishlist\view\VueGestionListe;
 use mywishlist\view\VueParticipationListe;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use mywishlist\models\item as Item;
-use mywishlist\models\liste as Liste;
+use mywishlist\models\Item as Item;
+use mywishlist\models\Liste as Liste;
 use mywishlist\view\VueGestionListe as VueGestionLs;
 
 class ControleurDesListes {

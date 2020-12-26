@@ -27,7 +27,7 @@ class VueParticipationListe {
     private function affichageElementsListe(array $items): string {
         $html = "<div><ul>";
         foreach ($items as $it) {
-            $html .= "<li>" . $it->nom . "</li>";
+            $html .= "<li>" . $it->no . "</li>";
         }
         $html .= "</ul></div>";
         return $html;
@@ -44,7 +44,7 @@ class VueParticipationListe {
         <h1>Nom : ($item->nom)</h1>
         <p> Desciption : ($item->descr)</p>
         <h3>Tarif : ($item->tarif)</h3>
-</section>  
+</section>
 END;
         return $html;
     }
@@ -57,7 +57,7 @@ END;
         switch ($selecteur) {
             case 1 :
             { //on veut l'ensemble des élements d'une liste
-                $content = $this->affichageElementsListe($this->data[0]);
+                $content = $this->affichageElementsListe($this->data);
                 break;
             }
             case 2 :
