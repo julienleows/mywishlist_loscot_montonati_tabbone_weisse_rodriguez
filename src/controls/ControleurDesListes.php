@@ -61,10 +61,15 @@ class ControleurDesListes {
     /** fct 21 : afficher les listes de souhaits qui sont en publiques */
     public function afficherListePublique(Request $rq, Response $rs, $args) {
         // recup les listes (modele eloquant)
-        $list = Liste::all(); // TODO doit recuperer les liste de souhait defini comme publique
+        $lists = Liste::all(); // TODO doit recuperer les liste de souhait defini comme publique
 
+        $array = [];
+        foreach ($lists as $list) {
+          $array[] = $list;
+        }
+      //  var_dump($array);
         // instancier une vue (passage des modeles a la vue)
-        $vue = new VueGestionListe($list);
+        $vue = new VueGestionListe($array);
 
         // methode render (cf TD13) + cours 14 p5 -> code html
         $rs->getBody()->write($vue->render(2));
