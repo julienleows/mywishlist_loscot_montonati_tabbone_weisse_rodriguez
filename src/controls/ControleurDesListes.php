@@ -64,10 +64,10 @@ class ControleurDesListes {
         $list = Liste::all(); // TODO doit recuperer les liste de souhait defini comme publique
 
         // instancier une vue (passage des modeles a la vue)
-        $vue = new VueGestionListe($list->toArray());
+        $vue = new VueGestionListe($list);
 
         // methode render (cf TD13) + cours 14 p5 -> code html
-        $rs->getBody()->write($vue->render(1));
+        $rs->getBody()->write($vue->render(2));
         return $rs;
     }
 }

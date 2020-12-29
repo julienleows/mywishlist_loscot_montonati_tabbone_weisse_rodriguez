@@ -14,7 +14,7 @@ class VueGestionListe {
      * Constructeur de la VueParticipant
      * @param array $d modèle
      */
-    public function __construct(array $d) {
+    public function __construct($d) {
         $this->data = $d;
     }
 
@@ -26,17 +26,17 @@ class VueGestionListe {
         $html = <<<END
         <div>
         // Remplire contenu du champ action
-        <form action ="" method="POST"> 
-        <legend>Formulaire création liste : </legend>
-        <label for="titre">Titre : </label>
-        <input type="text" name="titre" placeholder="<titre>" required><br>
-        <label for="desc">Description : </label>
-        <input type="text" name="description" placeholder="<description>"><br>
-        <label for="exp">Date limite : </label>
-        <input type="date" name="expiration" placeholder="<expiration>"><br>       
-</form>
-</div>
-END;
+            <form action ="" method="POST"> 
+                <legend>Formulaire création liste : </legend>
+                <label for="titre">Titre : </label>
+                <input type="text" name="titre" placeholder="<titre>" required><br>
+                <label for="desc">Description : </label>
+                <input type="text" name="description" placeholder="<description>"><br>
+                <label for="exp">Date limite : </label>
+                <input type="date" name="expiration" placeholder="<expiration>"><br>       
+            </form>
+        </div>
+        END;
         return $html;
     }
 
@@ -52,15 +52,20 @@ END;
      * Affichage de la mise en public d'une liste
      * @param array $list
      */
-    private function affichagePublicListe(array $list) {
-
+    private function affichagePublicListe($list) {
+        $html = "<div><ul>";
+        foreach ($list as $it) {
+            $html .= "<li>" . $it->titre . "</li>";
+        }
+        $html .= "</ul></div>";
+        return $html;
     }
 
     /**
      * Affichage de la liste des listes publiques
      * @param array $list
      */
-    private function affichageListe(array $list) {
+    private function affichageListesPublic(array $list) {
 
     }
 
@@ -77,19 +82,24 @@ END;
                 $content = $this->affichageCreationListe();
                 break;
             }
+
+            case 2 :
+            { // affichage des listes publiques
+                $content = $this->affichagePublicListe($this->data);
+            }
         }
         $html = <<<END
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Exemple</title>
-  </head>
-  <body>
-		<h1>Wish List</h1>
-    $content
-  </body>
-</html>
-END;
+        <!DOCTYPE html>
+            <html>
+              <head>
+                <title>Exemple</title>
+              </head>
+              <body>
+                    <h1>Wish List</h1>
+                $content
+              </body>
+            </html>
+        END;
         return $html;
     }
 }
