@@ -33,17 +33,27 @@ class ControleurDesListes {
     /** fct 6 : créer une liste */
     public function creerListe(Request $rq, Response $rs, $args) {
         try {
-            $ls = new Liste();
-            $ls->titre = $args['titre'];
-            $ls->description = $args['description'];
-            $ls->expiration = $args['expiration'];
-            $ls->save();
-            $vue=new VueGestionLs([$ls]);
-            $rs->getBody()->write($vue->render(1));
-            return $rs;
+            $rs->getBody()->write(sizeof($args));
+            if (sizeof($args) == 3) {
+                $this->creationListeBDD($args);
+                $rs->getBody()->write("envoie réussie");
+            }
+            else {
+                $vue=new VueGestionLs([]);
+                $rs->getBody()->write($vue->render(1));
+            }
         } catch (ModelNotFoundException $m) {
-            $rs->getBody()->write("item {$ls->nom} non trouvé !");
+            $rs->getBody()->write("Erreur de liste");
         }
+        return $rs;
+    }
+
+    private function creationListeBDD($args) {
+        $ls = new Liste();
+        $ls->titre = $args['titre'];
+        $ls->description = $args['description'];
+        $ls->expiration =  date_create_from_format('j-m-Y',($args['expiration']));
+        $ls->save();
     }
 
     /** fct 7 : modifier les informations générales d'une de ses listes */

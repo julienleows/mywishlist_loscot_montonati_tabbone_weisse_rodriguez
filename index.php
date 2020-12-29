@@ -60,6 +60,13 @@ $app->get('/crealiste[/]', function (Request $rq, Response $rs, array $args) use
 }
 );
 
+# fct 6 : afficher le formulaire de création d'une liste
+$app->post('/crealiste[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
+    $ctrl = new ControleurDesListes($container);
+    return $ctrl->creerListe($rq, $rs, $_POST);
+}
+);
+
 # fct 3 : Reserver un item
 $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     /*

@@ -25,8 +25,7 @@ class VueGestionListe {
     private function affichageCreationListe() {
         $html = <<<END
         <div>
-        // Remplire contenu du champ action
-            <form action ="" method="POST">
+            <form action ="#" method="post">
                 <legend>Formulaire création liste : </legend>
                 <label for="titre">Titre : </label>
                 <input type="text" name="titre" placeholder="<titre>" required><br>
@@ -34,6 +33,7 @@ class VueGestionListe {
                 <input type="text" name="description" placeholder="<description>"><br>
                 <label for="exp">Date limite : </label>
                 <input type="date" name="expiration" placeholder="<expiration>"><br>
+                <button type="submit"> Envoyer </button>
             </form>
         </div>
         END;
