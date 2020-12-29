@@ -49,24 +49,32 @@ class VueGestionListe {
     }
 
     /**
-     * Affichage de la mise en public d'une liste
+     * Affichage des listes publiques
      * @param array $list
      */
-    private function affichagePublicListe(array $list) {
-        $html = "<div><ul>";
-        foreach ($list as $it) {
-            $html .= "<li>" . $it->titre . "</li>";
+    private function affichagePublicListe($list) {
+        $html = "";
+        foreach ($list as $ls) {
+            $html .= "
+            <div style='border:4px solid black; padding: 10px;'>
+                    <div style='text-transform: uppercase;'>
+                        <h3>$ls->titre</h3>
+                    </div>
+                    <div>
+                        <p>
+                            $ls->description
+                            <ul>
+                                <li>Expire le $ls->expiration</li>
+                            </ul>
+                        </p>
+                        
+                        <br>
+                        <a href='index.php/liste/$ls->token' style='background: white; border:4px solid black; padding: 5px; text-decoration: none;'> VOIR LA LISTE</a><br><br>
+                    </div>
+            </div>
+            <br><br> ";
         }
-        $html .= "</ul></div>";
         return $html;
-    }
-
-    /**
-     * Affichage de la liste des listes publiques
-     * @param array $list
-     */
-    private function affichageListesPublic(array $list) {
-
     }
 
 
