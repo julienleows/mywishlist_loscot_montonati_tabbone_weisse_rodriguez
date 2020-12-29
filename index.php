@@ -48,6 +48,7 @@ $app->get('/listes[/]', function (Request $rq, Response $rs, array $args) use ($
 $app->get("/listes/{token}[/]", function (Request $rq, Response $rs, array $args) use ($container): Response {
     $ctrl = new ControleurParticipationListe($container);
     // On affiche la liste de souhaits en fonction du token qui est donne
+    // $ctrl->partagerListe($rq,$rs,['liste_id' => 1]);
     return $ctrl->afficherListeSouhaits($rq, $rs, $args);
 }
 );

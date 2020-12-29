@@ -44,7 +44,7 @@ class ControleurParticipationListe {
           try {
             $rest = substr($token, 0, 8);
             if ($rest == "nosecure") {
-                $rs->getBody()->write("Erreur 403 forbidden");
+                $rs->getBody()->write("Erreur : cette liste n'est pas publique");
                 return $rs;
             } else
             $item=Liste::query()->where('token','=',$token)
@@ -98,7 +98,7 @@ class ControleurParticipationListe {
                         <meta charset="UTF-8">
                         <title>ITEM</title>
                         <style>
-                            h1{ text-align: center; } 
+                            h1{ text-align: center; }
                             table, th, td {
                               border: 1px solid black;
                               border-collapse: collapse;
@@ -118,36 +118,36 @@ class ControleurParticipationListe {
                           border: 1px solid #CCC;
                           border-radius: 1em;
                         }
-            
+
                         form div + div {
                           margin-top: 1em;
                         }
-            
+
                         label {
                           width: 90px;
                           text-align: right;
                         }
-            
+
                         input, textarea {
                           font: 1em sans-serif;
                           width: 300px;
                           box-sizing: border-box;
                           border: 1px solid #999;
                         }
-            
+
                         input:focus, textarea:focus {
                           border-color: #000;
                         }
-            
+
                         textarea {
                           vertical-align: top;
                           height: 5em;
                         }
-            
+
                         .button {
-                          padding-left: 90px; 
+                          padding-left: 90px;
                         }
-            
+
                         button {
                           margin-left: .5em;
                         }';
@@ -157,19 +157,19 @@ class ControleurParticipationListe {
                    </head>
                    <body>
                     <h1>ITEM PAGE</h1>
-                    
+
                     <br></br>
                     <br></br>
-                    
+
                     <div class="InformationItem">
-                        <table> 
-                            <tr> 
-                                <td>ID</td> 
+                        <table>
+                            <tr>
+                                <td>ID</td>
                                 <td>LISTE_ID</td>
-                                <td>NOM</td> 
-                                <td>DESCRIPTION</td> 
-                                <td>IMG</td> 
-                                <td>URL</td> 
+                                <td>NOM</td>
+                                <td>DESCRIPTION</td>
+                                <td>IMG</td>
+                                <td>URL</td>
                                 <td>TARIF</td>
                             </tr>
                             <tr>
@@ -180,14 +180,14 @@ class ControleurParticipationListe {
                                 <td>' . $img . '</td>
                                 <td>' . $url . '</td>
                                 <td>' . $tarif . '</td>
-                            </tr>  
+                            </tr>
                         </table>
                     </div>';
 
 
             if (!$reservation->exists()) {
                 $rendu = $rendu . '<br></br>
-	
+
 
                       <form action="" method="get">
                  <p>Votre nom : <input type="text" name="nom" /></p>
@@ -221,10 +221,10 @@ class ControleurParticipationListe {
       try{
           $ls=Liste::query()->where('no','=',$liste_id)
               ->FirstOrFail();
-          $newtoken = hash('crc32', "secure" . $ls->no);
+          $newtoken = hash('md5', openssl_random_pseudo_bytes(1) . "secure" . $ls->no); // hash('md5',"4secure1")
           $ls->token = $newtoken; // on encrypte le token, et on le place dans la bdd
           $ls->save();
-          $rs->getBody()->write("nouvelle url : " . "nomsiteweb/listepriv/" . $newtoken); // on affiche le lien
+          $rs->getBody()->write("nouvelle url : " . "nomsiteweb/listes/" . $newtoken); // on affiche le lien
       } catch (Exception $exception){
           $rs = getBody()->write($exception);
       }
