@@ -52,7 +52,7 @@ class ControleurDesListes {
         $ls = new Liste();
         $ls->titre = $args['titre'];
         $ls->description = $args['description'];
-        $ls->expiration =  date_create_from_format('j-m-Y',($args['expiration']));
+        $ls->expiration = $args['expiration'];
         $ls->save();
     }
 

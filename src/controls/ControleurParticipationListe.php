@@ -42,8 +42,8 @@ class ControleurParticipationListe {
           // c'est tres moche, mais pour l'instant ça marche
           // a modifier si possible
           try {
-            $rest = substr($token, 0, 8);
-            if ($rest == "nosecure") {
+            $rest = substr($token, 0, 6);
+            if ($rest == "secure") {
                 $rs->getBody()->write("Erreur : cette liste n'est pas publique");
                 return $rs;
             } else
@@ -221,7 +221,7 @@ class ControleurParticipationListe {
       try{
           $ls=Liste::query()->where('no','=',$liste_id)
               ->FirstOrFail();
-          $newtoken = hash('md5', openssl_random_pseudo_bytes(1) . "secure" . $ls->no); // hash('md5',"4secure1")
+          $newtoken = hash('md5', openssl_random_pseudo_bytes(255) . "secure" . $ls->no); // hash('md5',"(255_bytes_random)secure1")
           $ls->token = $newtoken; // on encrypte le token, et on le place dans la bdd
           $ls->save();
           $rs->getBody()->write("nouvelle url : " . "nomsiteweb/listes/" . $newtoken); // on affiche le lien
