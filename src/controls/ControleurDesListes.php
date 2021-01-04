@@ -33,10 +33,13 @@ class ControleurDesListes {
     /** fct 6 : créer une liste */
     public function creerListe(Request $rq, Response $rs, $args) {
         try {
-            $rs->getBody()->write(sizeof($args));
             if (sizeof($args) == 3) {
-                $this->creationListeBDD($args);
-                $rs->getBody()->write("envoie réussie");
+                if (! $this->verificationListeExistante($args)){
+                  $this->creationListeBDD($args);
+                  $rs->getBody()->write("envoie réussie");
+                } else {
+                  $rs->getBody()->write("cette liste existe deja !");
+                }
             }
             else {
                 $vue=new VueGestionLs([]);
@@ -48,11 +51,27 @@ class ControleurDesListes {
         return $rs;
     }
 
+    private function verificationListeExistante($args){
+      try{
+        $ls=Liste::query()->where([['titre','=',$args['titre']],
+                          ['description', '=', $args['description']],
+                          ['expiration', '=', $args['expiration']]])
+                          ->FirstOrFail();
+        return true;
+      } catch (ModelNotFoundException $m) {
+        return false;
+      } // c'est debile, mais on peut pas enlever cette ligne
+      return false;
+    }
+
     private function creationListeBDD($args) {
         $ls = new Liste();
         $ls->titre = $args['titre'];
         $ls->description = $args['description'];
+        // userid a voir plus tard
         $ls->expiration = $args['expiration'];
+        $ls->token = 'secure';
+        // $ls->public = false;
         $ls->save();
     }
 
