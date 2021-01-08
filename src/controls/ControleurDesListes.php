@@ -70,8 +70,8 @@ class ControleurDesListes {
         $ls->description = $args['description'];
         // userid a voir plus tard
         $ls->expiration = $args['expiration'];
-        $ls->token = 'secure';
-        // $ls->public = false;
+        $ls->token = hash('md5', openssl_random_pseudo_bytes(255) . "secure" . $ls->no);
+        $ls->public = 0;
         $ls->save();
     }
 

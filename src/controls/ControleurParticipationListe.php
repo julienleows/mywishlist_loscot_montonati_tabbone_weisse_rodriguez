@@ -29,31 +29,21 @@ class ControleurParticipationListe {
         $this->container = $container;
     }
 
-    /* fct 1 : Afficher les élements d'une liste de souhaits */
+    /* fct 1 : Afficher une liste de souhait si elle est publique */
     public function afficherListeSouhaits(Request $rq, Response $rs, $args) {
-        (isset($args['id'])) ? $id = $args['id'] : $id = '';
         (isset($args['token'])) ? $token = $args['token'] : $token = '';
         try {
-            $item=Liste::query()->where('no','=',$id)
-                    ->FirstOrFail();
+          $liste=Liste::query()->where('token','=',$token)
+                  ->FirstOrFail();
+                if ($liste->public == 0) {
+              $rs->getBody()->write("Erreur : cette liste n'est pas publique");
+              return $rs;
+          } else {
             $vue=new VueParticipationListe([$item]);
             $rs->getBody()->write($vue->render(1));
-        } catch (ModelNotFoundException $e){
-          // c'est tres moche, mais pour l'instant ça marche
-          // a modifier si possible
-          try {
-            $rest = substr($token, 0, 6);
-            if ($rest == "secure") {
-                $rs->getBody()->write("Erreur : cette liste n'est pas publique");
-                return $rs;
-            } else
-            $item=Liste::query()->where('token','=',$token)
-                    ->FirstOrFail();
-            $vue=new VueParticipationListe([$item]);
-            $rs->getBody()->write($vue->render(1));
-          } catch (ModelNotFoundException $m) {
-              $rs->getBody()->write("item {$item->nom} non trouvé !");
           }
+        } catch (ModelNotFoundException $m) {
+            $rs->getBody()->write("item {$item->nom} non trouvé !");
         }
         return $rs;
     }
@@ -216,22 +206,6 @@ class ControleurParticipationListe {
             return $rs;
         }
 
-    }
-
-    /* fct 14 : partager une liste */
-    public function partagerListe(Request $rq, Response $rs, $args) {
-      $liste_id = $args['liste_id'];
-      try{
-          $ls=Liste::query()->where('no','=',$liste_id)
-              ->FirstOrFail();
-          $newtoken = hash('md5', openssl_random_pseudo_bytes(255) . "secure" . $ls->no); // hash('md5',"(255_bytes_random)secure1")
-          $ls->token = $newtoken; // on encrypte le token, et on le place dans la bdd
-          $ls->save();
-          $rs->getBody()->write("nouvelle url : " . "nomsiteweb/listes/" . $newtoken); // on affiche le lien
-      } catch (Exception $exception){
-          $rs = getBody()->write($exception);
-      }
-      return $rs;
     }
 
     /* fct 15 : Consulter les réservations d'une de ses listes avant échéance */
