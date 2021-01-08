@@ -36,7 +36,7 @@ class VueGestionListe {
                 <button type="submit"> Envoyer </button>
             </form>
         </div>
-        END;
+END;
         return $html;
     }
 
@@ -48,7 +48,11 @@ class VueGestionListe {
 
     }
 
-
+    /**
+     * Fct
+     * @param $liste
+     * @return string
+     */
     private function affichage1Liste($liste){
         return <<<END
              <br>
@@ -74,7 +78,7 @@ END;
     }
 
     /**
-     * Affichage des listes publiques
+     * Fct 20 : Affichage des listes publiques
      * @param array $list
      */
     private function affichagePublicListe() {

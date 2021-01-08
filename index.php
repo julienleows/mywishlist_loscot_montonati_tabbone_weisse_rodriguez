@@ -99,7 +99,19 @@ $app->get('/SuppressionPubliqueListe/{id}[/]', function (Request $rq, Response $
     }
 );
 
+#fct 8 : Ajout d'un item à une liste
+$app->get('/AjoutItem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+    $ctrl = new ControleurDesItems($container);
+    return $ctrl->ajouterItem($rq, $rs, $args);
+}
+);
 
+#fct 8 : Ajout d'un item à une liste
+$app->post('/AjoutItem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+    $ctrl = new ControleurDesItems($container);
+    return $ctrl->ajouterItem($rq, $rs, $args);
+}
+);
 
 #TEST ROUTE
 

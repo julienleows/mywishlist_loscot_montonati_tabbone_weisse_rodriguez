@@ -10,6 +10,7 @@
 
 namespace mywishlist\controls;
 
+use mywishlist\view\VueGestionItem;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as Item;
@@ -27,7 +28,12 @@ class ControleurDesItems {
 
     /** fct 8 : Ajouter un item **/
     public function ajouterItem(Request $rq, Response $rs, array $args): Response {
-        $rs->getBody()->write('s\'ajouter un item');
+        $it=new Item();
+        $it->nom=$args['nom'];
+        $it->descr=$args['descr'];
+        $it->prix=$args['prix'];
+        $vue=new VueGestionItem($it);
+        $rs->getBody()->write($vue->render(1));
         return $rs;
     }
 

@@ -19,7 +19,7 @@ class VueParticipationListe {
     }
 
     /**
-     * Affichage de l'ensemble des élements d'une liste
+     * Fct 1 : Affichage de l'ensemble des élements d'une liste
      * @param array $items ensemble des items à afficher
      * @param Liste $ls liste dont on souhaite afficher les items
      * @return string
@@ -34,7 +34,7 @@ class VueParticipationListe {
     }
 
     /**
-     * Affichage d'un item
+     * Fct 2 : Affichage d'un item
      * @param Item $item item qu'on souhaite afficher
      * @return string
      */
