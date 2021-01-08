@@ -99,14 +99,9 @@ class ControleurDesListes {
         // recup les listes (modele eloquant)
         $lists = Liste::query()->where('public', '=', true)->get();
 
-
-        $array = [];
-        foreach ($lists as $list) { // TODO QUESTION AU PROF
-            $array[] = $list;
-        }
         //var_dump($lists);
         // instancier une vue (passage des modeles a la vue)
-        $vue = new VueGestionListe($array);
+        $vue = new VueGestionListe($lists->toArray());
 
         // methode render (cf TD13) + cours 14 p5 -> code html
         $rs->getBody()->write($vue->render(2));
