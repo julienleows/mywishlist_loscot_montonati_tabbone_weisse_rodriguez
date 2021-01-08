@@ -54,6 +54,7 @@ END;
      * @param $selecteur
      */
     public function render($selecteur): string {
+        $content = null;
         switch ($selecteur) {
             case 1 :
             { //on veut l'ensemble des élements d'une liste
@@ -66,19 +67,8 @@ END;
                 break;
             }
         }
-        $html = <<<END
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Exemple</title>
-  </head>
-  <body>
-		<h1>Wish List</h1>
-    $content
-  </body>
-</html>
-END;
-        return $html;
+        $vueRender = new VueRender();
+        return $vueRender->render($content);
     }
 
 }

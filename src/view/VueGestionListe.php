@@ -48,34 +48,43 @@ class VueGestionListe {
 
     }
 
-    /**
-     * Affichage des listes publiques
-     * @param array $list
-     */
-    private function affichagePublicListe($list) {
-        $html = "";
-        foreach ($list as $ls) {
-            $html .= "
+
+    private function affichageUneListe($liste){
+        return <<<END
+             <br>
             <div style='border:4px solid black; padding: 10px;'>
                     <div style='text-transform: uppercase;'>
-                        <h3>$ls->titre</h3>
+                        <h3>${liste['titre']}</h3>
                     </div>
                     <div>
                         <p>
-                            $ls->description
+                            ${liste['description']}
                             <ul>
-                                <li>Expire le $ls->expiration</li>
+                                <li>Expire le ${liste['expiration']}</li>
                             </ul>
                         </p>
                         
                         <br>
-                        <a href='index.php/liste/$ls->token' style='background: white; border:4px solid black; padding: 5px; text-decoration: none;'> VOIR LA LISTE</a><br><br>
+                        <a href='index.php/listes/${liste['token']} style='background: white; border:4px solid black; padding: 5px; text-decoration: none;'> VOIR LA LISTE</a><br><br>
                     </div>
             </div>
-            <br><br> ";
+            <br><br>                 
+END;
+
+    }
+
+    /**
+     * Affichage des listes publiques
+     * @param array $list
+     */
+    private function affichagePublicListe() {
+        $html = "";
+        foreach ($this->data as $ls) {
+            $html .= $this->affichageUneListe($ls);
         }
         return $html;
     }
+
 
 
     /**
@@ -84,6 +93,7 @@ class VueGestionListe {
      */
     public function render($selecteur) {
         // TODO render a finir
+        $content = null;
         switch ($selecteur) {
             case 1 :
             { //on veut le formulaire de création d'une listes
@@ -93,21 +103,11 @@ class VueGestionListe {
 
             case 2 :
             { // affichage des listes publiques
-                $content = $this->affichagePublicListe($this->data);
+                $content = $this->affichagePublicListe();
+                break;
             }
         }
-        $html = <<<END
-        <!DOCTYPE html>
-            <html>
-              <head>
-                <title>Exemple</title>
-              </head>
-              <body>
-                    <h1>Wish List</h1>
-                $content
-              </body>
-            </html>
-        END;
-        return $html;
+        $vueRender = new VueRender();
+        return $vueRender->render($content);
     }
 }
