@@ -12,7 +12,8 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 # imports
-use \Psr\Http\Message\ServerRequestInterface as Request;
+    use mywishlist\models\Liste as Liste;
+    use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \mywishlist\controls\ControleurDesListes as ControleurDesListes;
 use \mywishlist\controls\ControleurDesComptes as ControleurDesCompteurs;
@@ -35,6 +36,8 @@ $db->bootEloquent();
 # creation instance App Slim
 $container = new \Slim\Container($config);
 $app = new \Slim\App($container);
+
+
 
 # ======= ROUTES =======
 # fct 21 : afficher les listes de souhaits qui sont en publiques
@@ -69,14 +72,7 @@ $app->post('/crealiste[/]', function (Request $rq, Response $rs, array $args) us
 
 # fct 3 : Reserver un item
 $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
-    /*
-    $db::connection()->table("CREATE TABLE IF NOT EXISTS reservation (
-                                     nom varchar(200) NOT NULL,
-                                     id int(11),
-                                     message varchar(200),
-                                     PRIMARY KEY (nom,id),
-                                     FOREIGN KEY (id) REFERENCES item(id) );");
-    */
+
     if (isset($_GET['nom'])) {
         if (isset($_GET['message'])) {
 
@@ -88,6 +84,25 @@ $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args)
     return $ctrl->reserverItem($rq, $rs, $args);
 }
 );
+
+# fct 20 : Ajouter une liste en publique
+$app->get('/RendrePubliqueListe/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+
+        $ctrl = new ControleurDesListes($container);
+        return $ctrl->rendreListePublique($rq, $rs, $args);
+    }
+);
+#fct 20.2 : Supprimer une liste de public
+$app->get('/SuppressionPubliqueListe/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+        $ctrl = new ControleurDesListes($container);
+        return $ctrl->suppressionListePublique($rq, $rs, $args);
+    }
+);
+
+
+
+#TEST ROUTE
+
 
 # ...
 

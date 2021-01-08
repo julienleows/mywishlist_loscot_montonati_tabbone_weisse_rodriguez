@@ -77,11 +77,6 @@ class ControleurParticipationListe {
         /*
          * VERSION 1
          */
-
-
-
-
-
         try {
             $args = Item::query()->where('id', '=', $args['id'])->FirstOrFail();
             $reservation = Reservation::query()->where('id', '=', $args['id']);
@@ -185,12 +180,19 @@ class ControleurParticipationListe {
                     </div>';
 
 
+            $valueCookie = '';
+            if(isset($_COOKIE['nomReservation'])){
+                $valueCookie = $_COOKIE['nomReservation'];
+            }
+
+
+
             if (!$reservation->exists()) {
                 $rendu = $rendu . '<br></br>
 
 
                       <form action="" method="get">
-                 <p>Votre nom : <input type="text" name="nom" /></p>
+                 <p>Votre nom : <input type="text" name="nom" value = ' . $valueCookie . '></p>
                  <p>Votre message : <input type="text" name="message" /></p>
                  <p><input type="submit" value="Compléter la réservation"></p>
                 </form>
@@ -201,6 +203,7 @@ class ControleurParticipationListe {
             if (isset($_GET['nom'])) {
                 if (isset($_GET['message'])) {
                     $rendu = $rendu . '<br></br><p> La table fait partie de vos réservations </p>';
+                    setcookie('nomReservation', $_GET['nom'],time()+ 60*60*60);
                 }
             }
 
