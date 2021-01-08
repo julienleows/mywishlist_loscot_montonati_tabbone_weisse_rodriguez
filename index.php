@@ -12,7 +12,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 # imports
-    use mywishlist\models\Liste as Liste;
+use mywishlist\models\Liste as Liste;
     use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \mywishlist\controls\ControleurDesListes as ControleurDesListes;
@@ -48,7 +48,7 @@ $app->get('/listes[/]', function (Request $rq, Response $rs, array $args) use ($
 );
 
 # fct 14 : afficher une liste de souhait qui est en prive (par partage d'url)
-$app->get("/listes/{token}[/]", function (Request $rq, Response $rs, array $args) use ($container): Response {
+$app->get("/liste/{token}[/]", function (Request $rq, Response $rs, array $args) use ($container): Response {
     $ctrl = new ControleurParticipationListe($container);
     // On affiche la liste de souhaits en fonction du token qui est donne
     // $ctrl->partagerListe($rq,$rs,['liste_id' => 1]);

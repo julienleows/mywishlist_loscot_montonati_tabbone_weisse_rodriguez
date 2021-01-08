@@ -84,7 +84,7 @@ class ControleurDesListes {
     /** fct 20 : rendre une liste publique */
     public function rendreListePublique(Request $rq, Response $rs, $args) {
             $var = ControleurDesListes::ajoutListePublique($args['id']);
-            $rs->getBody()->write($var . ' TOTO : ' . str_replace(array('{','}','"','public',':'),'',Liste::query()->select("public")->where('user_id','=',$args['id'])->first()));
+            $rs->getBody()->write($var . ' TOTO : ' . str_replace(array('{','}','"','public',':'),'',Liste::query()->select("public")->where('token','=',$args['id'])->first()));
             return $rs;
     }
 
@@ -136,11 +136,11 @@ class ControleurDesListes {
 
     }
 
-    public function ajoutListePublique($id): string
+    public function ajoutListePublique($token): string
     {
 
-        if(!ControleurDesListes::rendPublicListe($id)){
-            Liste::query()->where('user_id','=',$id)->update(['public' => '1']);
+        if(!ControleurDesListes::rendPublicListe($token)){
+            Liste::query()->where('token','=',$token)->update(['public' => '1']);
             return "SUCCES_AJOUT_UNE_INTERFACE_CLAIR_ET_DES_VRAIS_RETOUR";
         }else{
             return "Liste déjà présente";

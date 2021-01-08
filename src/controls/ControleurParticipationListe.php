@@ -15,8 +15,7 @@ use mywishlist\view\VueParticipationListe;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\item as Item;
-use mywishlist\models\liste as Liste;
-use mywishlist\models\urlliste as UrlListe;
+use mywishlist\models\Liste as Liste;
 use \mywishlist\models\Reservation as reservation;
 
 class ControleurParticipationListe {
@@ -39,11 +38,11 @@ class ControleurParticipationListe {
               $rs->getBody()->write("Erreur : cette liste n'est pas publique");
               return $rs;
           } else {
-            $vue=new VueParticipationListe([$item]);
+            $vue=new VueParticipationListe([$liste]);
             $rs->getBody()->write($vue->render(1));
           }
         } catch (ModelNotFoundException $m) {
-            $rs->getBody()->write("item {$item->nom} non trouvé !");
+            $rs->getBody()->write("item {$liste->nom} non trouvé !");
         }
         return $rs;
     }
