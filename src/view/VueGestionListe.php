@@ -49,7 +49,7 @@ class VueGestionListe {
     }
 
 
-    private function affichageUneListe($liste){
+    private function affichage1Liste($liste){
         return <<<END
              <br>
             <div style='border:4px solid black; padding: 10px;'>
@@ -80,7 +80,7 @@ END;
     private function affichagePublicListe() {
         $html = "";
         foreach ($this->data as $ls) {
-            $html .= $this->affichageUneListe($ls);
+            $html .= $this->affichage1Liste($ls);
         }
         return $html;
     }
