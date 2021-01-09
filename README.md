@@ -1,6 +1,5 @@
-
 <p align="center">
-	![titre_projet](https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse/blob/main/images/logos/logo_mywhislist.svg)</div>
+  <img width="460" height="300" src="https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse/blob/main/images/logos/logo_mywhislist.svg">
 </p>
 
 # PROJET PHP MY WISH LIST
