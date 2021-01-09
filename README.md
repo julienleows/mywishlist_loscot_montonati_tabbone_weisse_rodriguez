@@ -11,7 +11,7 @@ Sujet : My Whish List
 Ce dépôt github regroupe tous les documents et sources du projet MyWishList
 
 > **L'objectif est de réaliser est réaliser un site web avec le patron MVC.
-	Le site permet de réaliser des listes contenant des items qui sont réservablez.**
+	Le site permet de réaliser des listes contenant des items qui sont réservables.**
 
 * Membres :
 	* Julien Weisse [@JulienLeoWS](https://github.com/JulienLeoWS)
