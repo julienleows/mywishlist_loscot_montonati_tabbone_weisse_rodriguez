@@ -1,5 +1,7 @@
 
-<center>![titre_projet](https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse/blob/main/images/logos/logo_mywhislist.svg)</div>
+<p align="center">
+	![titre_projet](https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse/blob/main/images/logos/logo_mywhislist.svg)</div>
+</p>
 
 # PROJET PHP MY WISH LIST
 Projet PHP- IUT Nancy Charlemagne 2020-2021  
