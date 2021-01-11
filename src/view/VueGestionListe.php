@@ -9,13 +9,15 @@ use mywishlist\models\liste as Liste;
 class VueGestionListe {
 
     private $data;
+    private $container;
 
     /**
      * Constructeur de la VueParticipant
      * @param array $d modèle
      */
-    public function __construct(array $d) {
+    public function __construct(array $d, $c) {
         $this->data = $d;
+        $this->container = $c;
     }
 
     /**
@@ -69,7 +71,7 @@ END;
                         </p>
                         
                         <br>
-                        <a href='index.php/listes/${liste['token']} style='background: white; border:4px solid black; padding: 5px; text-decoration: none;'> VOIR LA LISTE</a><br><br>
+                        <a href='{$this->container->router->pathFor('liste',['token'=>$liste['token']])}' style='background: white; border:4px solid black; padding: 5px; text-decoration: none;'> VOIR LA LISTE</a><br><br>
                     </div>
             </div>
             <br><br>                 
@@ -111,7 +113,7 @@ END;
                 break;
             }
         }
-        $vueRender = new VueRender();
+        $vueRender = new VueRender($this->container);
         return $vueRender->render($content);
     }
 }

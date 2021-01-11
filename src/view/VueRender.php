@@ -2,13 +2,29 @@
 namespace mywishlist\view;
 
 
+
 class VueRender {
+
+    private $container;
+
+
+    /**
+     * Constructeur de la Vue Render
+     */
+    public function __construct($c) {
+        $this->container = $c;
+    }
+
+
     public function render($content) {
         return <<<END
         <!DOCTYPE html>
         <html>
             <head>
                 <title>My Wish List</title>
+                
+                <!-- favicon -->
+                <link rel="shortcut icon" type="image/x-icon" href="images/favicon/favicon_mywishlist.ico"/>
                  <!-- css boostrap -->
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
                 <!-- viewport -->
@@ -18,16 +34,19 @@ class VueRender {
                 <!-- navbar -->
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                   <div class="container-fluid">
-                       <a class="navbar-brand" href="#">
-                           My WishList
-                       </a>
+                        <a class="navbar-brand" href="{$this->container->router->pathFor('racine')}">
+                            <img src="{$this->container->router->pathFor('racine')}/images/logos/logo_mywishlist.svg" alt="" width="50" height="38" class="d-inline-block align-top">
+                            My Wishlist
+                        </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="listes">Listes</a></li>
-                        <li class="nav-item"><a class="nav-link" href="crealiste">Creation liste</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{$this->container->router->pathFor('listes')}">Listes</a></li>
+                      </ul>
+                      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="{$this->container->router->pathFor('crealiste')}">Creation liste</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Connexion/Inscription</a></li>
                       </ul>
                      </div>
@@ -48,7 +67,7 @@ END;
     }
 
 
-    public function home() {
+    public function accueil() {
         return <<<END
             <p>ici c'est la page d'accueil</p>
 END;

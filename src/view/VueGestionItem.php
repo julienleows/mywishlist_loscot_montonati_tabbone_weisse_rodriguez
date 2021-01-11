@@ -9,13 +9,15 @@ use mywishlist\models\liste as Liste;
 class VueGestionItem {
 
     private $data;
+    private $container;
 
     /**
      * Constructeur de la VueParticipant
      * @param array $d modèle
      */
-    public function __construct(array $d) {
+    public function __construct(array $d, $c) {
         $this->data = $d;
+        $this->container = $c;
     }
 
     private function ajouterItem() {
@@ -51,7 +53,7 @@ END;
             {
             }
         }
-        $vueRender = new VueRender();
+        $vueRender = new VueRender($this->container);
         return $vueRender->render($content);
     }
 

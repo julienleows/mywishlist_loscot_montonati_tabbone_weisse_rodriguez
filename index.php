@@ -22,10 +22,10 @@ use \mywishlist\controls\ControleurDesMessages as ControleurDesMessages;
 use \mywishlist\controls\ControleurDesImages as ControleurDesImages;
 use \mywishlist\controls\ControleurParticipationListe as ControleurParticipationListe;
 use \mywishlist\models\Reservation as reservation;
+use \mywishlist\controls\ControleurAffichageDesPages;
 
 # affichage des erreurs systeme de Slim
-    $config = ['settings' => ['displayErrorDetails' => true,
-        'dbconf' => '/conf/conf.ini']];
+$config = ['settings' => ['displayErrorDetails' => true,'dbconf' => '/conf/conf.ini']];
 
 # connection base de donnees MySQL
 $db = new \Illuminate\Database\Capsule\Manager();
@@ -40,12 +40,19 @@ $app = new \Slim\App($container);
 
 
 # ======= ROUTES =======
+# route racine
+$app->get('/', function (Request $rq, Response $rs, array $args) use ($container): Response {
+    $ctrl = new ControleurAffichageDesPages($container);
+    return $ctrl->accueil($rq, $rs, $args);
+}
+)->setName('racine');
+
 # fct 21 : afficher les listes de souhaits qui sont en publiques
 $app->get('/listes[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
     $ctrl = new ControleurDesListes($container);
     return $ctrl->afficherListePublique($rq, $rs, $args);
 }
-);
+)->setName('listes');
 
 # fct 14 : afficher une liste de souhait qui est en prive (par partage d'url)
 $app->get("/liste/{token}[/]", function (Request $rq, Response $rs, array $args) use ($container): Response {
@@ -54,44 +61,36 @@ $app->get("/liste/{token}[/]", function (Request $rq, Response $rs, array $args)
     // $ctrl->partagerListe($rq,$rs,['liste_id' => 1]);
     return $ctrl->afficherListeSouhaits($rq, $rs, $args);
 }
-);
+)->setName('liste');
 
 # fct 6 : afficher le formulaire de création d'une liste
 $app->get('/crealiste[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
     $ctrl = new ControleurDesListes($container);
     return $ctrl->creerListe($rq, $rs, $args);
 }
-);
-
-# fct 6 : afficher le formulaire de création d'une liste
-$app->post('/crealiste[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
-    $ctrl = new ControleurDesListes($container);
-    return $ctrl->creerListe($rq, $rs, $_POST);
-}
-);
+)->setName('crealiste');
 
 # fct 3 : Reserver un item
 $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
 
     if (isset($_GET['nom'])) {
         if (isset($_GET['message'])) {
-
             $db::connection()->insert("INSERT INTO reservation VALUES('" . $_GET['nom'] . "','" . $args['id'] . "','" . $_GET['message'] . "')");
-
         }
     }
     $ctrl = new ControleurParticipationListe($container);
     return $ctrl->reserverItem($rq, $rs, $args);
 }
-);
+)->setName('reserver');
 
 # fct 20 : Ajouter une liste en publique
-$app->get('/RendrePubliqueListe/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+$app->get('/rendrepubliqueliste/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
 
         $ctrl = new ControleurDesListes($container);
         return $ctrl->rendreListePublique($rq, $rs, $args);
     }
 );
+
 #fct 20.2 : Supprimer une liste de public
 $app->get('/SuppressionPubliqueListe/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
         $ctrl = new ControleurDesListes($container);

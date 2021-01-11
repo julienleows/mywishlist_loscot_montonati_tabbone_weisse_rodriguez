@@ -38,7 +38,7 @@ class ControleurParticipationListe {
               $rs->getBody()->write("Erreur : cette liste n'est pas publique");
               return $rs;
           } else {
-            $vue=new VueParticipationListe([$liste]);
+            $vue=new VueParticipationListe([$liste], $this->container);
             $rs->getBody()->write($vue->render(1));
           }
         } catch (ModelNotFoundException $m) {
@@ -52,7 +52,7 @@ class ControleurParticipationListe {
         try {
             $item=Item::query()->where('id','=',$args['id'])
                     ->FirstOrFail();
-            $vue=new VueParticipationListe([$item]);
+            $vue=new VueParticipationListe([$item], $this->container);
             $rs->getBody()->write($vue->render(2));
             return $rs;
         } catch (ModelNotFoundException $m) {

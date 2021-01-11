@@ -42,7 +42,7 @@ class ControleurDesListes {
                 }
             }
             else {
-                $vue=new VueGestionLs([]);
+                $vue=new VueGestionLs([], $this->container);
                 $rs->getBody()->write($vue->render(1));
             }
         } catch (ModelNotFoundException $m) {
@@ -101,7 +101,7 @@ class ControleurDesListes {
 
         //var_dump($lists);
         // instancier une vue (passage des modeles a la vue)
-        $vue = new VueGestionListe($lists->toArray());
+        $vue = new VueGestionListe($lists->toArray(), $this->container);
 
         // methode render (cf TD13) + cours 14 p5 -> code html
         $rs->getBody()->write($vue->render(2));
