@@ -23,8 +23,8 @@ Ce dépôt github regroupe tous les documents et sources du projet MyWishList
 
 ## Technologies
 * PHP ([php.net](https://www.php.net))
-* FrameWork Eloquent ([laravel.com/eloquent](https://laravel.com/docs/8.x/eloquent))
-* FrameWork Slim ([slimframework.com](https://www.slimframework.com/))
+* Eloquent ([laravel.com/eloquent](https://laravel.com/docs/8.x/eloquent))
+* Slim ([slimframework.com](https://www.slimframework.com/))
 * Bootstrap ([getbootstrap.com](https://getbootstrap.com/))
 
 
@@ -61,7 +61,7 @@ non | 27 | Supprimer son compte |
 non | 28 | Joindre des listes à son compte |
 
 autres : 
-- [x] logo du site web | Julien
+- [x] logo du site web(svg,favicon) | Julien
 - [x] mise en place de bootstrap | Julien
 
 
