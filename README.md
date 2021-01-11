@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="230" height="150" src="https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse/blob/main/images/logos/logo_mywhislist.svg">
+  <img width="230" height="150" src="https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse/blob/main/images/logos/logo_mywishlist.svg">
 </p>
 
 # PROJET PHP MY WISH LIST
