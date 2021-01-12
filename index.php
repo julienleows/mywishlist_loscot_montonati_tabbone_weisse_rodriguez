@@ -24,6 +24,7 @@ use \mywishlist\controls\ControleurParticipationListe as ControleurParticipation
 use \mywishlist\models\Reservation as reservation;
 use \mywishlist\controls\ControleurAffichageDesPages;
 
+
 # affichage des erreurs systeme de Slim
 $config = ['settings' => ['displayErrorDetails' => true,'dbconf' => '/conf/conf.ini']];
 
@@ -80,9 +81,21 @@ $app->post('/crealiste[/]', function (Request $rq, Response $rs, array $args) us
 # fct 3 : Reserver un item
 $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
 
+
+    $db::connection()->statement("CREATE TABLE IF NOT EXISTS reservation ( 
+    nom varchar(200) NOT NULL, 
+    id int(11), 
+    message varchar(200), 
+    PRIMARY KEY (nom,id), 
+    FOREIGN KEY (id) REFERENCES item(id) );");
+
+
     if (isset($_GET['nom'])) {
         if (isset($_GET['message'])) {
+            $reservation = Reservation::query()->where([['nom','=',$_GET['nom']],['id','=',$args['id']]]);
+            if(!$reservation->exists()){
             $db::connection()->insert("INSERT INTO reservation VALUES('" . $_GET['nom'] . "','" . $args['id'] . "','" . $_GET['message'] . "')");
+            }
         }
     }
     $ctrl = new ControleurParticipationListe($container);
