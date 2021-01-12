@@ -1,0 +1,19 @@
+/**
+ * feuille css pour l'affichage de la page d'accueil
+ */
+
+.titre-page-accueil {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+
+.titre-page-accueil > h1 {
+    margin: 10px;
+}
+
+.bouton-inscrire {
+    display: flex;
+    justify-content: center;
+}

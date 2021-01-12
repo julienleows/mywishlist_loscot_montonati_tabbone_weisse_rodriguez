@@ -1,0 +1,11 @@
+/**
+ * feuille css pour l'affichage des listes
+ */
+.boite-liste {
+    border:4px solid #E44332;
+    padding: 10px;
+}
+
+.titre-liste {
+    text-transform: uppercase;
+}

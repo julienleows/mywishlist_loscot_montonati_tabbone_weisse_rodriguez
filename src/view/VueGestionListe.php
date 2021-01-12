@@ -57,22 +57,24 @@ END;
      */
     private function affichage1Liste($liste){
         return <<<END
-             <br>
-            <div style='border:4px solid black; padding: 10px;'>
-                    <div style='text-transform: uppercase;'>
-                        <h3>${liste['titre']}</h3>
-                    </div>
-                    <div>
-                        <p>
-                            ${liste['description']}
-                            <ul>
-                                <li>Expire le ${liste['expiration']}</li>
-                            </ul>
-                        </p>
+            <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}/css/csslistes.css" type="text/css"/>
+            <br>
+            <div class="boite-liste"'>
+                <div class="titre-liste">
+                    <h3>${liste['titre']}</h3>
+                </div>
+                    <p>
+                        ${liste['description']}
+                        <ul>
+                            <li>Expire le ${liste['expiration']}</li>
+                        </ul>
+                    </p>
                         
-                        <br>
-                        <a href='{$this->container->router->pathFor('liste',['token'=>$liste['token']])}' style='background: white; border:4px solid black; padding: 5px; text-decoration: none;'> VOIR LA LISTE</a><br><br>
-                    </div>
+                    <br>
+                        
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('liste',['token'=>$liste['token']])}';">
+                        VOIR LA LISTE
+                    </button>
             </div>
             <br><br>                 
 END;

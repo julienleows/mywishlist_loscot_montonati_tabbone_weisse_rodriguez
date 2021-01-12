@@ -69,7 +69,33 @@ END;
 
     public function accueil() {
         return <<<END
-            <p>ici c'est la page d'accueil</p>
+            <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}/css/cssaccueil.css" type="text/css"/>
+            <br>
+            <span class="titre-page-accueil">
+                <img src="{$this->container->router->pathFor('racine')}/images/logos/logo_mywishlist.svg">
+                <h1>Des merveilleuses listes avec Wishlist</h1>
+            </span>
+
+            <br>
+            <br>
+            <div class="bouton-inscrire">
+                 <button type="button" class="btn btn-danger btn-lg" onclick="window.location.href='#';">
+                    S'incrire
+                 </button>
+            </div>
+               
+            <br>
+            <br>
+            <br>
+               
+            <div class="text-page-accueil">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adierat volutpat. Mauris non sem eros. Nullam aliquet neque aliquam justo vehicula, in auctor magna porttitor. 
+                    Curabitur malesuada lobortis fermentum. Curabitur cursus quis ligula ac rhoncus.
+                    Phasellus fermentum orci eget aliqueus turpis, aliquam a consectetur a, rutrum luctus urna. Duis vehicula mi et aliquet mattis. 
+                    Etiam ornare ante eu nunc sagittis porta.
+                </p>
+            </div>
 END;
     }
 
