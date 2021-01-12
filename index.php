@@ -70,6 +70,13 @@ $app->get('/crealiste[/]', function (Request $rq, Response $rs, array $args) use
 }
 )->setName('crealiste');
 
+
+$app->post('/crealiste[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
+    $ctrl = new ControleurDesListes($container);
+    return $ctrl->creerListe($rq, $rs, $_POST);
+}
+)->setName('creaListe');
+
 # fct 3 : Reserver un item
 $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
 
@@ -84,7 +91,7 @@ $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args)
 )->setName('reserver');
 
 # fct 20 : Ajouter une liste en publique
-$app->get('/rendrepubliqueliste/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+$app->get('/rendrepubliqueliste/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
 
         $ctrl = new ControleurDesListes($container);
         return $ctrl->rendreListePublique($rq, $rs, $args);

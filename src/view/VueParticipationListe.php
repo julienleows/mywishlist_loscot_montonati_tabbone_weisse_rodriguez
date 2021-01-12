@@ -28,8 +28,17 @@ class VueParticipationListe {
      */
     private function affichageElementsListe(array $items): string {
         $html = "<div><ul>";
-        foreach ($items as $it) {
-            $html .= "<li>" . $it->no . "</li>";
+        if (sizeof($items) != 0) {
+            foreach ($items as $it) {
+                $html .= "<li>" . $it->id . "</li>";
+                $html .= "<li>" . $it->liste_id . "</li>";
+                $html .= "<li>" . $it->nom . "</li>";
+                $html .= "<li>" . $it->descr . "</li>";
+                $html .= "<br>";
+            }
+        }
+        else {
+            $html ="<h1> LA LISTE N A PAS D ITEMS </h1>";
         }
         $html .= "</ul></div>";
         return $html;
