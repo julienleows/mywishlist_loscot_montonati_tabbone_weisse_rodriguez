@@ -173,6 +173,12 @@ class ControleurParticipationListe {
                         </table>
                     </div>';
 
+            if (isset($_GET['nom'])) {
+                if (isset($_GET['message'])) {
+                    $rendu = $rendu . '<br></br><p> La table fait partie de vos réservations </p>';
+                    setcookie('nomReservation', $_GET['nom'],time()+ 60*60*60);
+                }
+            }
 
             $valueCookie = '';
             if(isset($_COOKIE['nomReservation'])){
@@ -192,14 +198,11 @@ class ControleurParticipationListe {
                 </form>
 
                         ';
+            }else{
+                $rendu .= '<br><br> <p> La liste est réserver par : ' . str_replace(array('{','"','}','nom',':','[',']'),'',$reservation->get('nom')) . '</p>';
             }
 
-            if (isset($_GET['nom'])) {
-                if (isset($_GET['message'])) {
-                    $rendu = $rendu . '<br></br><p> La table fait partie de vos réservations </p>';
-                    setcookie('nomReservation', $_GET['nom'],time()+ 60*60*60);
-                }
-            }
+
 
             $rendu = $rendu . '</body>
                 </html>';
