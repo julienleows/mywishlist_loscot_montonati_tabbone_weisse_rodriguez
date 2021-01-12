@@ -85,7 +85,6 @@ $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args)
 
 # fct 20 : Ajouter une liste en publique
 $app->get('/rendrepubliqueliste/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
-
         $ctrl = new ControleurDesListes($container);
         return $ctrl->rendreListePublique($rq, $rs, $args);
     }
@@ -99,18 +98,10 @@ $app->get('/SuppressionPubliqueListe/{id}[/]', function (Request $rq, Response $
 );
 
 #fct 8 : Ajout d'un item à une liste
-$app->get('/AjoutItem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+$app->get('/ajoutItem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
     return $ctrl->ajouterItem($rq, $rs, $args);
-}
-);
-
-#fct 8 : Ajout d'un item à une liste
-$app->post('/AjoutItem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
-    $ctrl = new ControleurDesItems($container);
-    return $ctrl->ajouterItem($rq, $rs, $args);
-}
-);
+})->setName('creaItem');
 
 #TEST ROUTE
 

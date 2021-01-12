@@ -78,7 +78,6 @@ END;
             </div>
             <br><br>                 
 END;
-
     }
 
     /**
@@ -92,7 +91,6 @@ END;
         }
         return $html;
     }
-
 
 
     /**
