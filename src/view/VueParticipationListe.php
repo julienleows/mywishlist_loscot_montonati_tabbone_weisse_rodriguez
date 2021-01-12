@@ -30,15 +30,11 @@ class VueParticipationListe {
         $html = "<div><ul>";
         if (sizeof($items) != 0) {
             foreach ($items as $it) {
-                $html .= "<li>" . $it->id . "</li>";
-                $html .= "<li>" . $it->liste_id . "</li>";
-                $html .= "<li>" . $it->nom . "</li>";
-                $html .= "<li>" . $it->descr . "</li>";
-                $html .= "<br>";
+                $html.=$this->affichageItem($it);
             }
         }
         else {
-            $html ="<h1> LA LISTE N A PAS D ITEMS </h1>";
+            $html ="<h1> LA LISTE N'A PAS D'ITEMS </h1>";
         }
         $html .= "</ul></div>";
         return $html;
@@ -52,9 +48,9 @@ class VueParticipationListe {
     private function affichageItem(Item $item): string {
         $html = <<<END
         <section class="content">
-        <h1>Nom : ($item->nom)</h1>
-        <p> Desciption : ($item->descr)</p>
-        <h3>Tarif : ($item->tarif)</h3>
+        <h1> <u>Nom</u> : $item->nom</h1>
+        <h3> <u>Desciption </u>: $item->descr</h3>
+        <h3> <u>Tarif </u>: $item->tarif</h3>
 </section>
 END;
         return $html;
