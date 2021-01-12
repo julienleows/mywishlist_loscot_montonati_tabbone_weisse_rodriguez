@@ -92,12 +92,14 @@ $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args)
 
     if (isset($_GET['nom'])) {
         if (isset($_GET['message'])) {
-            $reservation = Reservation::query()->where([['nom','=',$_GET['nom']],['id','=',$args['id']]]);
+            $reservation = Reservation::query()->where([['id','=',$args['id']]]);
+                    setcookie('nomReservation', $_GET['nom'],time()+ 60*60*60);
             if(!$reservation->exists()){
             $db::connection()->insert("INSERT INTO reservation VALUES('" . $_GET['nom'] . "','" . $args['id'] . "','" . $_GET['message'] . "')");
             }
         }
     }
+
     $ctrl = new ControleurParticipationListe($container);
     return $ctrl->reserverItem($rq, $rs, $args);
 }
