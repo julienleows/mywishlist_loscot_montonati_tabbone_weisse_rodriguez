@@ -26,16 +26,24 @@ class VueGestionListe {
      */
     private function affichageCreationListe() {
         $html = <<<END
+        <div class="py-5 text-center">
+              <h2>Creation d'une liste</h2>
+              <p class="lead">blablablabla</p>
+        </div>
+
         <div>
             <form action ="#" method="post">
-                <legend>Formulaire création liste : </legend>
-                <label for="titre">Titre : </label>
-                <input type="text" name="titre" placeholder="<titre>" required><br>
-                <label for="desc">Description : </label>
-                <input type="text" name="description" placeholder="<description>"><br>
-                <label for="exp">Date limite : </label>
-                <input type="date" name="expiration" placeholder="<expiration>"><br>
-                <button type="submit"> Envoyer </button>
+                <label for="titre" class="form-label">Titre</label>
+                <input type="text" class="form-control" name="titre" placeholder="" required><br>
+                
+                <label for="desc" class="form-label">Description</label>
+                <input type="text" class="form-control" name="description" placeholder=""><br>
+
+                <label for="exp" class="form-label">Date limite</label>
+                <input type="date" class="form-control" name="expiration" placeholder=""><br>
+                <button type="submit" class="btn btn-danger btn-lg" onclick="window.location.href='#';">
+                    Créer la liste
+                </button>
             </form>
         </div>
 END;

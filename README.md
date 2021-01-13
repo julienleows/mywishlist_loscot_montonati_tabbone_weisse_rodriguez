@@ -31,8 +31,8 @@ Ce dépôt github regroupe tous les documents et sources du projet MyWishList
 ## Fonctionnalités (tableau de bord)
 fini? | Numéro Fct | Nom Fct | Auteur
 :-: |:-: | :- |:-
-oui | 1  | Afficher une liste de souhaits | Lucas 
-non | 2  | Afficher un item d'une liste   | 
+oui | 1  | Afficher une liste de souhaits | Lucas/Clement
+non | 2  | Afficher un item d'une liste   | Lucas
 non | 3  | Réserver un item               | Godefrox
 non | 4  | Ajouter un message avec sa réservation |
 non | 5  | Ajouter un message sur une liste |
@@ -50,7 +50,7 @@ non | 16 | Consulter les réservations et messages d'une de ses listes après é
 non | 17 | Créer un compte |
 non | 18 | S'authentifier |
 non | 19 | Modifier son compte |
-non | 20 | Rendre une liste publique |
+non | 20 | Rendre une liste publique | Godefroy
 oui | 21 | Afficher les listes de souhaits publiques | Julien
 non | 21 | Créer une cagnotte sur un item |
 non | 23 | Participer à une cagnotte |

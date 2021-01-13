@@ -68,19 +68,10 @@ class ControleurParticipationListe {
     /* fct 3 : Reserver un item */
     public function reserverItem(Request $rq, Response $rs, $args)
     {
-        /*
-         * VERSION 1
-         */
         try {
+
             $args = Item::query()->where('id', '=', $args['id'])->FirstOrFail();
             $reservation = Reservation::query()->where('id', '=', $args['id']);
-            $id = $args['id'];
-            $liste_id = $args['liste_id'];
-            $nom = $args['nom'];
-            $descr = $args['descr'];
-            $img = $args['img'];
-            $url = $args['url'];
-            $tarif = $args['tarif'];
             $rendu = '<!DOCTYPE html>
                  <html lang="fr">
                     <head>
@@ -162,26 +153,31 @@ class ControleurParticipationListe {
                                 <td>TARIF</td>
                             </tr>
                             <tr>
-                                <td>' . $id . '</td>
-                                <td>' . $liste_id . '</td>
-                                <td>' . $nom . '</td>
-                                <td>' . $descr . '</td>
-                                <td>' . $img . '</td>
-                                <td>' . $url . '</td>
-                                <td>' . $tarif . '</td>
+                                <td>' . $args['id'] . '</td>
+                                <td>' . $args['liste_id'] . '</td>
+                                <td>' . $args['nom'] . '</td>
+                                <td>' . $args['descr'] . '</td>
+                                <td>' . $args['img'] . '</td>
+                                <td>' . $args['url'] . '</td>
+                                <td>' . $args['tarif'] . '</td>
                             </tr>
                         </table>
                     </div>';
 
 
+
+
             $valueCookie = '';
-            if(isset($_COOKIE['nomReservation'])){
+            if(isset($_GET['nom'])){
+                $valueCookie = $_GET['nom'];
+            }else if(isset($_COOKIE['nomReservation'])){
                 $valueCookie = $_COOKIE['nomReservation'];
             }
 
 
 
             if (!$reservation->exists()) {
+
                 $rendu = $rendu . '<br></br>
 
 
@@ -192,14 +188,19 @@ class ControleurParticipationListe {
                 </form>
 
                         ';
-            }
+            }else{
 
-            if (isset($_GET['nom'])) {
-                if (isset($_GET['message'])) {
-                    $rendu = $rendu . '<br></br><p> La table fait partie de vos réservations </p>';
-                    setcookie('nomReservation', $_GET['nom'],time()+ 60*60*60);
+                $nom = str_replace(array('{','"','}','nom',':','[',']'),'',$reservation->get('nom'));
+                if ($valueCookie == $nom) {
+                        $rendu = $rendu . '<br><p> La table fait partie de vos réservations </p>';
+
+
+                }else{
+                $rendu .= '<br><br> <p> La liste est réserver par : ' . $nom . '</p>';
                 }
             }
+
+
 
             $rendu = $rendu . '</body>
                 </html>';

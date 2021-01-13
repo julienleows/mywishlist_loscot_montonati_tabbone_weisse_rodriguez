@@ -45,9 +45,10 @@ class VueRender {
                       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link" href="{$this->container->router->pathFor('listes')}">Listes</a></li>
                       </ul>
-                      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                      <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link" href="{$this->container->router->pathFor('crealiste')}">Creation liste</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Connexion/Inscription</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Connexion</a></li>
+                        <li class="nav-item"><button type="button" class="btn btn-outline-danger" onclick="window.location.href='#';">Inscription</button></li>
                       </ul>
                      </div>
                   </div>
@@ -80,7 +81,7 @@ END;
             <br>
             <div class="bouton-inscrire">
                  <button type="button" class="btn btn-danger btn-lg" onclick="window.location.href='#';">
-                    S'incrire
+                    S'inscrire
                  </button>
             </div>
                
