@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use mywishlist\view\VueParticipationListe;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use mywishlist\models\item as Item;
+use mywishlist\models\Item as Item;
 use mywishlist\models\Liste as Liste;
 use \mywishlist\models\Reservation as reservation;
 
@@ -38,11 +38,16 @@ class ControleurParticipationListe {
               $rs->getBody()->write("Erreur : cette liste n'est pas publique");
               return $rs;
           } else {
-            $vue=new VueParticipationListe([$liste], $this->container);
+            $items=Item::query()->where('liste_id','=',$liste->no)->get();
+            $lsItem=[];
+            foreach ($items as $it) {
+                $lsItem[] = $it;
+            }
+            $vue=new VueParticipationListe($lsItem,$this->container);
             $rs->getBody()->write($vue->render(1));
           }
         } catch (ModelNotFoundException $m) {
-            $rs->getBody()->write("item {$liste->nom} non trouvé !");
+            $rs->getBody()->write("Liste non trouvé !");
         }
         return $rs;
     }

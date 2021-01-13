@@ -27,13 +27,26 @@ class VueParticipationListe {
      * @return string
      */
     private function affichageElementsListe(array $items): string {
-        $html = "<div><ul>";
-        foreach ($items as $it) {
-            $html .= "<li>" . $it->no . "</li>";
+        print_r($items);
+        $html = <<<END
+        <div><ul>
+        <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('creaitem', ['token'=>$items[0]['liste_id']])}';">
+             AJOUTER ITEM
+        </button>
+END;
+
+        if (sizeof($items) != 0) {
+            foreach ($items as $it) {
+                $html.=$this->affichageItem($it);
+            }
+        }
+        else {
+            $html ="<h1> LA LISTE N'A PAS D'ITEMS </h1>";
         }
         $html .= "</ul></div>";
         return $html;
     }
+
 
     /**
      * Fct 2 : Affichage d'un item
@@ -43,11 +56,34 @@ class VueParticipationListe {
     private function affichageItem(Item $item): string {
         $html = <<<END
         <section class="content">
-        <h1>Nom : ($item->nom)</h1>
-        <p> Desciption : ($item->descr)</p>
-        <h3>Tarif : ($item->tarif)</h3>
+        <h1> <u>Nom</u> : $item->nom</h1>
+        <h3> <u>Desciption </u>: $item->descr</h3>
+        <h3> <u>Tarif </u>: $item->tarif</h3>
+        <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('modifitem', ['idListe'=>$item['liste_id'], 'idItem'=>$item['id']])}';">
+             MODIFIER ITEM
+        </button>
+        <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('suppitem', ['idListe'=>$item['liste_id'], 'idItem'=>$item['id']])}';">
+             SUPPRIMER ITEM
+        </button>
 </section>
 END;
+        return $html;
+    }
+
+
+    /**
+     * Fct 2 : Affichage de la liste apres suppreson
+     * @param Item $item item qu'on souhaite afficher
+     * @return string
+     */
+    private function supprimerItem(array $items): string {
+        $html = <<<END
+        <section class="content">
+        <h3> L'item a été correctement supprimé </h3>
+</section>
+END;
+        print_r($items);
+    //    $html .= $this->affichageElementsListe($items);
         return $html;
     }
 
@@ -66,6 +102,11 @@ END;
             case 2 :
             { //on veut un item spécifique
                 $content = $this->affichageItem($this->data[0]);
+                break;
+            }
+            case 3 :
+            { // veut un item spécifique
+                $content = $this->supprimerItem($this->data);
                 break;
             }
         }

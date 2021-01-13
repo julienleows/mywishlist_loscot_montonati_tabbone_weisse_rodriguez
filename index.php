@@ -13,7 +13,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 # imports
 use mywishlist\models\Liste as Liste;
-    use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \mywishlist\controls\ControleurDesListes as ControleurDesListes;
 use \mywishlist\controls\ControleurDesComptes as ControleurDesCompteurs;
@@ -23,6 +23,7 @@ use \mywishlist\controls\ControleurDesImages as ControleurDesImages;
 use \mywishlist\controls\ControleurParticipationListe as ControleurParticipationListe;
 use \mywishlist\models\Reservation as reservation;
 use \mywishlist\controls\ControleurAffichageDesPages;
+
 
 # affichage des erreurs systeme de Slim
 $config = ['settings' => ['displayErrorDetails' => true,'dbconf' => '/conf/conf.ini']];
@@ -70,12 +71,31 @@ $app->get('/crealiste[/]', function (Request $rq, Response $rs, array $args) use
 }
 )->setName('crealiste');
 
+
+$app->post('/crealiste[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
+    $ctrl = new ControleurDesListes($container);
+    return $ctrl->creerListe($rq, $rs, $_POST);
+}
+)->setName('creaListe');
+
 # fct 3 : Reserver un item
 $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
 
+
+    $db::connection()->statement("CREATE TABLE IF NOT EXISTS reservation ( 
+    nom varchar(200) NOT NULL, 
+    id int(11), 
+    message varchar(200), 
+    PRIMARY KEY (nom,id), 
+    FOREIGN KEY (id) REFERENCES item(id) );");
+
+
     if (isset($_GET['nom'])) {
         if (isset($_GET['message'])) {
-            $db::connection()->insert("INSERT INTO reservation VALUES('" . $_GET['nom'] . "','" . $args['id'] . "','" . $_GET['message'] . "')");
+            $reservation = Reservation::query()->where([['nom','=',$_GET['nom']],['id','=',$args['id']]]);
+            if(!$reservation->exists()){
+                $db::connection()->insert("INSERT INTO reservation VALUES('" . $_GET['nom'] . "','" . $args['id'] . "','" . $_GET['message'] . "')");
+            }
         }
     }
     $ctrl = new ControleurParticipationListe($container);
@@ -84,24 +104,43 @@ $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args)
 )->setName('reserver');
 
 # fct 20 : Ajouter une liste en publique
-$app->get('/rendrepubliqueliste/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
-        $ctrl = new ControleurDesListes($container);
-        return $ctrl->rendreListePublique($rq, $rs, $args);
-    }
+$app->get('/rendrepubliqueliste/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+
+    $ctrl = new ControleurDesListes($container);
+    return $ctrl->rendreListePublique($rq, $rs, $args);
+}
 );
 
 #fct 20.2 : Supprimer une liste de public
 $app->get('/SuppressionPubliqueListe/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
-        $ctrl = new ControleurDesListes($container);
-        return $ctrl->suppressionListePublique($rq, $rs, $args);
-    }
+    $ctrl = new ControleurDesListes($container);
+    return $ctrl->suppressionListePublique($rq, $rs, $args);
+}
 );
 
 #fct 8 : Ajout d'un item à une liste
-$app->get('/ajoutItem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+$app->get('/ajoutitem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
-    return $ctrl->ajouterItem($rq, $rs, $args);
-})->setName('creaItem');
+    return $ctrl->creerItem($rq, $rs, $args, $args['token']);
+})->setName("creaitem");
+
+#fct 8 : Ajout d'un item à une liste
+$app->post('/ajoutitem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+    $ctrl = new ControleurDesItems($container);
+    return $ctrl->creerItem($rq, $rs, $_POST, $args['token']);
+})->setName("creaItem");
+
+#fct 8 : Ajout d'un item à une liste
+$app->get('/modifitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+    $ctrl = new ControleurDesItems($container);
+    return $ctrl->modifierItem($rq, $rs, $args, $args['idListe'], $args['idItem']);
+})->setName("modifitem");
+
+#fct 8 : Ajout d'un item à une liste
+$app->get('/suppitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+    $ctrl = new ControleurDesItems($container);
+    return $ctrl->supprimerItem($rq, $rs, $args, $args['idListe'], $args['idItem']);
+})->setName("suppitem");
 
 #TEST ROUTE
 

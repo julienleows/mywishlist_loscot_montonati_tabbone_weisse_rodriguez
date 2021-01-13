@@ -3,9 +3,6 @@
 
 namespace mywishlist\view;
 
-use mywishlist\models\item as Item;
-use mywishlist\models\liste as Liste;
-
 class VueGestionItem {
 
     private $data;
@@ -28,12 +25,12 @@ class VueGestionItem {
         <div>
             <form action ="#" method="post">
                 <legend>Formulaire création d'un item : </legend>
-                <label for="titre">Nom : </label>
-                <input type="text" name="titre" placeholder="<titre>" required><br>
+                <label for="nom">Nom : </label>
+                <input type="text" name="nom" placeholder="<nom>" required><br>
                 <label for="desc">Description : </label>
-                <input type="text" name="description" placeholder="<description>"><br>
-                <label for="exp">Prix : </label>
-                <input type="date" name="expiration" placeholder="<expiration>"><br>
+                <input type="text" name="desc" placeholder="<desc>"><br>
+                <label for="tarif">Prix : </label>
+                <input type="number" name="tarif" placeholder="<tarif>" value="0"><br>
                 <button type="submit"> Ajouter </button>
             </form>
         </div>
@@ -41,9 +38,18 @@ END;
         return $html;
     }
 
+    private function affichageItemErreur(): string {
+        $html = <<<END
+        <section class="content">
+        <h3> L'item existe deja! Changer le nom de l'item...</h3>
+END;
+        $html .= $this->affichageCreationItem();
+    return $html;
+    }
+
     /**
      * Fct
-     * @param $liste
+     * @param $item
      * @return string
      */
     private function affichage1Item($item){
@@ -62,8 +68,7 @@ END;
                     </p>
                         
                     <br>
-                        
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('liste',['token'=>$liste['token']])}';">
+                    <button type="button" class="btn btn-danger">
                         VOIR LA LISTE
                     </button>
             </div>
@@ -72,16 +77,6 @@ END;
 
     }
 
-    /**
-     * Fct 20 : Affichage des items
-     */
-    private function affichageItems() {
-        $html = "";
-        foreach ($this->data as $it) {
-            $html .= $this->affichage1Item($it);
-        }
-        return $html;
-    }
 
 
     /**
@@ -90,7 +85,19 @@ END;
      */
     public function render($selecteur) {
         // TODO render a finir
-        $content = $this->affichageItems();
+        $content = null;
+        switch ($selecteur) {
+            case 1 :
+            { //on veut le formulaire de création d'une listes
+                $content = $this->affichageCreationItem();
+                break;
+            }
+            case 2:
+            {
+                $content = $this->affichageItemErreur();
+                break;
+            }
+        }
         $vueRender = new VueRender($this->container);
         return $vueRender->render($content);
     }
