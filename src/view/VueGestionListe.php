@@ -37,10 +37,10 @@ class VueGestionListe {
                 <input type="text" class="form-control" name="titre" placeholder="" required><br>
                 
                 <label for="desc" class="form-label">Description</label>
-                <input type="text" class="form-control" name="description" placeholder=""><br>
+                <input type="text" class="form-control" name="description" placeholder="" required><br>
 
                 <label for="exp" class="form-label">Date limite</label>
-                <input type="date" class="form-control" name="expiration" placeholder=""><br>
+                <input type="date" class="form-control" name="expiration" placeholder="" required><br>
                 <button type="submit" class="btn btn-danger btn-lg" onclick="window.location.href='#';">
                     Créer la liste
                 </button>

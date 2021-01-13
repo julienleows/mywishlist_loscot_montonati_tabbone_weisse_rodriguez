@@ -100,4 +100,20 @@ END;
 END;
     }
 
+    public function erreur($erreurmessage) {
+        return <<<END
+            <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}/css/csserreur.css" type="text/css"/>
+            <br>   
+            <div class="text-page-accueil">
+                <p> $erreurmessage </p>
+            </div>
+            
+            <div class="bouton-milieu">
+                 <button type="button" class="btn btn-outline-danger" onclick="window.location.href='{$this->container->router->pathFor('racine')}';">
+                    page d'accueil
+                 </button>
+            </div>  
+END;
+    }
+
 }

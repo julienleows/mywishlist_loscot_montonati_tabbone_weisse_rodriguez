@@ -27,7 +27,6 @@ class VueParticipationListe {
      * @return string
      */
     private function affichageElementsListe(array $items): string {
-<<<<<<< HEAD
         print_r($items);
         $html = <<<END
         <div><ul>
@@ -35,10 +34,6 @@ class VueParticipationListe {
              AJOUTER ITEM
         </button>
 END;
-
-=======
-        $html = "<div><ul>";
->>>>>>> d93166bdd6b50293bcf2b792a7ecfa4baa55b574
         if (sizeof($items) != 0) {
             foreach ($items as $it) {
                 $html.=$this->affichageItem($it);
@@ -60,17 +55,16 @@ END;
     private function affichageItem(Item $item): string {
         $html = <<<END
         <section class="content">
-        <h1> <u>Nom</u> : $item->nom</h1>
-        <h3> <u>Desciption </u>: $item->descr</h3>
-        <h3> <u>Tarif </u>: $item->tarif</h3>
-<<<<<<< HEAD
-        <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('modifitem', ['idListe'=>$item['liste_id'], 'idItem'=>$item['id']])}';">
-             MODIFIER ITEM
-        </button>
-        <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('suppitem', ['idListe'=>$item['liste_id'], 'idItem'=>$item['id']])}';">
-             SUPPRIMER ITEM
-        </button>
-</section>
+            <h1> <u>Nom</u> : $item->nom</h1>
+            <h3> <u>Desciption </u>: $item->descr</h3>
+            <h3> <u>Tarif </u>: $item->tarif</h3>
+            <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('modifitem', ['idListe'=>$item['liste_id'], 'idItem'=>$item['id']])}';">
+                 MODIFIER ITEM
+            </button>
+            <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('suppitem', ['idListe'=>$item['liste_id'], 'idItem'=>$item['id']])}';">
+                 SUPPRIMER ITEM
+            </button>
+        </section>
 END;
         return $html;
     }
@@ -85,8 +79,6 @@ END;
         $html = <<<END
         <section class="content">
         <h3> L'item a été correctement supprimé </h3>
-=======
->>>>>>> d93166bdd6b50293bcf2b792a7ecfa4baa55b574
 </section>
 END;
         print_r($items);

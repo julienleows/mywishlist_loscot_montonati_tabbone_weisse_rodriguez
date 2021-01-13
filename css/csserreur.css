@@ -1,0 +1,8 @@
+/**
+ * feuille css pour l'affichage de la page d'erreur
+ */
+
+.bouton-milieu{
+    display: flex;
+    justify-content: center;
+}
