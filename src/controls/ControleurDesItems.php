@@ -72,40 +72,44 @@ class ControleurDesItems {
     }
 
     /** fct 9 : Modification d'un item **/
-    public function modifierItem(Request $rq, Response $rs, array $args, $idliste, $iditem): Response {
-        $item =  Item::where('id', $iditem)->FirstOrFail();
-        print_r($args);
+    public function modifierItem(Request $rq, Response $rs, array $args, $iditem): Response {
+        $item = Item::where('id', $iditem)->FirstOrFail();
         try{
-            if(sizeof($args)== 0){
-                $this->modifier($item, $args);
-                $vue=new VuePL([$item], $this->container);
+            if(sizeof($args) == 3){
+                $this->modifier($item['id'], $args);
+                $items = Item::query()->where('liste_id', $item['liste_id'])->get();
+                $lsItem=[];
+                foreach ($items as $it) {
+                    $lsItem[] = $it;
+                }
+                $vue=new VuePL($lsItem, $this->container);
                 $rs->getBody()->write($vue->render(4));
             }
             else{
                 $vue = new VueIT([$item], $this->container);
                 $rs->getBody()->write($vue->render(3));
             }
-
-
         }  catch (ModelNotFoundException $m) {
-$rs->getBody()->write("Erreur de liste");
-}
+            $rs->getBody()->write("Erreur de liste");
+        }
         return $rs;
     }
 
-    private function modifier( $item, $args){
-        $item->nom = $args['nom'];
-        $item->descr = $args['desc'];
-        $item->tarif = $args['tarif'];
-        $item->save();
+    private function modifier( $iditem, $args){
+        Item::query()->where('id', $iditem)
+            ->update(['nom' => $args['nom']], ['descr'=>$args['desc']], ['tarif'=>$args['tarif']]);
     }
 
     /** fct 10 : Suppression d'un item **/
-    public function supprimerItem(Request $rq, Response $rs, array $args, $idListe, $idItem): Response {
-        $items = Item::query()->where(['liste_id' => $idListe])->get()->toArray();
-        Item::query()->where(['liste_id' => $idListe])->where(['id' => $idItem])
-           ->delete();
-        $vue=new VueIT([], $this->container);
+    public function supprimerItem(Request $rq, Response $rs, array $args, $idItem): Response {
+        $itemDel = Item::query()->where('id', $idItem)->FirstOrFail();
+        Item::query()->where(['id' => $idItem])->delete();
+        $items = Item::query()->where('liste_id', $itemDel['liste_id'])->get();
+        $lsItem=[];
+        foreach ($items as $it) {
+            $lsItem[] = $it;
+        }
+        $vue=new VuePL([$itemDel, $lsItem], $this->container);
         $rs->getBody()->write($vue->render(3));
         return $rs;
     }

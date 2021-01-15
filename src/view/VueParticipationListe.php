@@ -27,7 +27,6 @@ class VueParticipationListe {
      * @return string
      */
     private function affichageElementsListe(array $items): string {
-        print_r($items);
         $html = <<<END
         <div><ul>
         <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('creaitem', ['token'=>$items[0]['liste_id']])}';">
@@ -40,7 +39,7 @@ END;
             }
         }
         else {
-            $html ="<h1> LA LISTE N'A PAS D'ITEMS </h1>";
+            $html .= "<h1> LA LISTE N'A PAS D'ITEMS </h1>";
         }
         $html .= "</ul></div>";
         return $html;
@@ -52,7 +51,7 @@ END;
      * @param Item $item item qu'on souhaite afficher
      * @return string
      */
-    private function affichageItem(Item $item): string {
+    private function affichageItem($item): string {
         $html = <<<END
         <section class="content">
             <h1> <u>Nom</u> : $item->nom</h1>
@@ -75,14 +74,13 @@ END;
      * @param Item $item item qu'on souhaite afficher
      * @return string
      */
-    private function supprimerItem(array $items): string {
+    private function affichagePostSupp(array $items): string {
         $html = <<<END
         <section class="content">
-        <h3> L'item a été correctement supprimé </h3>
-</section>
+        <h3> L'item {$items[0]['nom']} a été correctement supprimé </h3>
+        </section>
 END;
-        print_r($items);
-        $html .= $this->affichageElementsListe($items);
+        $html .= $this->affichageElementsListe($items[1]);
         return $html;
     }
 
@@ -95,7 +93,7 @@ END;
         $html = <<<END
         <section class="content">
         <h3> L'item a été correctement modifié </h3>
-</section>
+        </section>
 END;
         $html .= $this->affichageElementsListe($items);
         return $html;
@@ -122,12 +120,12 @@ END;
             }
             case 3 :
             { // veut un item spécifique
-                $content = $this->supprimerItem($this->data);
+                $content = $this->affichagePostSupp($this->data);
                 break;
             }
             case 4 :
             { // veut un item spécifique
-                $content = $this->affichagePostModif($this->data[0]);
+                $content = $this->affichagePostModif($this->data);
                 break;
             }
         }

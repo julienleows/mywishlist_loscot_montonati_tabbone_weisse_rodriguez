@@ -134,19 +134,19 @@ $app->post('/ajoutitem/{token}[/]', function (Request $rq, Response $rs, array $
 #fct 8 : GET Modifier d'un item à une liste
 $app->get('/modifitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
-    return $ctrl->modifierItem($rq, $rs, $args, $args['idListe'], $args['idItem']);
+    return $ctrl->modifierItem($rq, $rs, $args, $args['idItem']);
 })->setName("modifitem");
 
 #fct 8 : POST Modifier d'un item à une liste
 $app->post('/modifitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
-    return $ctrl->modifierItem($rq, $rs, $_POST, $args['idListe'], $args['idItem']);
+    return $ctrl->modifierItem($rq, $rs, $_POST, $args['idItem']);
 })->setName("modifitem");
 
 #fct 8 : Ajout d'un item à une liste
 $app->get('/suppitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
-    return $ctrl->supprimerItem($rq, $rs, $args, $args['idListe'], $args['idItem']);
+    return $ctrl->supprimerItem($rq, $rs, $args, $args['idItem']);
 })->setName("suppitem");
 
 #TEST ROUTE
