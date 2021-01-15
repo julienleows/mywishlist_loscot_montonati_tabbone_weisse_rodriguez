@@ -5,6 +5,7 @@ namespace mywishlist\view;
 
 use mywishlist\models\item as Item;
 use mywishlist\models\liste as Liste;
+use mywishlist\models\Reservation as reservation;
 
 class VueParticipationListe {
 
@@ -27,7 +28,7 @@ class VueParticipationListe {
      * @return string
      */
     private function affichageElementsListe(array $items): string {
-        print_r($items);
+       // print_r($items);
         $html = <<<END
         <div><ul>
         <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('creaitem', ['token'=>$items[0]['liste_id']])}';">
@@ -87,6 +88,148 @@ END;
     }
 
     /**
+     * Fct 3 :
+     */
+    private function affichageReservation($item) : string{
+        $reservation = Reservation::query()->where('id', '=', $item['id']);
+
+        $rendu = '<!DOCTYPE html>
+                 <html lang="fr">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>ITEM</title>
+                      </head>
+                   <body>
+                    <h1>ITEM PAGE</h1>
+
+                    <br></br>
+                    <br></br>
+
+                    <div class="InformationItem">
+                        <table>
+                            <tr>
+                                <td>ID</td>
+                                <td>LISTE_ID</td>
+                                <td>NOM</td>
+                                <td>DESCRIPTION</td>
+                                <td>IMG</td>
+                                <td>URL</td>
+                                <td>TARIF</td>
+                            </tr>
+                            <tr>
+                                <td>' . $item['id'] . '</td>
+                                <td>' . $item['liste_id'] . '</td>
+                                <td>' . $item['nom'] . '</td>
+                                <td>' . $item['descr'] . '</td>
+                                <td>' . $item['img'] . '</td>
+                                <td>' . $item['url'] . '</td>
+                                <td>' . $item['tarif'] . '</td>
+                            </tr>
+                        </table>
+                    </div>';
+
+
+
+
+        $valueCookie = '';
+        if(isset($_GET['nom'])){
+            $valueCookie = $_GET['nom'];
+        }else if(isset($_COOKIE['nomReservation'])){
+            $valueCookie = $_COOKIE['nomReservation'];
+        }
+
+
+
+        if (!$reservation->exists()) {
+
+            $rendu = $rendu . '<br></br>
+
+
+                      <form action="" method="get">
+                 <p>Votre nom : <input type="text" name="nom" value = ' . $valueCookie . '></p>
+                 <p>Votre message : <input type="text" name="message" /></p>
+                 <p><input type="submit" value="Compléter la réservation"></p>
+                </form>
+
+                        ';
+        }else{
+
+            $nom = str_replace(array('{','"','}','nom',':','[',']'),'',$reservation->get('nom'));
+            if ($valueCookie == $nom) {
+                $rendu = $rendu . '<br><p> La table fait partie de vos réservations </p>';
+
+
+            }else{
+                $rendu .= '<br><br> <p> La liste est réserver par : ' . $nom . '</p>';
+            }
+        }
+
+
+
+        $rendu = $rendu . '</body>
+                </html>';
+        return $rendu;
+
+        /* CSS
+          <style>
+                            h1{ text-align: center; }
+                            table, th, td {
+                              border: 1px solid black;
+                              border-collapse: collapse;
+                            }
+                            table{
+                            margin: 0 auto;
+                            }
+                            td{
+                             text-align: center;
+                            }';
+
+
+            $rendu = $rendu . 'form {
+                          margin: 0 auto;
+                          width: 400px;
+                          padding: 1em;
+                          border: 1px solid #CCC;
+                          border-radius: 1em;
+                        }
+
+                        form div + div {
+                          margin-top: 1em;
+                        }
+
+                        label {
+                          width: 90px;
+                          text-align: right;
+                        }
+
+                        input, textarea {
+                          font: 1em sans-serif;
+                          width: 300px;
+                          box-sizing: border-box;
+                          border: 1px solid #999;
+                        }
+
+                        input:focus, textarea:focus {
+                          border-color: #000;
+                        }
+
+                        textarea {
+                          vertical-align: top;
+                          height: 5em;
+                        }
+
+                        .button {
+                          padding-left: 90px;
+                        }
+
+                        button {
+                          margin-left: .5em;
+                        }';
+
+
+        */
+    }
+    /**
      * Fct 4 : Affichage de la liste apres Modiff
      * @param Item $item item qu'on souhaite afficher
      * @return string
@@ -130,6 +273,11 @@ END;
                 $content = $this->affichagePostModif($this->data[0]);
                 break;
             }
+            case 5 :
+                { // veut reserver un item
+                    $content = $this->affichageReservation($this->data[0]);
+                    break;
+                }
         }
         $vueRender = new VueRender($this->container);
         return $vueRender->render($content);
