@@ -65,6 +65,9 @@ END;
             <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('suppitem', ['idListe'=>$item['liste_id'], 'idItem'=>$item['id']])}';">
                  SUPPRIMER ITEM
             </button>
+            <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('reserver', ['idListe'=>$item['liste_id'], 'id'=>$item['id']])}';">
+                 RESERVER ITEM
+            </button>
         </section>
 END;
         return $html;
