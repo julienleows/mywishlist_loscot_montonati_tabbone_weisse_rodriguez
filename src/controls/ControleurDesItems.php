@@ -72,10 +72,32 @@ class ControleurDesItems {
     }
 
     /** fct 9 : Modification d'un item **/
-    public function modifierItem(Request $rq, Response $rs, array $args): Response {
-        print_r($rs);
-        $rs->getBody()->write('s\'modifier un item');
+    public function modifierItem(Request $rq, Response $rs, array $args, $idliste, $iditem): Response {
+        $item =  Item::where('id', $iditem)->FirstOrFail();
+        print_r($args);
+        try{
+            if(sizeof($args)== 0){
+                $this->modifier($item, $args);
+                $vue=new VuePL([$item], $this->container);
+                $rs->getBody()->write($vue->render(4));
+            }
+            else{
+                $vue = new VueIT([$item], $this->container);
+                $rs->getBody()->write($vue->render(3));
+            }
+
+
+        }  catch (ModelNotFoundException $m) {
+$rs->getBody()->write("Erreur de liste");
+}
         return $rs;
+    }
+
+    private function modifier( $item, $args){
+        $item->nom = $args['nom'];
+        $item->descr = $args['desc'];
+        $item->tarif = $args['tarif'];
+        $item->save();
     }
 
     /** fct 10 : Suppression d'un item **/

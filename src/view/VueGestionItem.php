@@ -77,6 +77,24 @@ END;
 
     }
 
+    private function affichageModif($item) {
+        $html = <<<END
+        <div>
+            <form action ="#" method="post">
+                <legend>Modifier votre item ${item['nom']} : </legend>
+                <label for="nom" >Nom : </label>
+                <input type="text" name="nom" value="${item['nom']}" placeholder="<nom>" required><br>
+                <label for="desc">Description : </label>
+                <input type="text" name="desc" value="${item['desc']}" placeholder="<desc>"><br>
+                <label for="tarif">Prix : </label>
+                <input type="number" name="tarif" value="${item['tarif']}" placeholder="<tarif>" value="0"><br>
+                <button type="submit"> Modifier </button>
+            </form>
+        </div>
+END;
+        return $html;
+    }
+
 
 
     /**
@@ -97,6 +115,12 @@ END;
                 $content = $this->affichageItemErreur();
                 break;
             }
+            case 3:
+            {
+                $content = $this->affichageModif($this->data[0]);
+                break;
+            }
+
         }
         $vueRender = new VueRender($this->container);
         return $vueRender->render($content);

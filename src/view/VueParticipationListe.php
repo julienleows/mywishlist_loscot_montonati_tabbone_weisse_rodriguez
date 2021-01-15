@@ -82,9 +82,26 @@ END;
 </section>
 END;
         print_r($items);
-    //    $html .= $this->affichageElementsListe($items);
+        $html .= $this->affichageElementsListe($items);
         return $html;
     }
+
+    /**
+     * Fct 4 : Affichage de la liste apres Modiff
+     * @param Item $item item qu'on souhaite afficher
+     * @return string
+     */
+    private function affichagePostModif(array $items): string {
+        $html = <<<END
+        <section class="content">
+        <h3> L'item a été correctement modifié </h3>
+</section>
+END;
+        $html .= $this->affichageElementsListe($items);
+        return $html;
+    }
+
+
 
     /**
      * Méthode pour choisir l'affichage désiré et retourner le resultat de cet affichage
@@ -106,6 +123,11 @@ END;
             case 3 :
             { // veut un item spécifique
                 $content = $this->supprimerItem($this->data);
+                break;
+            }
+            case 4 :
+            { // veut un item spécifique
+                $content = $this->affichagePostModif($this->data[0]);
                 break;
             }
         }
