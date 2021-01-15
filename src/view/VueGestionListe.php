@@ -83,6 +83,15 @@ END;
                     <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('liste',['token'=>$liste['token']])}';">
                         VOIR LA LISTE
                     </button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 1,'no' => $liste['no']])}';">
+                        RENDRE LISTE PUBLIC
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 0, 'no' => $liste['no']])}';">
+                        RENDRE LISTE PRIVE
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 2,'no' => $liste['no']])}';">
+                        RENDRE LISTE NON REPERTORIE
+                    </button>
             </div>
             <br><br>                 
 END;

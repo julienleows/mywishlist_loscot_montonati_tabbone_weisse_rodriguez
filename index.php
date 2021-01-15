@@ -105,19 +105,12 @@ $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args)
 )->setName('reserver');
 
 # fct 20 : Ajouter une liste en publique
-$app->get('/rendrepubliqueliste/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+$app->get('/rendreListe/{public}/{no}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
 
     $ctrl = new ControleurDesListes($container);
-    return $ctrl->rendreListePublique($rq, $rs, $args);
+    return $ctrl->rendreListe($rq, $rs, $args);
 }
-);
-
-#fct 20.2 : Supprimer une liste de public
-$app->get('/SuppressionPubliqueListe/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
-    $ctrl = new ControleurDesListes($container);
-    return $ctrl->suppressionListePublique($rq, $rs, $args);
-}
-);
+)->setName('rendreListe');
 
 #fct 8 : Ajout d'un item à une liste
 $app->get('/ajoutitem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {

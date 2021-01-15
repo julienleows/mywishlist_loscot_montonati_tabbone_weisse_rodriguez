@@ -82,16 +82,10 @@ class ControleurDesListes {
     }
 
     /** fct 20 : rendre une liste publique */
-    public function rendreListePublique(Request $rq, Response $rs, $args) {
-            $var = ControleurDesListes::ajoutListePublique($args['id']);
-            $rs->getBody()->write($var . ' TOTO : ' . str_replace(array('{','}','"','public',':'),'',Liste::query()->select("public")->where('token','=',$args['id'])->first()));
+    public function rendreListe(Request $rq, Response $rs, $args) {
+            $var = ControleurDesListes::ajoutListeEtat($args['no'],$args['public']);
+            $rs->getBody()->write($var);
             return $rs;
-    }
-
-    public function suppressionListePublique(Request $rq, Response $rs, $args) {
-        $var = ControleurDesListes::suppresionListePublique($args['id']);
-        $rs->getBody()->write($var . ' TOTO');
-        return $rs;
     }
 
     /** fct 21 : afficher les listes de souhaits qui sont en publiques */
@@ -125,10 +119,10 @@ class ControleurDesListes {
         return $varT;
     }
 */
-    /** fct de traitement : Rend un booléen indiquant la présence de l'id parmis la liste publiques au sein de la description */
-    public function rendPublicListe($id){
-        $var = str_replace(array('{','}','"','public',':'),'',Liste::query()->select("public")->where('user_id','=',$id)->first());
-        if($var == '1'){
+    /** fct de traitement : Rend un booléen indiquant la présence de l'id parmis la liste selectioner */
+    public function rendEtatListe($id,$public){
+        $var = str_replace(array('{','}','"','public',':'),'',Liste::query()->select("public")->where('no','=',$id)->first());
+        if($var == $public){
             return true;
         }else{
             return false;
@@ -136,25 +130,15 @@ class ControleurDesListes {
 
     }
 
-    public function ajoutListePublique($token): string
+    /** Ajoute une liste parmis les listes publiques */
+    public function ajoutListeEtat($id,$public): string
     {
 
-        if(!ControleurDesListes::rendPublicListe($token)){
-            Liste::query()->where('token','=',$token)->update(['public' => '1']);
+        if(!ControleurDesListes::rendEtatListe($id,$public)){
+            Liste::query()->where('no','=',$id)->update(['public' => $public]);
             return "SUCCES_AJOUT_UNE_INTERFACE_CLAIR_ET_DES_VRAIS_RETOUR";
         }else{
             return "Liste déjà présente";
-        }
-
-    }
-
-    public function suppresionListePublique($id){
-
-        if(ControleurDesListes::rendPublicListe($id)){
-            Liste::query()->where('user_id','=',$id)->update(['public' => '0']);
-             return "SUCCES_SUPRESS_UNE_INTERFACE_CLAIR_LA_ET_DES_VRAIS_RETOUR";
-        }else{
-            return "Liste pas présente";
         }
 
     }
