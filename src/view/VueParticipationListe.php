@@ -28,10 +28,6 @@ class VueParticipationListe {
      * @return string
      */
     private function affichageElementsListe(array $items): string {
-<<<<<<< HEAD
-=======
-       // print_r($items);
->>>>>>> aa88858fbffff4602c313e981ff25ccc5a7a6367
         $html = <<<END
         <div><ul>
         <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('creaitem', ['token'=>$items[0]['liste_id']])}';">
