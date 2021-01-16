@@ -83,13 +83,13 @@ END;
                     <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('liste',['token'=>$liste['token']])}';">
                         VOIR LA LISTE
                     </button>
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 1,'no' => $liste['no']])}';">
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 1,'token' => $liste['token']])}';">
                         RENDRE LISTE PUBLIC
                     </button>
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 0, 'no' => $liste['no']])}';">
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 0, 'token' => $liste['token']])}';">
                         RENDRE LISTE PRIVE
                     </button>
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 2,'no' => $liste['no']])}';">
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 2,'token' => $liste['token']])}';">
                         RENDRE LISTE NON REPERTORIE
                     </button>
             </div>

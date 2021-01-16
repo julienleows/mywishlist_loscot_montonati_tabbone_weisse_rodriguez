@@ -105,7 +105,7 @@ $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args)
 )->setName('reserver');
 
 # fct 20 : Ajouter une liste en publique
-$app->get('/rendreListe/{public}/{no}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+$app->get('/rendreListe/{public}/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
 
     $ctrl = new ControleurDesListes($container);
     return $ctrl->rendreListe($rq, $rs, $args);

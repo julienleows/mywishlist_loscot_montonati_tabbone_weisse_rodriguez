@@ -83,7 +83,7 @@ class ControleurDesListes {
 
     /** fct 20 : rendre une liste publique */
     public function rendreListe(Request $rq, Response $rs, $args) {
-            $var = ControleurDesListes::ajoutListeEtat($args['no'],$args['public']);
+            $var = ControleurDesListes::ajoutListeEtat($args['token'],$args['public']);
             $rs->getBody()->write($var);
             return $rs;
     }
@@ -131,11 +131,11 @@ class ControleurDesListes {
     }
 
     /** Ajoute une liste parmis les listes publiques */
-    public function ajoutListeEtat($id,$public): string
+    public function ajoutListeEtat($token,$public): string
     {
 
-        if(!ControleurDesListes::rendEtatListe($id,$public)){
-            Liste::query()->where('no','=',$id)->update(['public' => $public]);
+        if(!ControleurDesListes::rendEtatListe($token,$public)){
+            Liste::query()->where('token','=',$token)->update(['public' => $public]);
             return "SUCCES_AJOUT_UNE_INTERFACE_CLAIR_ET_DES_VRAIS_RETOUR";
         }else{
             return "Liste déjà présente";
