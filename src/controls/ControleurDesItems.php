@@ -55,13 +55,11 @@ class ControleurDesItems {
     }
 
     /** fct 9 : Modification d'un item **/
-    public function modifierItem(Request $rq, Response $rs,$args) {
-        $item = Item::query()->where('id','=',$args['idItem'])
-                ->firstOrFail();
+    public function modifierItem(Request $rq, Response $rs, $args, $tmpPost) {
         try{
-            if(sizeof($args) == 3){
-                $this->modifier($item['id'], $args);
-                $items = Item::query()->where('liste_id', $item['liste_id'])->get();
+            if(isset($tmpPost['nom'])){
+                $this->modifier($args['idItem'], $tmpPost);
+                $items = Item::query()->where('liste_id', '=', $args['idListe'])->get();
                 $lsItem=[];
                 foreach ($items as $it) {
                     $lsItem[] = $it;
@@ -70,6 +68,7 @@ class ControleurDesItems {
                 $rs->getBody()->write($vue->render(4));
             }
             else{
+                $item = Item::query()->where('id', '=', $args['idItem'])->firstOrFail();
                 $vue = new VueIT([$item], $this->container);
                 $rs->getBody()->write($vue->render(3));
             }
@@ -79,16 +78,18 @@ class ControleurDesItems {
         return $rs;
     }
 
-    private function modifier( $iditem, $args){
-        Item::query()->where('id', $iditem)
-            ->update(['nom' => $args['nom']], ['descr'=>$args['desc']], ['tarif'=>$args['tarif']]);
+    private function modifier( $iditem, $post){
+        $item = Item::query()->where('id', '=', $iditem);
+        $item->update(['nom' => $post['nom']]);
+        $item->update(['descr'=>$post['desc']]);
+        $item->update(['tarif'=>$post['tarif']]);
     }
 
     /** fct 10 : Suppression d'un item **/
     public function supprimerItem(Request $rq, Response $rs,$args): Response {
         $itemDel = Item::query()->where('id','=',$args['idItem'])->FirstOrFail();
         Item::query()->where(['id','=',$args['idItem']])->delete();
-        $items = Item::query()->where('liste_id', $itemDel['liste_id'])->get();
+        $items = Item::query()->where('liste_id','=', $itemDel['liste_id'])->get();
         $lsItem=[];
         foreach ($items as $it) {
             $lsItem[] = $it;

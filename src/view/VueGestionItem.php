@@ -66,13 +66,13 @@ END;
                             <li>Expire le ${item['tarif']}</li>
                         </ul>
                     </p>
-                        
+
                     <br>
                     <button type="button" class="btn btn-danger">
                         VOIR LA LISTE
                     </button>
             </div>
-            <br><br>                 
+            <br><br>
 END;
 
     }
@@ -87,7 +87,7 @@ END;
                 <label for="desc">Description : </label>
                 <input type="text" name="desc" value="${item['desc']}" placeholder="<desc>"><br>
                 <label for="tarif">Prix : </label>
-                <input type="number" name="tarif" value="${item['tarif']}" placeholder="<tarif>" value="0"><br>
+                <input type="number" name="tarif" value="${item['tarif']}" placeholder="<tarif>"><br>
                 <button type="submit"> Modifier </button>
             </form>
         </div>

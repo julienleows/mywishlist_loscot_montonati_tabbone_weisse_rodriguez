@@ -30,7 +30,7 @@ $config = ['settings' => ['displayErrorDetails' => true,'dbconf' => '/conf/conf.
 
 # connection base de donnees MySQL
 $db = new \Illuminate\Database\Capsule\Manager();
-$db->addConnection(parse_ini_file('conf/conf.ini'));
+$db->addConnection(parse_ini_file('src/conf/conf.ini'));
 $db->setAsGlobal();
 $db->bootEloquent();
 
@@ -82,11 +82,11 @@ $app->post('/crealiste[/]', function (Request $rq, Response $rs, array $args) us
 $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
 
 
-    $db::connection()->statement("CREATE TABLE IF NOT EXISTS reservation ( 
-    nom varchar(200) NOT NULL, 
-    id int(11), 
-    message varchar(200), 
-    PRIMARY KEY (nom,id), 
+    $db::connection()->statement("CREATE TABLE IF NOT EXISTS reservation (
+    nom varchar(200) NOT NULL,
+    id int(11),
+    message varchar(200),
+    PRIMARY KEY (nom,id),
     FOREIGN KEY (id) REFERENCES item(id) );");
 
 
@@ -127,13 +127,13 @@ $app->post('/ajoutitem/{token}[/]', function (Request $rq, Response $rs, array $
 #fct 8 : GET Modifier d'un item à une liste
 $app->get('/modifitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
-    return $ctrl->modifierItem($rq, $rs, $args);
+    return $ctrl->modifierItem($rq, $rs, $args, []);
 })->setName("modifitem");
 
 #fct 8 : POST Modifier d'un item à une liste
 $app->post('/modifitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
-    return $ctrl->modifierItem($rq, $rs, $_POST);
+    return $ctrl->modifierItem($rq, $rs,$args, $_POST);
 })->setName("modifitem");
 
 #fct 8 : Ajout d'un item à une liste
