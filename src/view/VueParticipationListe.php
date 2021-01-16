@@ -3,6 +3,7 @@
 
 namespace mywishlist\view;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use mywishlist\models\item as Item;
 use mywishlist\models\liste as Liste;
 use mywishlist\models\Reservation as reservation;
@@ -28,9 +29,16 @@ class VueParticipationListe {
      * @return string
      */
     private function affichageElementsListe(array $items): string {
+        try {
+            $ls=Liste::query()->where('no','=',$items[0]->liste_id)
+                    ->firstOrFail();
+        }
+        catch (ModelNotFoundException $m) {
+            $ls="";
+        }
         $html = <<<END
         <div><ul>
-        <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('creaitem', ['token'=>$items[0]['liste_id']])}';">
+        <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('creaitem', ['token'=>$ls->token])}';">
              AJOUTER ITEM
         </button>
 END;

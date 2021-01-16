@@ -11,6 +11,7 @@
 namespace mywishlist\controls;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use mywishlist\models\Liste;
 use mywishlist\view\VueGestionItem as VueIT;
 use mywishlist\view\VueParticipationListe as VuePL;
 use \Psr\Http\Message\ServerRequestInterface as Request;
@@ -29,23 +30,19 @@ class ControleurDesItems {
     }
 
     /** fct 8 : créer un item */
-    public function creerItem(Request $rq, Response $rs, $args) {
+    public function creerItem(Request $rq, Response $rs, $args,$tmpPOST) {
         try {
-            if (sizeof($args) == 3) {
-                if (! $this->verificationItemExistant($args)){
+            if (isset($tmpPOST['nom'])) {
                     $it = new Item();
-                    $it->nom = $args['nom'];
-                    $it->descr = $args['descr'];
-                    $it->tarif = $args['tarif'];
-                    // img / url a voir plus tard
-                    //$ls->tarif = $args['tarif'];
+                    $it->nom = $tmpPOST['nom'];
+                    $it->descr = $tmpPOST['desc'];
+                    $it->tarif = $tmpPOST['tarif'];
+                    $ls=Liste::query()->where('token','=',$args['token'])
+                            ->firstOrFail();
+                    $it->liste_id = $ls->no;
                     $it->save();
                     $vue=new VueIT([$it],$this->container);
                     $rs->getBody()->write($vue->render(1));
-                } else {
-                    $vue=new VueIT([], $this->container);
-                    $rs->getBody()->write($vue->render(2));
-                }
             }
             else {
                 $vue=new VueIT([], $this->container);
@@ -57,29 +54,10 @@ class ControleurDesItems {
         return $rs;
     }
 
-    /**
-     * Méthode permettant de vérifier si un item est présent dans une liste
-     * @param $args
-     * @return bool true sur l'item est présent et false sinon
-     */
-    private function verificationItemExistant($args){
-        try{
-            $item=Item::query()->where(['id' => $args['id']])
-                    ->FirstOrFail();
-            return true;
-        } catch (ModelNotFoundException $m) {
-            return false;
-        } // c'est debile, mais on peut pas enlever cette ligne
-        return false;
-    }
-
-    private function creationItemBDD($args, $liste_id) {
-
-    }
-
     /** fct 9 : Modification d'un item **/
-    public function modifierItem(Request $rq, Response $rs, array $args, $iditem): Response {
-        $item = Item::where('id', $iditem)->FirstOrFail();
+    public function modifierItem(Request $rq, Response $rs,$args) {
+        $item = Item::query()->where('id','=',$args['idItem'])
+                ->firstOrFail();
         try{
             if(sizeof($args) == 3){
                 $this->modifier($item['id'], $args);
@@ -107,9 +85,9 @@ class ControleurDesItems {
     }
 
     /** fct 10 : Suppression d'un item **/
-    public function supprimerItem(Request $rq, Response $rs, array $args, $idItem): Response {
-        $itemDel = Item::query()->where('id', $idItem)->FirstOrFail();
-        Item::query()->where(['id' => $idItem])->delete();
+    public function supprimerItem(Request $rq, Response $rs,$args): Response {
+        $itemDel = Item::query()->where('id','=',$args['idItem'])->FirstOrFail();
+        Item::query()->where(['id','=',$args['idItem']])->delete();
         $items = Item::query()->where('liste_id', $itemDel['liste_id'])->get();
         $lsItem=[];
         foreach ($items as $it) {

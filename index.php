@@ -30,7 +30,7 @@ $config = ['settings' => ['displayErrorDetails' => true,'dbconf' => '/conf/conf.
 
 # connection base de donnees MySQL
 $db = new \Illuminate\Database\Capsule\Manager();
-$db->addConnection(parse_ini_file('src/conf/conf.ini'));
+$db->addConnection(parse_ini_file('conf/conf.ini'));
 $db->setAsGlobal();
 $db->bootEloquent();
 
@@ -115,31 +115,31 @@ $app->get('/rendreListe/{public}/{token}[/]', function (Request $rq, Response $r
 #fct 8 : Ajout d'un item à une liste
 $app->get('/ajoutitem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
-    return $ctrl->creerItem($rq, $rs, $args);
+    return $ctrl->creerItem($rq, $rs, $args,[]);
 })->setName("creaitem");
 
 #fct 8 : Ajout d'un item à une liste
 $app->post('/ajoutitem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
-    return $ctrl->creerItem($rq, $rs, $_POST, $args['token']);
+    return $ctrl->creerItem($rq, $rs, $args,$_POST);
 })->setName("creaItem");
 
 #fct 8 : GET Modifier d'un item à une liste
 $app->get('/modifitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
-    return $ctrl->modifierItem($rq, $rs, $args, $args['idItem']);
+    return $ctrl->modifierItem($rq, $rs, $args);
 })->setName("modifitem");
 
 #fct 8 : POST Modifier d'un item à une liste
 $app->post('/modifitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
-    return $ctrl->modifierItem($rq, $rs, $_POST, $args['idItem']);
+    return $ctrl->modifierItem($rq, $rs, $_POST);
 })->setName("modifitem");
 
 #fct 8 : Ajout d'un item à une liste
 $app->get('/suppitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
-    return $ctrl->supprimerItem($rq, $rs, $args, $args['idItem']);
+    return $ctrl->supprimerItem($rq, $rs, $args);
 })->setName("suppitem");
 
 #TEST ROUTE
