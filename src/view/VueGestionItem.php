@@ -18,7 +18,7 @@ class VueGestionItem {
     }
 
     /**
-     * Affichage du formulaire de la création d'un item
+     * Fct 8 : Affichage du formulaire de la création d'un item
      */
     private function affichageCreationItem() {
         $html = <<<END
@@ -106,7 +106,7 @@ END;
         $content = null;
         switch ($selecteur) {
             case 1 :
-            { //on veut le formulaire de création d'une listes
+            { //Fct 8 : formulaire de création d'un item
                 $content = $this->affichageCreationItem();
                 break;
             }

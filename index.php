@@ -115,7 +115,7 @@ $app->get('/rendreListe/{public}/{no}[/]', function (Request $rq, Response $rs, 
 #fct 8 : Ajout d'un item à une liste
 $app->get('/ajoutitem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
-    return $ctrl->creerItem($rq, $rs, $args, $args['token']);
+    return $ctrl->creerItem($rq, $rs, $args);
 })->setName("creaitem");
 
 #fct 8 : Ajout d'un item à une liste

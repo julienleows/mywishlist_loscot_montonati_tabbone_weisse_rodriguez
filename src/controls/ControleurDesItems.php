@@ -15,7 +15,7 @@ use mywishlist\view\VueGestionItem as VueIT;
 use mywishlist\view\VueParticipationListe as VuePL;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use mywishlist\models\item as Item;
+use mywishlist\models\Item as Item;
 
 
 class ControleurDesItems {
@@ -28,13 +28,19 @@ class ControleurDesItems {
         $this->container = $container;
     }
 
-    /** fct 6 : créer une liste */
-    public function creerItem(Request $rq, Response $rs, $args, $liste_id) {
+    /** fct 8 : créer un item */
+    public function creerItem(Request $rq, Response $rs, $args) {
         try {
             if (sizeof($args) == 3) {
                 if (! $this->verificationItemExistant($args)){
-                    $this->creationItemBDD($args, $liste_id);
-                    $vue=new VuePL([], $this->container);
+                    $it = new Item();
+                    $it->nom = $args['nom'];
+                    $it->descr = $args['descr'];
+                    $it->tarif = $args['tarif'];
+                    // img / url a voir plus tard
+                    //$ls->tarif = $args['tarif'];
+                    $it->save();
+                    $vue=new VueIT([$it],$this->container);
                     $rs->getBody()->write($vue->render(1));
                 } else {
                     $vue=new VueIT([], $this->container);
@@ -51,9 +57,15 @@ class ControleurDesItems {
         return $rs;
     }
 
+    /**
+     * Méthode permettant de vérifier si un item est présent dans une liste
+     * @param $args
+     * @return bool true sur l'item est présent et false sinon
+     */
     private function verificationItemExistant($args){
         try{
-            $ls=Item::query()->where(['nom' => $args['nom']])->FirstOrFail();
+            $item=Item::query()->where(['id' => $args['id']])
+                    ->FirstOrFail();
             return true;
         } catch (ModelNotFoundException $m) {
             return false;
@@ -62,13 +74,7 @@ class ControleurDesItems {
     }
 
     private function creationItemBDD($args, $liste_id) {
-        $ls = new Item();
-        $ls->nom = $args['nom'];
-        $ls->descr = $args['descr'];
-        $ls->liste_id = $liste_id;
-        // img / url a voir plus tard
-        $ls->tarif = $args['tarif'];
-        $ls->save();
+
     }
 
     /** fct 9 : Modification d'un item **/
