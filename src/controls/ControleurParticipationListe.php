@@ -44,7 +44,7 @@ class ControleurParticipationListe {
                 $lsItem[] = $it;
             }
             $vue=new VueParticipationListe($lsItem,$this->container);
-            $rs->getBody()->write($vue->render(1));
+            $rs->getBody()->write($vue->render(1, $token));
           }
         } catch (ModelNotFoundException $m) {
             $rs->getBody()->write("Liste non trouvé !");

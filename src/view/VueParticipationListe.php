@@ -24,21 +24,27 @@ class VueParticipationListe {
 
     /**
      * Fct 1 : Affichage de l'ensemble des élements d'une liste
-     * @param array $items ensemble des items à afficher
-     * @param Liste $ls liste dont on souhaite afficher les items
+     * @param $token le token qui permet de retrouver les items et la liste
      * @return string
      */
-    private function affichageElementsListe(array $items): string {
+    private function affichageElementsListe($token): string {
         try {
-            $ls=Liste::query()->where('no','=',$items[0]->liste_id)
-                    ->firstOrFail();
+            $ls=Liste::query()->where('token','=',$token)
+                    ->firstOrFail(); // sa doit marcher
+            $item = Item::query()->where('liste_id','=',$ls->no)
+                    ->get(); // si sa sa marche pas, alors on a une liste d'items vides
+            // on transforme maintenant ces items en tableaux d'items
+            $items = [];
+            foreach ($item as $it) {
+              $items[] = $it;
+            }
         }
         catch (ModelNotFoundException $m) {
-            $ls="";
+            $items=[];
         }
         $html = <<<END
         <div><ul>
-        <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('creaitem', ['token'=>$ls->token])}';">
+        <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('creaitem', ['token'=>$token])}';">
              AJOUTER ITEM
         </button>
 END;
@@ -61,12 +67,13 @@ END;
      * @return string
      */
     private function affichageItem($item): string {
+        $ls = Liste::query()->where('no','=',$item['liste_id'])->firstOrFail();
         $html = <<<END
         <section class="content">
             <h1> <u>Nom</u> : $item->nom</h1>
             <h3> <u>Desciption </u>: $item->descr</h3>
             <h3> <u>Tarif </u>: $item->tarif</h3>
-            <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('modifitem', ['idListe'=>$item['liste_id'], 'idItem'=>$item['id']])}';">
+            <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('modifitem', ['token'=>$ls->token, 'idItem'=>$item['id']])}';">
                  MODIFIER ITEM
             </button>
             <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('suppitem', ['idListe'=>$item['liste_id'], 'idItem'=>$item['id']])}';">
@@ -223,6 +230,7 @@ END;
         */
     }
     /**
+     * @Deprecated
      * Fct 4 : Affichage de la liste apres Modiff
      * @param Item $item item qu'on souhaite afficher
      * @return string
@@ -242,13 +250,17 @@ END;
     /**
      * Méthode pour choisir l'affichage désiré et retourner le resultat de cet affichage
      * @param $selecteur
+     * @param $other_args peut etre facultatif
      */
-    public function render($selecteur): string {
+    public function render($selecteur, ...$other_args): string {
+        if (! isset($other_args[0])){
+          $other_args[0] = 'empty';
+        }
         $content = null;
         switch ($selecteur) {
             case 1 :
             { //on veut l'ensemble des élements d'une liste
-                $content = $this->affichageElementsListe($this->data);
+                $content = $this->affichageElementsListe($other_args[0]);
                 break;
             }
             case 2 :
@@ -258,7 +270,7 @@ END;
             }
             case 3 :
                 break;
-            case 4 :
+            case 4 : // A SUPPRIMER
             { // veut un item spécifique
                 $content = $this->affichagePostModif($this->data);
                 break;

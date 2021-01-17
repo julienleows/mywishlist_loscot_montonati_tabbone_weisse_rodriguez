@@ -33,16 +33,13 @@ class ControleurDesListes {
     /** fct 6 : créer une liste */
     public function creerListe(Request $rq, Response $rs, $args) {
         try {
+          $vue=new VueGestionLs([], $this->container);
             if (sizeof($args) == 3) {
                 if (! $this->verificationListeExistante($args)){
                   $this->creationListeBDD($args);
-                  $rs->getBody()->write("envoie réussie");
-                } else {
-                  $rs->getBody()->write("cette liste existe deja !");
+                  $rs->getBody()->write($vue->render(2));
                 }
-            }
-            else {
-                $vue=new VueGestionLs([], $this->container);
+            } else {
                 $rs->getBody()->write($vue->render(1));
             }
         } catch (ModelNotFoundException $m) {
@@ -71,7 +68,7 @@ class ControleurDesListes {
         // userid a voir plus tard
         $ls->expiration = $args['expiration'];
         $ls->token = hash('md5', openssl_random_pseudo_bytes(255) . "secure" . $ls->no);
-        $ls->public = 0;
+        $ls->public = 1;
         $ls->save();
     }
 

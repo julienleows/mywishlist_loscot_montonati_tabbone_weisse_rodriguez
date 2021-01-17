@@ -41,11 +41,11 @@ class ControleurDesItems {
                             ->firstOrFail();
                     $it->liste_id = $ls->no;
                     $it->save();
-                    $vue=new VueIT([$it],$this->container);
-                    $rs->getBody()->write($vue->render(1));
-            }
-            else {
-                $vue=new VueIT([], $this->container);
+                    $vue=new VuePL([$it],$this->container);
+                    $rs->getBody()->write($vue->render(1, $args['token']));
+            } else {
+                $it = '';
+                $vue=new VueIT([$it],$this->container);
                 $rs->getBody()->write($vue->render(1));
             }
         } catch (ModelNotFoundException $m) {
@@ -59,13 +59,14 @@ class ControleurDesItems {
         try{
             if(isset($tmpPost['nom'])){
                 $this->modifier($args['idItem'], $tmpPost);
-                $items = Item::query()->where('liste_id', '=', $args['idListe'])->get();
+                $ls = Liste::query()->where('token','=',$args['token'])->firstOrFail();
+                $items = Item::query()->where('liste_id', '=', $ls->no)->get();
                 $lsItem=[];
                 foreach ($items as $it) {
                     $lsItem[] = $it;
                 }
                 $vue=new VuePL($lsItem, $this->container);
-                $rs->getBody()->write($vue->render(4));
+                $rs->getBody()->write($vue->render(1, $args['token']));
             }
             else{
                 $item = Item::query()->where('id', '=', $args['idItem'])->firstOrFail();

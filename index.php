@@ -125,13 +125,13 @@ $app->post('/ajoutitem/{token}[/]', function (Request $rq, Response $rs, array $
 })->setName("creaItem");
 
 #fct 8 : GET Modifier d'un item à une liste
-$app->get('/modifitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+$app->get('/modifitem/{token}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
     return $ctrl->modifierItem($rq, $rs, $args, []);
 })->setName("modifitem");
 
 #fct 8 : POST Modifier d'un item à une liste
-$app->post('/modifitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+$app->post('/modifitem/{token}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
     return $ctrl->modifierItem($rq, $rs,$args, $_POST);
 })->setName("modifitem");
