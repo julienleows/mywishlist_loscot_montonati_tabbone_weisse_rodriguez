@@ -42,21 +42,28 @@ class VueParticipationListe {
         catch (ModelNotFoundException $m) {
             $items=[];
         }
-        $html = <<<END
+
+        $html = '';
+
+        if (sizeof($items) != 0) {
+            foreach ($items as $it) {
+                $html .= '<br>';
+                $html.=$this->affichageItem($it);
+                $html .= '<br>';
+            }
+        }
+        else {
+            $html .= "<br><h1> LA LISTE N'A PAS D'ITEMS </h1><br>";
+        }
+        $html .= "</ul></div>";
+
+        $html .= <<<END
+        <br>
         <div><ul>
         <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('creaitem', ['token'=>$token])}';">
              AJOUTER ITEM
         </button>
 END;
-        if (sizeof($items) != 0) {
-            foreach ($items as $it) {
-                $html.=$this->affichageItem($it);
-            }
-        }
-        else {
-            $html .= "<h1> LA LISTE N'A PAS D'ITEMS </h1>";
-        }
-        $html .= "</ul></div>";
         return $html;
     }
 

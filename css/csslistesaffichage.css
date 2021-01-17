@@ -2,8 +2,10 @@
  * feuille css pour l'affichage des listes
  */
 .boite-liste {
-    border:4px solid #E44332;
     padding: 10px;
+    background-color: #eeefef;
+    border: 5px solid #F8F9FA;
+    border-radius: 20px;
 }
 
 .titre-liste {

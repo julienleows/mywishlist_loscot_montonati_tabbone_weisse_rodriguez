@@ -65,7 +65,7 @@ END;
      */
     private function affichage1Liste($liste){
         return <<<END
-            <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}/css/csslistes.css" type="text/css"/>
+            <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}/css/csslistesaffichage.css" type="text/css"/>
             <br>
             <div class="boite-liste"'>
                 <div class="titre-liste">
@@ -83,13 +83,13 @@ END;
                     <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('liste',['token'=>$liste['token']])}';">
                         VOIR LA LISTE
                     </button>
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 1,'token' => $liste['token']])}';">
+                    <button type="button" class="btn btn-outline-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 1,'token' => $liste['token']])}';">
                         RENDRE LISTE PUBLIC
                     </button>
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 0, 'token' => $liste['token']])}';">
+                    <button type="button" class="btn btn-outline-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 0, 'token' => $liste['token']])}';">
                         RENDRE LISTE PRIVE
                     </button>
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 2,'token' => $liste['token']])}';">
+                    <button type="button" class="btn btn-outline-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 2,'token' => $liste['token']])}';">
                         RENDRE LISTE NON REPERTORIE
                     </button>
             </div>
