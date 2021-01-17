@@ -61,7 +61,7 @@ END;
                     <h3>${item['nom']}</h3>
                 </div>
                     <p>
-                        ${item['desc']}
+                        ${item['descr']}
                         <ul>
                             <li>Expire le ${item['tarif']}</li>
                         </ul>
@@ -85,7 +85,7 @@ END;
                 <label for="nom" >Nom : </label>
                 <input type="text" name="nom" value="${item['nom']}" placeholder="<nom>" required><br>
                 <label for="desc">Description : </label>
-                <input type="text" name="desc" value="${item['desc']}" placeholder="<desc>"><br>
+                <input type="text" name="desc" value="${item['descr']}" placeholder="<desc>"><br>
                 <label for="tarif">Prix : </label>
                 <input type="number" name="tarif" value="${item['tarif']}" placeholder="<tarif>"><br>
                 <button type="submit"> Modifier </button>

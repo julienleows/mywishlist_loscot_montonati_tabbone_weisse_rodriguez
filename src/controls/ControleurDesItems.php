@@ -88,14 +88,15 @@ class ControleurDesItems {
     /** fct 10 : Suppression d'un item **/
     public function supprimerItem(Request $rq, Response $rs,$args): Response {
         $itemDel = Item::query()->where('id','=',$args['idItem'])->FirstOrFail();
-        Item::query()->where(['id','=',$args['idItem']])->delete();
+        $liste = Liste::query()->where('no', '=', $itemDel['liste_id'])->FirstOrFail();
+        Item::query()->where('id','=',$args['idItem'])->delete();
         $items = Item::query()->where('liste_id','=', $itemDel['liste_id'])->get();
         $lsItem=[];
         foreach ($items as $it) {
             $lsItem[] = $it;
         }
         $vue=new VuePL([$itemDel, $lsItem], $this->container);
-        $rs->getBody()->write($vue->render(3));
-        return $rs;
+        $url = $this->container->router->pathFor('liste',['token'=>$liste['token']]);
+        return $rs->withRedirect($url);
     }
 }

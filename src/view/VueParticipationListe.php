@@ -80,22 +80,6 @@ END;
         return $html;
     }
 
-
-    /**
-     * Fct 2 : Affichage de la liste apres suppreson
-     * @param Item $item item qu'on souhaite afficher
-     * @return string
-     */
-    private function affichagePostSupp(array $items): string {
-        $html = <<<END
-        <section class="content">
-        <h3> L'item {$items[0]['nom']} a été correctement supprimé </h3>
-        </section>
-END;
-        $html .= $this->affichageElementsListe($items[1]);
-        return $html;
-    }
-
     /**
      * Fct 3 :
      */
@@ -273,10 +257,7 @@ END;
                 break;
             }
             case 3 :
-            { // veut un item spécifique
-                $content = $this->affichagePostSupp($this->data);
                 break;
-            }
             case 4 :
             { // veut un item spécifique
                 $content = $this->affichagePostModif($this->data);
