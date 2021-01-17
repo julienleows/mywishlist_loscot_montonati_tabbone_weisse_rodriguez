@@ -28,7 +28,6 @@ class VueGestionListe {
         $html = <<<END
         <div class="py-5 text-center">
               <h2>Creation d'une liste</h2>
-              <p class="lead">blablablabla</p>
         </div>
 
         <div>
@@ -41,7 +40,7 @@ class VueGestionListe {
 
                 <label for="exp" class="form-label">Date limite</label>
                 <input type="date" class="form-control" name="expiration" placeholder="" required><br>
-                <button type="submit" class="btn btn-danger btn-lg" onclick="window.location.href='#';">
+                <button type="submit" class="btn btn-danger btn-lg">
                     Créer la liste
                 </button>
             </form>
@@ -65,7 +64,7 @@ END;
      */
     private function affichage1Liste($liste){
         return <<<END
-            <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}/css/csslistesaffichage.css" type="text/css"/>
+            <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}css/csslistesaffichage.css" type="text/css"/>
             <br>
             <div class="boite-liste"'>
                 <div class="titre-liste">

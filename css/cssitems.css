@@ -1,0 +1,10 @@
+/**
+ * feuille css pour l'affichage des listes
+ */
+.boite-liste-item {
+    padding: 10px;
+    background-color: #eeefef;
+    border: 5px solid #F8F9FA;
+    border-radius: 20px;
+}
+

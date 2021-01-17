@@ -76,20 +76,22 @@ END;
     private function affichageItem($item): string {
         $ls = Liste::query()->where('no','=',$item['liste_id'])->firstOrFail();
         $html = <<<END
-        <section class="content">
+        <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}css/cssitems.css" type="text/css"/>
+        <div class="content boite-liste-item">
             <h1> <u>Nom</u> : $item->nom</h1>
-            <h3> <u>Desciption </u>: $item->descr</h3>
-            <h3> <u>Tarif </u>: $item->tarif</h3>
-            <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('modifitem', ['token'=>$ls->token, 'idItem'=>$item['id']])}';">
-                 MODIFIER ITEM
-            </button>
-            <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('suppitem', ['idListe'=>$item['liste_id'], 'idItem'=>$item['id']])}';">
-                 SUPPRIMER ITEM
-            </button>
+            <h6> <u>Desciption </u>: $item->descr</h6>
+            <h6> <u>Tarif </u>: $item->tarif</h6> 
             <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('reserver', ['idListe'=>$item['liste_id'], 'id'=>$item['id']])}';">
                  RESERVER ITEM
             </button>
-        </section>
+            <button type="button" class="btn btn-outline-danger" onclick="window.location.href='{$this->container->router->pathFor('modifitem', ['token'=>$ls->token, 'idItem'=>$item['id']])}';">
+                 MODIFIER ITEM
+            </button>
+            <button type="button" class="btn btn-outline-danger" onclick="window.location.href='{$this->container->router->pathFor('suppitem', ['idListe'=>$item['liste_id'], 'idItem'=>$item['id']])}';">
+                 SUPPRIMER ITEM
+            </button>
+           
+        </div>
 END;
         return $html;
     }
@@ -152,10 +154,16 @@ END;
             $rendu = $rendu . '<br></br>
 
 
-                      <form action="" method="get">
-                 <p>Votre nom : <input type="text" name="nom" value = ' . $valueCookie . '></p>
-                 <p>Votre message : <input type="text" name="message" /></p>
-                 <p><input type="submit" value="Compléter la réservation"></p>
+                <form action="" method="get">
+                <label for="nom" class="form-label">Votre nom</label>
+                <input type="text" class="form-control" name="nom" value = ' . $valueCookie . '>
+                
+                <label for="message" class="form-label">Votre message</label>
+                <input type="text" class="form-control name="message"/>
+                <br>
+                <button type="submit" class="btn btn-danger btn-lg">
+                    Valider la réservation
+                </button>
                 </form>
 
                         ';

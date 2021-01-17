@@ -22,16 +22,20 @@ class VueGestionItem {
      */
     private function affichageCreationItem() {
         $html = <<<END
+        <div class="py-5 text-center">
+            <h2>Formulaire création d'un item</h2>
+        </div>
         <div>
             <form action ="#" method="post">
-                <legend>Formulaire création d'un item : </legend>
-                <label for="nom">Nom : </label>
-                <input type="text" name="nom" placeholder="<nom>" required><br>
-                <label for="desc">Description : </label>
-                <input type="text" name="desc" placeholder="<desc>"><br>
-                <label for="tarif">Prix : </label>
-                <input type="number" name="tarif" placeholder="<tarif>" value="0"><br>
-                <button type="submit"> Ajouter </button>
+                <label for="nom" class="form-label">Nom : </label>
+                <input type="text" class="form-control" name="nom" placeholder="" required><br>
+                <label for="desc" class="form-label">Description : </label>
+                <input type="text" class="form-control" name="desc" placeholder=""><br>
+                <label for="tarif" class="form-label">Prix : </label>
+                <input type="number" class="form-control" name="tarif" placeholder="" value="0"><br>
+                <button type="submit" class="btn btn-danger btn-lg">
+                    Ajouter
+                </button>
             </form>
         </div>
 END;
@@ -79,16 +83,20 @@ END;
 
     private function affichageModif($item) {
         $html = <<<END
+        <div class="py-5 text-center">
+            <h2>Modifier votre item ${item['nom']}</h2>
+        </div>
         <div>
             <form action ="#" method="post">
-                <legend>Modifier votre item ${item['nom']} : </legend>
-                <label for="nom" >Nom : </label>
-                <input type="text" name="nom" value="${item['nom']}" placeholder="<nom>" required><br>
-                <label for="desc">Description : </label>
-                <input type="text" name="desc" value="${item['descr']}" placeholder="<desc>"><br>
-                <label for="tarif">Prix : </label>
-                <input type="number" name="tarif" value="${item['tarif']}" placeholder="<tarif>"><br>
-                <button type="submit"> Modifier </button>
+                <label for="nom" class="form-label">Nom : </label>
+                <input type="text" class="form-control" value="${item['nom']}" name="nom" placeholder="" required><br>
+                <label for="desc" class="form-label">Description : </label>
+                <input type="text" class="form-control"  value="${item['descr']}" name="desc" placeholder=""><br>
+                <label for="tarif" class="form-label">Prix : </label>
+                <input type="number" class="form-control" value="${item['tarif']}" name="tarif" placeholder="" value="0"><br>
+                <button type="submit" class="btn btn-danger btn-lg">
+                    Modifier
+                </button>
             </form>
         </div>
 END;
