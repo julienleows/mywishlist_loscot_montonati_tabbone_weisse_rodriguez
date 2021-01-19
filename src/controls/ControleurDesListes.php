@@ -82,7 +82,7 @@ class ControleurDesListes {
     public function rendreListe(Request $rq, Response $rs, $args) {
             $var = ControleurDesListes::ajoutListeEtat($args['token'],$args['public']);
             $rs->getBody()->write($var);
-            return $rs;
+            return $rs->withRedirect($this->container->router->pathFor('listes'));
     }
 
     /** fct 21 : afficher les listes de souhaits qui sont en publiques */

@@ -31,7 +31,7 @@ class VueGestionListe {
         </div>
 
         <div>
-            <form action ="#" method="post">
+            <form action="{$this->container->router->pathFor('listes')}" method="">
                 <label for="titre" class="form-label">Titre</label>
                 <input type="text" class="form-control" name="titre" placeholder="" required><br>
                 
@@ -82,6 +82,8 @@ END;
                     <button type="button" class="btn btn-danger" onclick="window.location.href='{$this->container->router->pathFor('liste',['token'=>$liste['token']])}';">
                         VOIR LA LISTE
                     </button>
+                    
+                    <input type="text" value="{$liste['token']}" disabled="disabled">
                     <button type="button" class="btn btn-outline-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 1,'token' => $liste['token']])}';">
                         RENDRE LISTE PUBLIC
                     </button>
