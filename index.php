@@ -144,10 +144,17 @@ $app->get('/suppitem/{idListe}/{idItem}', function (Request $rq, Response $rs, a
     return $ctrl->supprimerItem($rq, $rs, $args);
 })->setName("suppitem");
 
-#TEST ROUTE
+#fct 7 : GET Modifier une liste
+$app->get('/modifliste/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+    $ctrl = new ControleurDesListes($container);
+    return $ctrl->modifierListe($rq, $rs, $args, []);
+})->setName("modifliste");
 
-
-# ...
+#fct 7 : POST Modifier une liste
+$app->post('/modifitem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+    $ctrl = new ControleurDesListes($container);
+    return $ctrl->modifierListe($rq, $rs,$args, $_POST);
+})->setName("modifliste");
 
 # declenchement du traitement de la requette HTTP courante par le framework Slim
 $app->run();

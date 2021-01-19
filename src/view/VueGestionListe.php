@@ -50,6 +50,35 @@ END;
     }
 
     /**
+     * Affichage du modification liste
+     * @param array $list
+     */
+    private function affichageModificationListe($liste) {
+        $html = <<<END
+        <div class="py-5 text-center">
+              <h2>Modification de la liste</h2>
+        </div>
+
+        <div>
+            <form action="{$this->container->router->pathFor('listes')}" method="post">
+                <label for="titre" class="form-label">Titre</label>
+                <input type="text" class="form-control" name="titre" value="{$liste['titre']}" placeholder="" required><br>
+                
+                <label for="desc" class="form-label">Description</label>
+                <input type="text" class="form-control" name="" value="{$liste['description']}" placeholder="" required><br>
+
+                <label for="exp" class="form-label">Date limite</label>
+                <input type="date" class="form-control" name="expiration" value="{$liste['expiration']}" placeholder="" required><br>
+                <button type="submit" class="btn btn-danger btn-lg">
+                    Modifier la liste
+                </button>
+            </form>
+        </div>
+END;
+        return $html;
+    }
+
+    /**
      * Affichage de la modifications des infos d'une liste
      * @param array $list
      */
@@ -84,6 +113,9 @@ END;
                     </button>
                     
                     <input type="text" value="{$liste['token']}" disabled="disabled">
+                    <button type="button" class="btn btn-outline-danger" onclick="window.location.href='{$this->container->router->pathFor('modifliste',['token'=>$liste['token']])}';">
+                        MODIFIER LISTE
+                    </button>
                     <button type="button" class="btn btn-outline-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 1,'token' => $liste['token']])}';">
                         RENDRE LISTE PUBLIC
                     </button>
@@ -116,7 +148,6 @@ END;
      * @param $selecteur
      */
     public function render($selecteur) {
-        // TODO render a finir
         $content = null;
         switch ($selecteur) {
             case 1 :
@@ -128,6 +159,12 @@ END;
             case 2 :
             { // affichage des listes publiques
                 $content = $this->affichagePublicListe();
+                break;
+            }
+
+            case 3 :
+            { //on veut le formulaire de modification listes
+                $content = $this->affichageModificationListe($this->data[0]);
                 break;
             }
         }

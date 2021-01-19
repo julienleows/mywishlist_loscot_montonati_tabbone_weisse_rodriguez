@@ -13,12 +13,12 @@ namespace mywishlist\controls;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use mywishlist\view\VueGestionListe;
+use mywishlist\view\VueGestionListe as VueGestionLs;
 use mywishlist\view\VueParticipationListe;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use mywishlist\models\Item as Item;
 use mywishlist\models\Liste as Liste;
-use mywishlist\view\VueGestionListe as VueGestionLs;
 
 class ControleurDesListes {
 
@@ -72,10 +72,11 @@ class ControleurDesListes {
         $ls->save();
     }
 
-    /** fct 7 : modifier les informations générales d'une de ses listes */
-    public function modifierInformationsListe(Request $rq, Response $rs, $args) {
-        $rs->getBody()->write('modifier informationsListe');
-        return $rs;
+    private function modifier( $token, $post){
+        $liste = Liste::query()->where('token', '=', $token);
+        $liste->update(['titre' => $post['titre']]);
+        $liste->update(['description'=>$post['description']]);
+        $liste->update(['expiration'=>$post['expiration']]);
     }
 
     /** fct 20 : rendre une liste publique */
@@ -138,5 +139,28 @@ class ControleurDesListes {
             return "Liste déjà présente";
         }
 
+    }
+
+    /** fct 7 : Modification d'une liste **/
+    public function modifierListe(Request $rq, Response $rs, $args, $tmpPost) {
+        try {
+            if (isset($tmpPOST['token'])) {
+                $this->modifier($args['token'], $tmpPost);
+                $ls=Liste::query()->where('token','=',$args['token'])->firstOrFail();
+                $ls->titre = $tmpPOST['titre'];
+                $ls->description = $tmpPOST['description'];
+                $ls->expiration = $tmpPOST['expiration'];
+                $ls->save();
+                $vue=new VueGestionListe([$ls],$this->container);
+                $rs->getBody()->write($vue->render(3));
+            } else {
+                $ls = Liste::query()->where('token','=',$args['token'])->firstOrFail();
+                $vue=new VueGestionListe([$ls],$this->container);
+                $rs->getBody()->write($vue->render(3));
+            }
+        } catch (ModelNotFoundException $m) {
+            $rs->getBody()->write("Erreur de liste");
+        }
+        return $rs;
     }
 }
