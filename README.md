@@ -63,8 +63,8 @@ non | 28 | Joindre des listes à son compte |
 autres : 
 - [x] logo du site web(svg,favicon) | Julien
 - [x] mise en place de bootstrap | Julien
-- [x] correction bug (avec les $rs->withRedirect(...)
-- [x] mise en page accueil et navbar
+- [x] correction bug (avec les $rs->withRedirect(...) | Julien
+- [x] mise en page accueil et navbar | Julien
 
 ## disponible sur webetu :
 
