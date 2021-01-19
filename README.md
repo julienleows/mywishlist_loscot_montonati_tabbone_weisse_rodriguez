@@ -32,15 +32,15 @@ Ce dépôt github regroupe tous les documents et sources du projet MyWishList
 fini? | Numéro Fct | Nom Fct | Auteur
 :-: |:-: | :- |:-
 oui | 1  | Afficher une liste de souhaits | Lucas/Clement
-non | 2  | Afficher un item d'une liste   | Lucas
-non | 3  | Réserver un item               | Godefrox
-non | 4  | Ajouter un message avec sa réservation | Godefrox
+oui | 2  | Afficher un item d'une liste   | Lucas
+oui | 3  | Réserver un item               | Godefrox
+oui | 4  | Ajouter un message avec sa réservation | Godefrox
 non | 5  | Ajouter un message sur une liste |
-non | 6  | Créer une liste | Lucas/Clément
-non | 7  | Modifier les informations générales d'une de ses listes |
-non | 8  | Ajouter des items | Irene
-non | 9  | Modifier un item | Irene
-non | 10 | Supprimer un item | Irene
+oui | 6  | Créer une liste | Lucas/Clément
+non | 7  | Modifier les informations générales d'une de ses listes | Julien
+oui | 8  | Ajouter des items | Irene
+oui | 9  | Modifier un item | Irene
+oui | 10 | Supprimer un item | Irene
 non | 11 | Rajouter une image à un item |
 non | 12 | Modifier une image d'un item |
 non | 13 | Supprimer une image d'un item |
@@ -50,7 +50,7 @@ non | 16 | Consulter les réservations et messages d'une de ses listes après é
 non | 17 | Créer un compte |
 non | 18 | S'authentifier |
 non | 19 | Modifier son compte |
-non | 20 | Rendre une liste publique | Godefroy
+oui | 20 | Rendre une liste publique | Godefroy
 oui | 21 | Afficher les listes de souhaits publiques | Julien
 non | 21 | Créer une cagnotte sur un item |
 non | 23 | Participer à une cagnotte |
