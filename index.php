@@ -89,10 +89,10 @@ $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args)
     PRIMARY KEY (nom,id),
     FOREIGN KEY (id) REFERENCES item(id) );");
 
-
     if (isset($_GET['nom'])) {
         if (isset($_GET['message'])) {
             $reservation = Reservation::query()->where([['nom','=',$_GET['nom']],['id','=',$args['id']]]);
+            $_SESSION['nomReservation'] = $_GET['nom'];
             if(!$reservation->exists()){
                 $db::connection()->insert("INSERT INTO reservation VALUES('" . $_GET['nom'] . "','" . $args['id'] . "','" . $_GET['message'] . "')");
             }
@@ -101,6 +101,8 @@ $app->get('/reserver/{id}[/]', function (Request $rq, Response $rs, array $args)
 
     $ctrl = new ControleurParticipationListe($container);
     return $ctrl->reserverItem($rq, $rs, $args);
+
+
 }
 )->setName('reserver');
 

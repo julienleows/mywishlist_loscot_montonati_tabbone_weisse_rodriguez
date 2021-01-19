@@ -55,6 +55,7 @@ class ControleurParticipationListe {
     /* fct 2 : Afficher un item d'une liste de souhaits */
     public function afficherItemListeSouhaits(Request $rq, Response $rs, $args) {
         try {
+
             $item=Item::query()->where('id','=',$args['id'])
                     ->FirstOrFail();
             $vue=new VueParticipationListe([$item], $this->container);
@@ -69,7 +70,6 @@ class ControleurParticipationListe {
     public function reserverItem(Request $rq, Response $rs, $args)
     {
         try {
-
             $item = Item::query()->where('id', '=', $args['id'])->FirstOrFail();
             $vue = new VueParticipationListe([$item],$this->container);
             $rs->getBody()->Write($vue->render(5));

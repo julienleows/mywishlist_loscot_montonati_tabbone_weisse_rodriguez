@@ -143,11 +143,10 @@ END;
         $valueCookie = '';
         if(isset($_GET['nom'])){
             $valueCookie = $_GET['nom'];
-        }else if(isset($_COOKIE['nomReservation'])){
-            $valueCookie = $_COOKIE['nomReservation'];
+            $_SESSION['nomReservation'] = $valueCookie;
+        }else if(isset($_SESSION['nomReservation'])){
+            $valueCookie = $_SESSION['nomReservation'];
         }
-
-
 
         if (!$reservation->exists()) {
 
@@ -159,7 +158,7 @@ END;
                 <input type="text" class="form-control" name="nom" value = ' . $valueCookie . '>
                 
                 <label for="message" class="form-label">Votre message</label>
-                <input type="text" class="form-control name="message"/>
+                <input type="text" class="form-control" name="message"/>
                 <br>
                 <button type="submit" class="btn btn-danger btn-lg">
                     Valider la réservation
