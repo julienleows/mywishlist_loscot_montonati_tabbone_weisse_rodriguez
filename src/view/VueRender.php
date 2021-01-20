@@ -103,10 +103,10 @@ END;
             <div class="text-page-accueil">
                 <p>
                     Bonjour bienvenue sur notre site de gestion de liste.
-                    Crée votre liste et accès à vos listes et résever les items !<br>
-                    Ou encore modifier vos items de vos listes pour créer de des superbes listes.<br>
+                    Crée votre liste et accès à vos listes et réserver les items !<br>
+                    Où encore modifier vos items de vos listes pour créer des superbes listes.<br>
                     <br>
-                    Le site web s'apdapte sur toutes les platforme mobiles, tablette, pc...
+                    Le site web s'apdapte sur toutes les platformes mobiles, tablette, pc...
                 </p>
                
             </div>
