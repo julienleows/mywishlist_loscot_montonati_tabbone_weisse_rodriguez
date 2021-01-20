@@ -43,7 +43,20 @@ class VueParticipationListe {
             $items=[];
         }
 
-        $html = '';
+        $html = <<<END
+            <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}css/csslistesaffichage.css" type="text/css"/>
+            <br>
+          <div class="titre-liste">
+                    <h3>{$ls->titre}</h3>
+                </div>
+                    <p>
+                        {$ls->description}
+                        <ul>
+                            <li>Expire le {$ls->expiration}</li>
+                        </ul>
+                    </p>
+
+END;
 
         if (sizeof($items) != 0) {
             foreach ($items as $it) {

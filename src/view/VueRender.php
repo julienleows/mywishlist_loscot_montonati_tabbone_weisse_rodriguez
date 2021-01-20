@@ -41,8 +41,10 @@ class VueRender {
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                     
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">                             
+                       <form method="post" action="{$this->container->router->pathFor('postliste')}" type="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control me-2" type="text" name="token" placeholder="clé de partage" required/></label>
+                       </form>	
                       <ul class="navbar-nav me-auto mb-2 mb-lg-0">                  
                         <li class="nav-item"><a class="nav-link" href="{$this->container->router->pathFor('listes')}">Listes</a></li>
                       </ul>

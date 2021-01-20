@@ -37,7 +37,7 @@ class ControleurDesListes {
             if (sizeof($args) == 3) {
                 if (! $this->verificationListeExistante($args)){
                   $this->creationListeBDD($args);
-                  $rs->getBody()->write($vue->render(2));
+                    $rs->getBody()->write($vue->render(2));
                 }
             } else {
                 $rs->getBody()->write($vue->render(1));
@@ -144,15 +144,15 @@ class ControleurDesListes {
     /** fct 7 : Modification d'une liste **/
     public function modifierListe(Request $rq, Response $rs, $args, $tmpPost) {
         try {
-            if (isset($tmpPOST['token'])) {
+            if (isset($tmpPost['titre'])) {
                 $this->modifier($args['token'], $tmpPost);
-                $ls=Liste::query()->where('token','=',$args['token'])->firstOrFail();
-                $ls->titre = $tmpPOST['titre'];
-                $ls->description = $tmpPOST['description'];
-                $ls->expiration = $tmpPOST['expiration'];
-                $ls->save();
-                $vue=new VueGestionListe([$ls],$this->container);
-                $rs->getBody()->write($vue->render(3));
+                $ls=Liste::query()->where('public','=',1)->get();
+                $arrayls = [];
+                foreach ($ls as $l) {
+                    $arrayls[] = $l;
+                }
+                $vue=new VueGestionListe($arrayls,$this->container);
+                $rs->getBody()->write($vue->render(2));
             } else {
                 $ls = Liste::query()->where('token','=',$args['token'])->firstOrFail();
                 $vue=new VueGestionListe([$ls],$this->container);
@@ -161,6 +161,22 @@ class ControleurDesListes {
         } catch (ModelNotFoundException $m) {
             $rs->getBody()->write("Erreur de liste");
         }
+        return $rs;
+    }
+
+    public function supprimerListe(Request $rq, Response $rs, $args){
+        $liste = Liste::query()->where('token', '=', $args['token'])->FirstOrFail();
+        $liste->delete();
+
+        $ls = Liste::query()->where('public','=',1)->get();
+
+        $arrayls=[];
+        foreach ($ls as $l) {
+            $arrayls[] = $l;
+        }
+
+        $vue=new VueGestionListe($arrayls,$this->container);
+        $rs->getBody()->write($vue->render(2));
         return $rs;
     }
 }

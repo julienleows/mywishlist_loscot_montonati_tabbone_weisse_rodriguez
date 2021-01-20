@@ -31,7 +31,7 @@ class VueGestionListe {
         </div>
 
         <div>
-            <form action="{$this->container->router->pathFor('listes')}" method="">
+            <form action="" method="post">
                 <label for="titre" class="form-label">Titre</label>
                 <input type="text" class="form-control" name="titre" placeholder="" required><br>
                 
@@ -65,7 +65,7 @@ END;
                 <input type="text" class="form-control" name="titre" value="{$liste['titre']}" placeholder="" required><br>
                 
                 <label for="desc" class="form-label">Description</label>
-                <input type="text" class="form-control" name="" value="{$liste['description']}" placeholder="" required><br>
+                <input type="text" class="form-control" name="description" value="{$liste['description']}" placeholder="" required><br>
 
                 <label for="exp" class="form-label">Date limite</label>
                 <input type="date" class="form-control" name="expiration" value="{$liste['expiration']}" placeholder="" required><br>
@@ -124,6 +124,9 @@ END;
                     </button>
                     <button type="button" class="btn btn-outline-danger" onclick="window.location.href='{$this->container->router->pathFor('rendreListe',['public' => 2,'token' => $liste['token']])}';">
                         RENDRE LISTE NON REPERTORIE
+                    </button>
+                    <button type="button" class="btn btn-outline-warning" onclick="window.location.href='{$this->container->router->pathFor('suppliste',['token'=>$liste['token']])}';">
+                        SUPPRIMER LISTE
                     </button>
             </div>
             <br><br>                 

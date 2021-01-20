@@ -64,13 +64,24 @@ $app->get("/liste/{token}[/]", function (Request $rq, Response $rs, array $args)
 }
 )->setName('liste');
 
+$app->get('/suppliste/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+    $ctrl = new ControleurDesListes($container);
+    return $ctrl->supprimerListe($rq, $rs, $args);
+}
+)->setName("suppliste");
+
+$app->post("/liste[/]", function (Request $rq, Response $rs, array $args) use ($container): Response {
+    $ctrl = new ControleurParticipationListe($container);
+    return $ctrl->afficherListeSouhaits($rq, $rs, $_POST);
+}
+)->setName('postliste');
+
 # fct 6 : afficher le formulaire de création d'une liste
 $app->get('/crealiste[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
     $ctrl = new ControleurDesListes($container);
     return $ctrl->creerListe($rq, $rs, $args);
 }
 )->setName('crealiste');
-
 
 $app->post('/crealiste[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
     $ctrl = new ControleurDesListes($container);
@@ -151,7 +162,7 @@ $app->get('/modifliste/{token}[/]', function (Request $rq, Response $rs, array $
 })->setName("modifliste");
 
 #fct 7 : POST Modifier une liste
-$app->post('/modifitem/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+$app->post('/modifliste/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesListes($container);
     return $ctrl->modifierListe($rq, $rs,$args, $_POST);
 })->setName("modifliste");
