@@ -104,3 +104,7 @@ collation=utf8_unicode_ci |
 ## Visualiser les commits
 commande : `gitk` avec un terminal dans la racine du projet.
 
+<p align="center">
+  <img width="230" height="150" src="https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse_rodriguez/blob/main/images/illustrations/mobile-image.svg">
+</p>
+
