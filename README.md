@@ -1,5 +1,6 @@
+
 <p align="center">
-  <img width="230" height="150" src="https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse/blob/main/images/logos/logo_mywishlist.svg">
+  <img width="230" height="150" src="https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse_rodriguez/blob/main/images/logos/logo_mywishlist.svg">
 </p>
 
 # PROJET PHP MY WISH LIST
@@ -37,14 +38,14 @@ oui | 3  | Réserver un item               | Godefroy / Lucas
 oui | 4  | Ajouter un message avec sa réservation | Godefrox
 non | 5  | Ajouter un message sur une liste |
 oui | 6  | Créer une liste | Lucas/Clément
-non | 7  | Modifier les informations générales d'une de ses listes | Julien
+oui | 7  | Modifier les informations générales d'une de ses listes | Julien
 oui | 8  | Ajouter des items | Irene / Clément
 oui | 9  | Modifier un item | Irene / Clément
 oui | 10 | Supprimer un item | Irene / Clément
 non | 11 | Rajouter une image à un item |
 non | 12 | Modifier une image d'un item |
 non | 13 | Supprimer une image d'un item |
-oui | 14 | Partager une liste | Clément
+oui | 14 | Partager une liste | Clément/ Julien
 non | 15 | Consulter les réservations d'une de ses listes avant échéance |
 non | 16 | Consulter les réservations et messages d'une de ses listes après échéance |
 non | 17 | Créer un compte |
@@ -68,16 +69,33 @@ autres :
 
 ## disponible sur webetu :
 
-[mettre lien webetu]
+[https://webetu.iutnc.univ-lorraine.fr/www/weisse53u/mywishlist](https://webetu.iutnc.univ-lorraine.fr/www/weisse53u/mywishlist)
 
 
 ## Instalation
 
 * installer l'utilitaire XAMP ([xamp.com](https://www.apachefriends.org/fr/index.html))
-* mettre ce dépôt dans le fichier htdocs/[votrenom] de xamp
-
+* mettre ce dépôt dans le fichier htdocs/[votrenom] de xamp avce la commande git clone de votre shell :
 `git clone https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse_rodriguez`
 
 * lancer XAMP : démarrer les services Apache et MySQL.
-* Télécharger notre fichier `mywishlist_sql.txt`
-* ...
+* Créer une base de données nommée : `mywishlist` depuis l'interface phpMyAdmin.
+* Télécharger notre fichier [mywishlist_sql.txt](https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse_rodriguez/blob/main/mywishlist_sql.txt)
+puis executer le code sql dans votre base de données.
+
+* configuerer le fichier `src/conf/conf.ini` avec les information de votre base de données par exemple : 
+
+ | | 
+:-: 
+driver=mysql |
+username=[IDENTIFIANT DE VOTRE BASE] |
+password= [MDP UTILISATEUR DE LA BASE] |
+host=localhost |
+database=wishlist |
+charset=utf8 |
+collation=utf8_unicode_ci |
+
+* Installer composer [getcomposer.org](https://getcomposer.org/)
+* Avec un terminal dans la racine de notre projet faire :
+`composer install`
+*maintenant le projet correctement installé, rdv sur votre page de localhost/[votrenom]/mywishlist_loscot_montonati_tabbone_weisse_rodriguez/
