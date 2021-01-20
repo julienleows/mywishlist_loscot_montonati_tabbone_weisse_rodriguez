@@ -99,3 +99,8 @@ collation=utf8_unicode_ci |
 * Avec un terminal dans la racine de notre projet faire :
 `composer install`
 * maintenant le projet correctement installé, rdv sur votre page de localhost/[votrenom]/mywishlist_loscot_montonati_tabbone_weisse_rodriguez/
+
+
+## Visualiser les commits
+commande : `gitk` avec un terminal dans la racine du projet.
+
