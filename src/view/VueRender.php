@@ -15,7 +15,11 @@ class VueRender {
         $this->container = $c;
     }
 
-
+    /**
+     * Méthode render pour afficher le contenu d'une page
+     * @param $content
+     * @return string
+     */
     public function render($content) {
         return <<<END
         <!DOCTYPE html>
@@ -68,7 +72,10 @@ class VueRender {
 END;
     }
 
-
+    /**
+     * Méthode pour afficher la page d'acceuil
+     * @return string
+     */
     public function accueil() {
         return <<<END
             <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}css/cssaccueil.css" type="text/css"/>
@@ -110,6 +117,11 @@ END;
 END;
     }
 
+    /**
+     * Méthode pour afficher la page d'erreur
+     * @param $erreurmessage
+     * @return string
+     */
     public function erreur($erreurmessage) {
         return <<<END
             <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}/css/csserreur.css" type="text/css"/>

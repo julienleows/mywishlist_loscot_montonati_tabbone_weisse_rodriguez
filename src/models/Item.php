@@ -1,6 +1,10 @@
 <?php
 namespace mywishlist\models;
 
+/**
+ * Class Item représentant la table Item
+ * @package mywishlist\models
+ */
 class Item extends \Illuminate\Database\Eloquent\Model {
     public $timestamps = false;
     protected $table = "item";

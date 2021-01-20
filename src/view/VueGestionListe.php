@@ -79,14 +79,6 @@ END;
     }
 
     /**
-     * Affichage de la modifications des infos d'une liste
-     * @param array $list
-     */
-    private function affichageModificationsListe(array $list) {
-
-    }
-
-    /**
      * Fct
      * @param $liste
      * @return string

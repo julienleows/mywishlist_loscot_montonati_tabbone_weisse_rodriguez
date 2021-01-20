@@ -110,7 +110,7 @@ END;
     }
 
     /**
-     * Fct 3 :
+     * Fct 3 : Méthode pour afficher la reservation d'un item
      */
     private function affichageReservation($item) : string{
         $reservation = Reservation::query()->where('id', '=', $item['id']);
@@ -196,83 +196,7 @@ END;
         $rendu = $rendu . '</body>
                 </html>';
         return $rendu;
-
-        /* CSS
-          <style>
-                            h1{ text-align: center; }
-                            table, th, td {
-                              border: 1px solid black;
-                              border-collapse: collapse;
-                            }
-                            table{
-                            margin: 0 auto;
-                            }
-                            td{
-                             text-align: center;
-                            }';
-
-
-            $rendu = $rendu . 'form {
-                          margin: 0 auto;
-                          width: 400px;
-                          padding: 1em;
-                          border: 1px solid #CCC;
-                          border-radius: 1em;
-                        }
-
-                        form div + div {
-                          margin-top: 1em;
-                        }
-
-                        label {
-                          width: 90px;
-                          text-align: right;
-                        }
-
-                        input, textarea {
-                          font: 1em sans-serif;
-                          width: 300px;
-                          box-sizing: border-box;
-                          border: 1px solid #999;
-                        }
-
-                        input:focus, textarea:focus {
-                          border-color: #000;
-                        }
-
-                        textarea {
-                          vertical-align: top;
-                          height: 5em;
-                        }
-
-                        .button {
-                          padding-left: 90px;
-                        }
-
-                        button {
-                          margin-left: .5em;
-                        }';
-
-
-        */
     }
-    /**
-     * @Deprecated
-     * Fct 4 : Affichage de la liste apres Modiff
-     * @param Item $item item qu'on souhaite afficher
-     * @return string
-     */
-    private function affichagePostModif(array $items): string {
-        $html = <<<END
-        <section class="content">
-        <h3> L'item a été correctement modifié </h3>
-        </section>
-END;
-        $html .= $this->affichageElementsListe($items);
-        return $html;
-    }
-
-
 
     /**
      * Méthode pour choisir l'affichage désiré et retourner le resultat de cet affichage
@@ -297,11 +221,6 @@ END;
             }
             case 3 :
                 break;
-            case 4 : // A SUPPRIMER
-            { // veut un item spécifique
-                $content = $this->affichagePostModif($this->data);
-                break;
-            }
             case 5 :
                 { // veut reserver un item
                     $content = $this->affichageReservation($this->data[0]);

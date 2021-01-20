@@ -64,17 +64,21 @@ $app->get("/liste/{token}[/]", function (Request $rq, Response $rs, array $args)
 }
 )->setName('liste');
 
-$app->get('/suppliste/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
-    $ctrl = new ControleurDesListes($container);
-    return $ctrl->supprimerListe($rq, $rs, $args);
-}
-)->setName("suppliste");
-
+# fct 14 : afficher une liste de souhait qui est en prive (par partage d'url) méthode POST
 $app->post("/liste[/]", function (Request $rq, Response $rs, array $args) use ($container): Response {
     $ctrl = new ControleurParticipationListe($container);
     return $ctrl->afficherListeSouhaits($rq, $rs, $_POST);
 }
 )->setName('postliste');
+
+/**
+ * Fct de suppresion de liste
+ */
+$app->get('/suppliste/{token}[/]', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
+    $ctrl = new ControleurDesListes($container);
+    return $ctrl->supprimerListe($rq, $rs, $args);
+}
+)->setName("suppliste");
 
 # fct 6 : afficher le formulaire de création d'une liste
 $app->get('/crealiste[/]', function (Request $rq, Response $rs, array $args) use ($container): Response {
@@ -149,7 +153,7 @@ $app->post('/modifitem/{token}/{idItem}', function (Request $rq, Response $rs, a
     return $ctrl->modifierItem($rq, $rs,$args, $_POST);
 })->setName("modifitem");
 
-#fct 8 : Ajout d'un item à une liste
+#fct 10 : Suppresion d'un item à une liste
 $app->get('/suppitem/{idListe}/{idItem}', function (Request $rq, Response $rs, array $args) use ($db, $container): Response {
     $ctrl = new ControleurDesItems($container);
     return $ctrl->supprimerItem($rq, $rs, $args);

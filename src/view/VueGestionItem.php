@@ -42,6 +42,10 @@ END;
         return $html;
     }
 
+    /**
+     * Méthode permettant d'afficher un message d'erreur si l'item existe déjà
+     * @return string
+     */
     private function affichageItemErreur(): string {
         $html = <<<END
         <section class="content">
@@ -52,7 +56,7 @@ END;
     }
 
     /**
-     * Fct
+     * Fct 2 permettant d'afficher un item d'une liste
      * @param $item
      * @return string
      */
@@ -81,6 +85,11 @@ END;
 
     }
 
+    /**
+     * Méthode permettant d'afficher les modifications faites sur un Item
+     * @param $item
+     * @return string
+     */
     private function affichageModif($item) {
         $html = <<<END
         <div class="py-5 text-center">
@@ -119,12 +128,12 @@ END;
                 break;
             }
             case 2:
-            {
+            {//Méthode permettant d'afficher un message d'erreur si celui-ci existe déjà
                 $content = $this->affichageItemErreur();
                 break;
             }
             case 3:
-            {
+            { //Méthode pour afficher les modifications faites sur un Item
                 $content = $this->affichageModif($this->data[0]);
                 break;
             }

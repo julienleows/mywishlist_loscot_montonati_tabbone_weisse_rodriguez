@@ -37,7 +37,6 @@ class ControleurDesListes {
             if (sizeof($args) == 3) {
                 if (! $this->verificationListeExistante($args)){
                   $this->creationListeBDD($args);
-                    //$rs->getBody()->write($vue->render(2));
                     $rs = $rs ->withRedirect($this->container->router->pathFor('listes'));
                 }
             } else {
@@ -49,6 +48,11 @@ class ControleurDesListes {
         return $rs;
     }
 
+    /**
+     * Méthode permettant de vérifier si une liste est déjà existante
+     * @param $args
+     * @return bool
+     */
     private function verificationListeExistante($args){
       try{
         $ls=Liste::query()->where([['titre','=',$args['titre']],
@@ -58,21 +62,29 @@ class ControleurDesListes {
         return true;
       } catch (ModelNotFoundException $m) {
         return false;
-      } // c'est debile, mais on peut pas enlever cette ligne
+      }
       return false;
     }
 
+    /**
+     * Méthode permettant de créer une liste dans la base de données
+     * @param $args
+     */
     private function creationListeBDD($args) {
         $ls = new Liste();
-        $ls->titre = $args['titre'];
-        $ls->description = $args['description'];
-        // userid a voir plus tard
-        $ls->expiration = $args['expiration'];
+        $ls->titre =filter_var($args['titre'],FILTER_SANITIZE_STRING);
+        $ls->description = filter_var($args['description'],FILTER_SANITIZE_STRING);
+        $ls->expiration =$args['expiration'];
         $ls->token = hash('md5', openssl_random_pseudo_bytes(255) . "secure" . $ls->no);
         $ls->public = 1;
         $ls->save();
     }
 
+    /**
+     * Méthode permettant de modifier une liste dans la base de données
+     * @param $token
+     * @param $post
+     */
     private function modifier( $token, $post){
         $liste = Liste::query()->where('token', '=', $token);
         $liste->update(['titre' => $post['titre']]);
@@ -101,23 +113,6 @@ class ControleurDesListes {
         return $rs;
     }
 
-    /** fct de traitement : Rend la description de la liste publique */
-/*
-    public function rendIdListeSouhait($no){
-        $var = Liste::query()->select("user_id")->where('user_id','=',$no)->first();
-        $varT = str_replace(array('user_id','{','}','"',':'),'',$var);
-        return $varT;
-    }
-*/
-
-    /** fct de traitement : Rend la description de la liste publique */
-    /*
-    public function rendDescription(){
-        $var = Liste::query()->select("description")->where('user_id','=',0)->first();
-        $varT = str_replace(array('description','{','}','"',':'),'',$var);
-        return $varT;
-    }
-*/
     /** fct de traitement : Rend un booléen indiquant la présence de l'id parmis la liste selectioner */
     public function rendEtatListe($id,$public){
         $var = str_replace(array('{','}','"','public',':'),'',Liste::query()->select("public")->where('no','=',$id)->first());
@@ -166,6 +161,13 @@ class ControleurDesListes {
         return $rs;
     }
 
+    /**
+     * Méthode permettant de supprimer une liste
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function supprimerListe(Request $rq, Response $rs, $args){
         $liste = Liste::query()->where('token', '=', $args['token'])->FirstOrFail();
         $liste->delete();

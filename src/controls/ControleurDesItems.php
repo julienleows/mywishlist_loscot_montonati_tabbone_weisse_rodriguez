@@ -24,7 +24,7 @@ class ControleurDesItems {
     /** instance container */
     private $container;
 
-    /** constructeur vide de la classe ControleurDesItems : pour l'instant **/
+    /** constructeur vide de la classe ControleurDesItems */
     public function __construct(\Slim\Container $container) {
         $this->container = $container;
     }
@@ -34,9 +34,9 @@ class ControleurDesItems {
         try {
             if (isset($tmpPOST['nom'])) {
                     $it = new Item();
-                    $it->nom = $tmpPOST['nom'];
-                    $it->descr = $tmpPOST['desc'];
-                    $it->tarif = $tmpPOST['tarif'];
+                    $it->nom = filter_var($tmpPOST['nom'],FILTER_SANITIZE_STRING);
+                    $it->descr = filter_var($tmpPOST['desc'],FILTER_SANITIZE_STRING);
+                    $it->tarif = filter_var($tmpPOST['tarif'],FILTER_SANITIZE_NUMBER_INT);
                     $ls=Liste::query()->where('token','=',$args['token'])
                             ->firstOrFail();
                     $it->liste_id = $ls->no;
@@ -79,11 +79,16 @@ class ControleurDesItems {
         return $rs;
     }
 
+    /**
+     * Méthode permettant de modifier un item dans la base de données
+     * @param $iditem
+     * @param $post
+     */
     private function modifier( $iditem, $post){
         $item = Item::query()->where('id', '=', $iditem);
-        $item->update(['nom' => $post['nom']]);
-        $item->update(['descr'=>$post['desc']]);
-        $item->update(['tarif'=>$post['tarif']]);
+        $item->update(['nom' => filter_var($post['nom'],FILTER_SANITIZE_STRING)]);
+        $item->update(['descr'=>filter_var( $post['desc'],FILTER_SANITIZE_STRING)]);
+        $item->update(['tarif'=> filter_var( $post['tarif'],FILTER_SANITIZE_STRING)]);
     }
 
     /** fct 10 : Suppression d'un item **/
