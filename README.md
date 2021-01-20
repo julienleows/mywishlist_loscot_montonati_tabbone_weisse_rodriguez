@@ -98,4 +98,4 @@ collation=utf8_unicode_ci |
 * Installer composer [getcomposer.org](https://getcomposer.org/)
 * Avec un terminal dans la racine de notre projet faire :
 `composer install`
-*maintenant le projet correctement installé, rdv sur votre page de localhost/[votrenom]/mywishlist_loscot_montonati_tabbone_weisse_rodriguez/
+* maintenant le projet correctement installé, rdv sur votre page de localhost/[votrenom]/mywishlist_loscot_montonati_tabbone_weisse_rodriguez/
