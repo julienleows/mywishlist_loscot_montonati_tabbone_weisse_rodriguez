@@ -75,7 +75,7 @@ autres :
 ## Instalation
 
 * installer l'utilitaire XAMP ([xamp.com](https://www.apachefriends.org/fr/index.html))
-* mettre ce dépôt dans le fichier htdocs/[votrenom] de xamp avce la commande git clone de votre shell :
+* mettre notre projet dans le fichier htdocs/[votrenom] de xamp avec la commande git clone de votre terminal :
 `git clone https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse_rodriguez`
 
 * lancer XAMP : démarrer les services Apache et MySQL.
@@ -83,7 +83,7 @@ autres :
 * Télécharger notre fichier [mywishlist_sql.txt](https://github.com/julienleows/mywishlist_loscot_montonati_tabbone_weisse_rodriguez/blob/main/mywishlist_sql.txt)
 puis executer le code sql dans votre base de données.
 
-* configuerer le fichier `src/conf/conf.ini` avec les information de votre base de données par exemple : 
+* configuerer le fichier `src/conf/conf.ini` avec les information de votre base de données, par exemple : 
 
  | | 
 :-: 
