@@ -3,7 +3,6 @@
 
 
 # fichiers
-composer.json
 composer.lock
 src/conf/conf.ini
 src/conf/._conf.ini
