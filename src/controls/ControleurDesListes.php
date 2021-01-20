@@ -37,7 +37,8 @@ class ControleurDesListes {
             if (sizeof($args) == 3) {
                 if (! $this->verificationListeExistante($args)){
                   $this->creationListeBDD($args);
-                    $rs->getBody()->write($vue->render(2));
+                    //$rs->getBody()->write($vue->render(2));
+                    $rs = $rs ->withRedirect($this->container->router->pathFor('listes'));
                 }
             } else {
                 $rs->getBody()->write($vue->render(1));
@@ -152,7 +153,8 @@ class ControleurDesListes {
                     $arrayls[] = $l;
                 }
                 $vue=new VueGestionListe($arrayls,$this->container);
-                $rs->getBody()->write($vue->render(2));
+                //rs->getBody()->write($vue->render(2));
+                $rs = $rs ->withRedirect($this->container->router->pathFor('listes'));
             } else {
                 $ls = Liste::query()->where('token','=',$args['token'])->firstOrFail();
                 $vue=new VueGestionListe([$ls],$this->container);

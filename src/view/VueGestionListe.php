@@ -33,7 +33,7 @@ class VueGestionListe {
         <div>
             <form action="" method="post">
                 <label for="titre" class="form-label">Titre</label>
-                <input type="text" class="form-control" name="titre" placeholder="" required><br>
+                <input type="text" class="form-control" name="titre" placeholder="" required maxlength="22"><br>
                 
                 <label for="desc" class="form-label">Description</label>
                 <input type="text" class="form-control" name="description" placeholder="" required><br>
@@ -60,9 +60,9 @@ END;
         </div>
 
         <div>
-            <form action="{$this->container->router->pathFor('listes')}" method="post">
+            <form action="" method="post">
                 <label for="titre" class="form-label">Titre</label>
-                <input type="text" class="form-control" name="titre" value="{$liste['titre']}" placeholder="" required><br>
+                <input type="text" class="form-control" name="titre" value="{$liste['titre']}" placeholder="" required maxlength="22"><br>
                 
                 <label for="desc" class="form-label">Description</label>
                 <input type="text" class="form-control" name="description" value="{$liste['description']}" placeholder="" required><br>

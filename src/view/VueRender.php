@@ -45,14 +45,11 @@ class VueRender {
                        <form method="post" action="{$this->container->router->pathFor('postliste')}" type="search" placeholder="Search" aria-label="Search">
                             <input class="form-control me-2" type="text" name="token" placeholder="clé de partage" required/></label>
                        </form>	
-                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">                  
-                        <li class="nav-item"><a class="nav-link" href="{$this->container->router->pathFor('listes')}">Listes</a></li>
-                      </ul>
+                      <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                       
                       <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link" href="{$this->container->router->pathFor('crealiste')}">Creation liste</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Connexion</a></li>
-                        <li class="nav-item"><button type="button" class="btn btn-outline-danger" onclick="window.location.href='#';">Inscription</button></li>
+                        <li class="nav-item"><button type="button" class="btn btn-outline-danger" onclick="window.location.href='{$this->container->router->pathFor('listes')}';">Listes</button></li>
                       </ul>
                      </div>
                   </div>
@@ -74,7 +71,7 @@ END;
 
     public function accueil() {
         return <<<END
-            <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}/css/cssaccueil.css" type="text/css"/>
+            <link rel="stylesheet" href="{$this->container->router->pathFor('racine')}css/cssaccueil.css" type="text/css"/>
             <br>
             <span class="titre-page-accueil">
                 <img src="{$this->container->router->pathFor('racine')}/images/logos/logo_mywishlist.svg">
@@ -83,9 +80,12 @@ END;
 
             <br>
             <br>
-            <div class="bouton-inscrire">
-                 <button type="button" class="btn btn-danger btn-lg" onclick="window.location.href='#';">
-                    S'inscrire
+            <div class="boutons">
+                 <button type="button" class="btn btn-danger btn-lg" onclick="window.location.href='{$this->container->router->pathFor('listes')}';">
+                    Listes
+                 </button>
+                 <button type="button" class="btn btn-danger btn-lg" onclick="window.location.href='{$this->container->router->pathFor('crealiste')}';">
+                    Création Liste
                  </button>
             </div>
                
@@ -95,12 +95,18 @@ END;
                
             <div class="text-page-accueil">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adierat volutpat. Mauris non sem eros. Nullam aliquet neque aliquam justo vehicula, in auctor magna porttitor. 
-                    Curabitur malesuada lobortis fermentum. Curabitur cursus quis ligula ac rhoncus.
-                    Phasellus fermentum orci eget aliqueus turpis, aliquam a consectetur a, rutrum luctus urna. Duis vehicula mi et aliquet mattis. 
-                    Etiam ornare ante eu nunc sagittis porta.
+                    Bonjour bienvenue sur notre site de gestion de liste.
+                    Crée votre liste et accès à vos listes et résever les items !<br>
+                    Ou encore modifier vos items de vos listes pour créer de des superbes listes.<br>
+                    <br>
+                    Le site web s'apdapte sur toutes les platforme mobiles, tablette, pc...
                 </p>
+               
             </div>
+            
+            
+            
+            
 END;
     }
 

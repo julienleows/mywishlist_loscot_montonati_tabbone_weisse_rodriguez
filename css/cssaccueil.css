@@ -13,7 +13,11 @@
     margin: 10px;
 }
 
-.bouton-inscrire {
+.boutons {
     display: flex;
     justify-content: center;
+}
+
+.boutons > button {
+    margin: 20px;
 }
