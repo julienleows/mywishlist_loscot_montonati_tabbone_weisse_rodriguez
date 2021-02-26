@@ -26,6 +26,7 @@ Ce dépôt github regroupe tous les documents et sources du projet MyWishList
 * PHP ([php.net](https://www.php.net))
 * Eloquent ([laravel.com/eloquent](https://laravel.com/docs/8.x/eloquent))
 * Slim ([slimframework.com](https://www.slimframework.com/))
+* MySQL ([mysql.com](https://www.mysql.com/))
 * Bootstrap ([getbootstrap.com](https://getbootstrap.com/))
 
 
